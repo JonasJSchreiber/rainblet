@@ -1,0 +1,25 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+/node_modules
+/dist
+/.angular
+/tmp
+/out-tsc
+/.idea
+/.vscode/*
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/settings.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/npm-debug.log
+/yarn-error.log
+/testem.log
+
+# System Files
+.DS_Store
+Thumbs.db
