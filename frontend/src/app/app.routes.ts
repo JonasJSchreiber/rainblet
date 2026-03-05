@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 import { CollectionPageComponent } from './pages/collection-page.component';
 import { HomePageComponent } from './pages/home-page.component';
 import { PlayPageComponent } from './pages/play-page.component';
@@ -7,9 +8,9 @@ import { StorePageComponent } from './pages/store-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'play', component: PlayPageComponent },
-  { path: 'results', component: ResultsPageComponent },
-  { path: 'collection', component: CollectionPageComponent },
-  { path: 'store', component: StorePageComponent },
+  { path: 'play', component: PlayPageComponent, canActivate: [authGuard] },
+  { path: 'results', component: ResultsPageComponent, canActivate: [authGuard] },
+  { path: 'collection', component: CollectionPageComponent, canActivate: [authGuard] },
+  { path: 'store', component: StorePageComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];

@@ -1,10 +1,19 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Frontend (Angular)
+/frontend/node_modules
+/frontend/dist
+/frontend/.angular
+/frontend/tmp
+/frontend/out-tsc
+/frontend/.sass-cache
+/frontend/coverage
+/frontend/npm-debug.log
+/frontend/yarn-error.log
+/frontend/testem.log
 
-/node_modules
-/dist
-/.angular
-/tmp
-/out-tsc
+# Backend (Spring Boot)
+/backend/target
+
+# IDE/editor
 /.idea
 /.vscode/*
 !.vscode/extensions.json
@@ -12,14 +21,6 @@
 !.vscode/launch.json
 !.vscode/settings.json
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/npm-debug.log
-/yarn-error.log
-/testem.log
-
-# System Files
+# System files
 .DS_Store
 Thumbs.db
