@@ -5,3 +5,9 @@ databaseChangeLog:
       file: db/changelog/db.changelog-002-seed-reference-data.yaml
   - include:
       file: db/changelog/db.changelog-003-fix-boolean-types.yaml
+  - include:
+      file: db/changelog/db.changelog-004-add-password-hash.yaml
+  - include:
+      file: db/changelog/db.changelog-005-user-collectibles.yaml
+  - include:
+      file: db/changelog/db.changelog-006-user-wallets.yaml

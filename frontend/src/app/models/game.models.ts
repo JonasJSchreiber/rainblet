@@ -8,6 +8,8 @@ export interface Question {
 
 export type Rarity = 'common' | 'rare' | 'epic' | 'legendary' | 'chroma';
 
+export const RARITY_DISPLAY_ORDER: Rarity[] = ['common', 'rare', 'legendary', 'epic', 'chroma'];
+
 export interface Collectible {
   id: string;
   name: string;
@@ -65,3 +67,4 @@ export interface GameSessionState {
   startedAt: string;
   completedAt: string | null;
 }
+

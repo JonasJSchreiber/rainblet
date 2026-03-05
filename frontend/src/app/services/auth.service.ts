@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { AppConfigService } from '../config/app-config.service';
 import { GameService } from './game.service';
 
@@ -8,6 +9,24 @@ interface AuthUser {
   email: string;
   name: string;
   pictureUrl?: string;
+}
+
+interface AuthResponse {
+  token: string;
+  id: string;
+  email: string;
+  name: string;
+  pictureUrl?: string;
+}
+
+interface AuthMessagePayload {
+  type: 'rainblet-auth-token';
+  token: string;
+  id?: string;
+  email?: string;
+  name?: string;
+  pictureUrl?: string;
+  provider?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,6 +44,7 @@ export class AuthService {
   readonly isAuthenticated = computed(() => !!this.tokenState());
 
   constructor() {
+    window.addEventListener('message', this.handleAuthMessage);
     this.initializeFromStorage();
   }
 
@@ -38,7 +58,19 @@ export class AuthService {
 
   loginWithGoogle(): void {
     const loginUrl = `${this.getApiBase()}/api/auth/google`;
-    window.location.href = loginUrl;
+    window.open(loginUrl, '_blank', 'popup=true,width=560,height=760');
+  }
+
+  loginWithEmail(email: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.getApiBase()}/api/auth/login`, { email, password }).pipe(
+      tap((response) => this.applyAuthResponse(response))
+    );
+  }
+
+  registerWithEmail(email: string, name: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.getApiBase()}/api/auth/register`, { email, name, password }).pipe(
+      tap((response) => this.applyAuthResponse(response))
+    );
   }
 
   logout(): void {
@@ -51,42 +83,80 @@ export class AuthService {
     });
   }
 
+  private readonly handleAuthMessage = (event: MessageEvent): void => {
+    if (event.origin !== window.location.origin || !event.data || typeof event.data !== 'object') {
+      return;
+    }
+
+    const payload = event.data as Partial<AuthMessagePayload>;
+    if (payload.type !== 'rainblet-auth-token' || !payload.token) {
+      return;
+    }
+
+    this.applyAuthResponse(
+      {
+        token: payload.token,
+        id: payload.id ?? '',
+        email: payload.email ?? '',
+        name: payload.name ?? '',
+        pictureUrl: payload.pictureUrl ?? ''
+      },
+      payload.provider === 'google'
+    );
+  };
+
   private initializeFromStorage(): void {
     const params = new URLSearchParams(window.location.search);
     const tokenFromCallback = params.get('token');
     const nameFromCallback = params.get('name');
     const emailFromCallback = params.get('email');
     const pictureFromCallback = params.get('picture');
+    const providerFromCallback = params.get('provider') ?? '';
 
     if (tokenFromCallback) {
-      this.setSession(tokenFromCallback);
-      const callbackUser: AuthUser = {
-        id: '',
-        email: emailFromCallback ?? '',
-        name: nameFromCallback ?? '',
-        pictureUrl: pictureFromCallback ?? ''
-      };
-      if (callbackUser.name || callbackUser.email || callbackUser.pictureUrl) {
-        this.userState.set(callbackUser);
+      if (window.opener && window.opener !== window) {
+        window.opener.postMessage(
+          {
+            type: 'rainblet-auth-token',
+            token: tokenFromCallback,
+            name: nameFromCallback ?? '',
+            email: emailFromCallback ?? '',
+            pictureUrl: pictureFromCallback ?? '',
+            provider: providerFromCallback
+          } satisfies AuthMessagePayload,
+          window.location.origin
+        );
+        window.close();
+        return;
       }
+
+      this.applyAuthResponse(
+        {
+          token: tokenFromCallback,
+          id: '',
+          email: emailFromCallback ?? '',
+          name: nameFromCallback ?? '',
+          pictureUrl: pictureFromCallback ?? ''
+        },
+        providerFromCallback === 'google'
+      );
 
       params.delete('token');
       params.delete('name');
       params.delete('email');
       params.delete('picture');
+      params.delete('provider');
       const nextQuery = params.toString();
       const nextUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ''}${window.location.hash}`;
       window.history.replaceState({}, '', nextUrl);
-    } else {
-      const savedToken = sessionStorage.getItem('auth_token');
-      if (savedToken) {
-        this.tokenState.set(savedToken);
-      }
+      return;
     }
 
-    if (this.tokenState()) {
+    const savedToken = sessionStorage.getItem('auth_token');
+    if (savedToken) {
+      this.tokenState.set(savedToken);
       this.game.refreshReferenceData();
-      this.fetchCurrentUser(!!tokenFromCallback);
+      this.fetchCurrentUser(false);
     }
   }
 
@@ -106,9 +176,24 @@ export class AuthService {
     });
   }
 
+  private applyAuthResponse(response: AuthResponse, triggerSsoUpsert = false): void {
+    this.setSession(response.token);
+    this.userState.set({
+      id: response.id,
+      email: response.email,
+      name: response.name,
+      pictureUrl: response.pictureUrl ?? ''
+    });
+
+    if (triggerSsoUpsert) {
+      this.upsertUserFromSso();
+    }
+  }
+
   private upsertUserFromSso(): void {
     const endpoint = `${this.getApiBase()}/api/users/sso-upsert`;
     this.http.post(endpoint, {}).subscribe({
+      next: () => this.game.refreshReferenceData(),
       error: (error) => {
         this.logError('upsertUserFromSso error', error);
       }

@@ -1,6 +1,6 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { StickerAvatar } from '../models/game.models';
+import { Collectible, RARITY_DISPLAY_ORDER, StickerAvatar } from '../models/game.models';
 import { GameService } from '../services/game.service';
 
 @Component({
@@ -15,8 +15,23 @@ export class CollectionPageComponent {
   readonly inventory = computed(() => this.game.gameState()?.stickerInventory ?? {});
   readonly selectedSticker = signal<StickerAvatar | null>(null);
 
+  readonly sortedCollectibles = computed(() => {
+    const rarityRank = new Map(RARITY_DISPLAY_ORDER.map((rarity, index) => [rarity, index]));
+
+    return [...this.game.allCollectibles()].sort((a, b) => {
+      const rankA = rarityRank.get(a.rarity) ?? Number.MAX_SAFE_INTEGER;
+      const rankB = rarityRank.get(b.rarity) ?? Number.MAX_SAFE_INTEGER;
+
+      if (rankA !== rankB) {
+        return rankA - rankB;
+      }
+
+      return a.name.localeCompare(b.name);
+    });
+  });
+
   isUnlocked(id: string): boolean {
-    return this.game.unlockedCollectibles().some((collectible) => collectible.id === id);
+    return this.game.unlockedCollectibles().some((collectible: Collectible) => collectible.id === id);
   }
 
   stickerCount(id: string): number {
@@ -28,6 +43,17 @@ export class CollectionPageComponent {
       return;
     }
     this.selectedSticker.set(sticker);
+  }
+
+  salePrice(sticker: StickerAvatar): number {
+    return this.game.getStickerSalePrice(sticker);
+  }
+
+  sellSticker(sticker: StickerAvatar): void {
+    this.game.sellSticker(sticker.id);
+    if (this.stickerCount(sticker.id) <= 0) {
+      this.closeSticker();
+    }
   }
 
   closeSticker(): void {

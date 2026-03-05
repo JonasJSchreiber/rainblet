@@ -1,12 +1,19 @@
 package com.rainblet.backend.controller;
 
+import com.rainblet.backend.dto.UserCollectiblesRequest;
 import com.rainblet.backend.dto.UserUpsertRequest;
+import com.rainblet.backend.dto.UserWalletRequest;
+import com.rainblet.backend.dto.UserWalletResponse;
 import com.rainblet.backend.entity.User;
+import com.rainblet.backend.entity.UserWallet;
 import com.rainblet.backend.repository.UserRepository;
+import com.rainblet.backend.service.UserCollectibleService;
 import com.rainblet.backend.service.UserService;
+import com.rainblet.backend.service.UserWalletService;
 import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,10 +33,19 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final UserCollectibleService userCollectibleService;
+    private final UserWalletService userWalletService;
 
-    public UserController(UserRepository userRepository, UserService userService) {
+    public UserController(
+            UserRepository userRepository,
+            UserService userService,
+            UserCollectibleService userCollectibleService,
+            UserWalletService userWalletService
+    ) {
         this.userRepository = userRepository;
         this.userService = userService;
+        this.userCollectibleService = userCollectibleService;
+        this.userWalletService = userWalletService;
     }
 
     @GetMapping
@@ -79,6 +95,45 @@ public class UserController {
 
         UserUpsertRequest merged = mergeFromClaims(claims, request);
         return userService.upsertFromSso(merged);
+    }
+
+    @GetMapping("/me/collectibles")
+    public Map<String, List<String>> getMyCollectibles(Authentication authentication) {
+        User user = userService.resolveAuthenticatedUser(authentication);
+        List<String> collectibleIds = userCollectibleService.getCollectibleIdsForUser(user.getId());
+        return Map.of("collectibleIds", collectibleIds);
+    }
+
+    @PutMapping("/me/collectibles")
+    public Map<String, List<String>> putMyCollectibles(
+            Authentication authentication,
+            @RequestBody(required = false) UserCollectiblesRequest request
+    ) {
+        User user = userService.resolveAuthenticatedUser(authentication);
+        List<String> collectibleIds = request == null ? List.of() : request.getCollectibleIds();
+        List<String> persisted = userCollectibleService.replaceCollectibles(user.getId(), collectibleIds);
+        return Map.of("collectibleIds", persisted);
+    }
+
+    @GetMapping("/me/wallet")
+    public UserWalletResponse getMyWallet(Authentication authentication) {
+        User user = userService.resolveAuthenticatedUser(authentication);
+        UserWallet wallet = userWalletService.getOrCreateByUserId(user.getId());
+        return new UserWalletResponse(wallet.getUserId(), wallet.getCoins(), wallet.getPoints());
+    }
+
+    @PutMapping("/me/wallet")
+    public UserWalletResponse putMyWallet(
+            Authentication authentication,
+            @RequestBody(required = false) UserWalletRequest request
+    ) {
+        if (request == null || request.getCoins() == null || request.getPoints() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "coins and points are required");
+        }
+
+        User user = userService.resolveAuthenticatedUser(authentication);
+        UserWallet wallet = userWalletService.upsertByUserId(user.getId(), request.getCoins(), request.getPoints());
+        return new UserWalletResponse(wallet.getUserId(), wallet.getCoins(), wallet.getPoints());
     }
 
     private UserUpsertRequest mergeFromClaims(Claims claims, UserUpsertRequest request) {

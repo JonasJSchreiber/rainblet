@@ -1,5 +1,6 @@
 package com.rainblet.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -57,6 +58,10 @@ public class User {
     @NotBlank
     @Column(name = "sso_subject", nullable = false, length = 200)
     private String ssoSubject;
+
+    @JsonIgnore
+    @Column(name = "password_hash", length = 255)
+    private String passwordHash;
 
     @Column(name = "last_login_at")
     private Instant lastLoginAt;
@@ -157,6 +162,14 @@ public class User {
 
     public void setSsoSubject(String ssoSubject) {
         this.ssoSubject = ssoSubject;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public Instant getLastLoginAt() {

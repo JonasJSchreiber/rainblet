@@ -180,6 +180,88 @@ footer {
   font-weight: 900;
 }
 
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 18, 40, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 15;
+  padding: 1rem;
+}
+
+.auth-modal {
+  width: min(460px, 96vw);
+  background: #fff;
+  border-radius: 18px;
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0 20px 42px rgba(8, 20, 58, 0.35);
+  display: grid;
+  gap: 0.8rem;
+}
+
+.auth-modal h3 {
+  margin: 0;
+}
+
+.close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  border: 0;
+  border-radius: 999px;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: #e8edff;
+  color: #173f82;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.email-login {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.email-login input {
+  border: 2px solid #d1dbf7;
+  border-radius: 10px;
+  padding: 0.5rem;
+  font: inherit;
+}
+
+.submit,
+.google,
+.create {
+  border: 0;
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.submit {
+  background: #1c6af9;
+  color: #fff;
+}
+
+.google {
+  background: #ecf2ff;
+  color: #113e91;
+}
+
+.create {
+  background: #ffe463;
+  color: #3d2d00;
+}
+
+.error {
+  margin: 0;
+  color: #b01a20;
+  font-weight: 700;
+}
+
 @media (max-width: 700px) {
   .header {
     flex-direction: column;

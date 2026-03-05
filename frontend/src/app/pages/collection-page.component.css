@@ -160,3 +160,19 @@ p {
     min-height: 46vh;
   }
 }
+.sell {
+  margin-top: 0.65rem;
+  border: 0;
+  border-radius: 12px;
+  padding: 0.68rem 1rem;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  background: #d8f3df;
+  color: #215a2f;
+}
+
+.sell:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

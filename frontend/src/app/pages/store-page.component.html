@@ -4,7 +4,7 @@
 
   <div class="banner">
     <div><strong>Coins:</strong> {{ game.walletCoins() }}</div>
-    <div><strong>Points:</strong> {{ game.gameState()?.score ?? 0 }}</div>
+    <div><strong>Points:</strong> {{ game.walletPoints() }}</div>
   </div>
 
   @if (lastResult(); as result) {
@@ -23,8 +23,19 @@
     </article>
   }
 
+  @if (lastSale(); as sale) {
+    <article class="drop sold">
+      <div class="emoji">+{{ sale.salePrice }}</div>
+      <div>
+        <h3>Sticker sold</h3>
+        <p>You received {{ sale.salePrice }} coins.</p>
+        <small>Coins now: {{ sale.remainingCoins }}</small>
+      </div>
+    </article>
+  }
+
   <div class="sticker-grid">
-    @for (sticker of game.allStickers(); track sticker.id) {
+    @for (sticker of sortedStoreStickers(); track sticker.id) {
       <article class="sticker-card" [class]="'sticker-card ' + sticker.rarity">
         <div class="sticker-emoji">{{ sticker.emoji }}</div>
         <div class="name">{{ sticker.name }}</div>
@@ -33,7 +44,10 @@
 
         @if (offer(sticker); as currentOffer) {
           <button [disabled]="!canAfford(sticker)" (click)="openPreview(sticker)">
-            Try: {{ currentOffer.cost }} {{ currentOffer.currency }} · {{ percent(currentOffer.successRate) }}
+            Try: {{ currentOffer.cost }} {{ currentOffer.currency }} Â· {{ percent(currentOffer.successRate) }}
+          </button>
+          <button class="sell" [disabled]="ownedCount(sticker) === 0" (click)="sellSticker(sticker)">
+            Sell: {{ salePrice(sticker) }} coins
           </button>
         }
       </article>
@@ -53,6 +67,9 @@
           </p>
           <button class="confirm" [disabled]="!canAfford(sticker)" (click)="confirmRoll(sticker)">
             Roll for {{ sticker.name }}
+          </button>
+          <button class="confirm sell" [disabled]="ownedCount(sticker) === 0" (click)="sellSticker(sticker)">
+            Sell 1 copy for {{ salePrice(sticker) }} coins
           </button>
         }
       </article>

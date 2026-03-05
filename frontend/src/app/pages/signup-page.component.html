@@ -1,0 +1,40 @@
+<section class="card signup">
+  <h2>Create user</h2>
+  <p>Use an email/password account for direct login.</p>
+
+  <form (ngSubmit)="createUser()" class="form">
+    <label for="signup-email">Email</label>
+    <input id="signup-email" type="email" [ngModel]="email()" (ngModelChange)="email.set($event)" name="email" required />
+
+    <label for="signup-name">Name</label>
+    <input id="signup-name" type="text" [ngModel]="name()" (ngModelChange)="name.set($event)" name="name" maxlength="200" required />
+
+    <label for="signup-password">Password</label>
+    <input
+      id="signup-password"
+      type="password"
+      [ngModel]="password()"
+      (ngModelChange)="password.set($event)"
+      name="password"
+      minlength="8"
+      required />
+
+    <label for="signup-confirm-password">Confirm password</label>
+    <input
+      id="signup-confirm-password"
+      type="password"
+      [ngModel]="confirmPassword()"
+      (ngModelChange)="confirmPassword.set($event)"
+      name="confirmPassword"
+      minlength="8"
+      required />
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <button type="submit" [disabled]="isSubmitting()">
+      @if (isSubmitting()) { Creating user... } @else { Create user }
+    </button>
+  </form>
+</section>

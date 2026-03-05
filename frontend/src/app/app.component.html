@@ -25,7 +25,7 @@
           }
         </div>
       } @else {
-        <button class="auth-btn" type="button" (click)="loginWithGoogle()">Login with Google</button>
+        <button class="auth-btn" type="button" (click)="openLoginModal()">Login</button>
       }
     </div>
   </header>
@@ -47,3 +47,37 @@
     <span>Stickers: {{ ownedStickers() }}</span>
   </footer>
 </div>
+
+@if (isLoginModalOpen()) {
+  <div class="modal-backdrop" (click)="closeLoginModal()">
+    <article class="auth-modal" (click)="$event.stopPropagation()">
+      <button class="close" type="button" (click)="closeLoginModal()">x</button>
+      <h3>Sign in</h3>
+
+      <form class="email-login" (ngSubmit)="submitEmailLogin()">
+        <label for="login-email">Email address</label>
+        <input id="login-email" type="email" [ngModel]="loginEmail()" (ngModelChange)="loginEmail.set($event)" name="loginEmail" required />
+
+        <label for="login-password">Password</label>
+        <input
+          id="login-password"
+          type="password"
+          [ngModel]="loginPassword()"
+          (ngModelChange)="loginPassword.set($event)"
+          name="loginPassword"
+          required />
+
+        @if (loginError()) {
+          <p class="error">{{ loginError() }}</p>
+        }
+
+        <button class="submit" type="submit" [disabled]="isLoginSubmitting()">
+          @if (isLoginSubmitting()) { Signing in... } @else { Login with Email }
+        </button>
+      </form>
+
+      <button class="google" type="button" (click)="loginWithGoogle()">Login with Google (new tab)</button>
+      <button class="create" type="button" (click)="goToCreateUser()">Create user</button>
+    </article>
+  </div>
+}

@@ -1,0 +1,41 @@
+.signup {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.signup h2 {
+  margin: 0;
+}
+
+.form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.form input {
+  border: 2px solid #d3dcf9;
+  border-radius: 10px;
+  padding: 0.55rem;
+  font: inherit;
+}
+
+.form button {
+  border: 0;
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: #1c6af9;
+  color: #fff;
+}
+
+.form button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.error {
+  margin: 0;
+  color: #b01a20;
+  font-weight: 700;
+}

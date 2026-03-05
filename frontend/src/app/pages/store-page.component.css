@@ -27,6 +27,7 @@
 
 .drop.success { border: 1px solid #ffcf40; background: linear-gradient(120deg, #fff9d9, #ffeaf8); }
 .drop.fail { border: 1px solid #d3dff5; background: #f7fbff; }
+.drop.sold { border: 1px solid #cfe9d1; background: #ecfaef; }
 
 .emoji { font-size: 2.2rem; }
 .pop { animation: pop 280ms ease-out; }
@@ -174,4 +175,8 @@
     width: min(92vw, 580px);
     min-height: 46vh;
   }
+}
+.sell {
+  background: #d8f3df;
+  color: #215a2f;
 }

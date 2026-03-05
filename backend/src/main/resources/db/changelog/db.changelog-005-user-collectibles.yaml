@@ -1,0 +1,118 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-create-user-collectibles
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: user_collectibles
+      changes:
+        - createTable:
+            tableName: user_collectibles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user_collectibles
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: collectible_id
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: unlocked_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 005-add-user-collectibles-uk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_collectibles
+          - not:
+              uniqueConstraintExists:
+                tableName: user_collectibles
+                constraintName: uk_user_collectibles_user_collectible
+      changes:
+        - addUniqueConstraint:
+            tableName: user_collectibles
+            columnNames: user_id, collectible_id
+            constraintName: uk_user_collectibles_user_collectible
+
+  - changeSet:
+      id: 005-add-user-collectibles-user-fk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_collectibles
+          - tableExists:
+              tableName: users
+          - not:
+              foreignKeyConstraintExists:
+                foreignKeyName: fk_user_collectibles_user
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: user_collectibles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_user_collectibles_user
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 005-add-user-collectibles-collectible-fk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_collectibles
+          - tableExists:
+              tableName: collectibles
+          - not:
+              foreignKeyConstraintExists:
+                foreignKeyName: fk_user_collectibles_collectible
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: user_collectibles
+            baseColumnNames: collectible_id
+            referencedTableName: collectibles
+            referencedColumnNames: id
+            constraintName: fk_user_collectibles_collectible
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 005-add-user-collectibles-user-index
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_collectibles
+          - not:
+              indexExists:
+                tableName: user_collectibles
+                indexName: idx_user_collectibles_user_id
+      changes:
+        - createIndex:
+            tableName: user_collectibles
+            indexName: idx_user_collectibles_user_id
+            columns:
+              - column:
+                  name: user_id

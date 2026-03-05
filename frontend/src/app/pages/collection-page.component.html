@@ -4,7 +4,7 @@
 
   <h3>Achievements</h3>
   <div class="grid">
-    @for (collectible of game.allCollectibles(); track collectible.id) {
+    @for (collectible of sortedCollectibles(); track collectible.id) {
       <article [class.locked]="!isUnlocked(collectible.id)">
         <header>
           <strong>{{ collectible.name }}</strong>
@@ -43,6 +43,9 @@
         <h3>{{ sticker.name }}</h3>
         <p>{{ sticker.rarity | titlecase }}</p>
         <p class="owned-count">Owned: {{ stickerCount(sticker.id) }}</p>
+        <button class="sell" [disabled]="stickerCount(sticker.id) === 0" (click)="sellSticker(sticker)">
+          Sell 1 copy for {{ salePrice(sticker) }} coins
+        </button>
       </article>
     </div>
   }

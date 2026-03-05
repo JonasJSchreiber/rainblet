@@ -27,6 +27,16 @@ const RARITY_RULES: Record<Rarity, { cost: number; currency: OfferCurrency; succ
   chroma: { cost: 14, currency: 'score', successRate: 0.01 }
 };
 
+interface UserCollectiblesResponse {
+  collectibleIds: string[];
+}
+
+interface UserWalletResponse {
+  userId: number;
+  coins: number;
+  points: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,6 +48,8 @@ export class GameService {
   private readonly questionBankState = signal<Question[]>([]);
   private readonly collectiblesState = signal<Collectible[]>([]);
   private readonly stickersState = signal<StickerAvatar[]>([]);
+  private readonly persistedUnlockedCollectibleIds = signal<string[]>([]);
+  private readonly persistedWallet = signal<{ coins: number; points: number }>({ coins: 0, points: 0 });
 
   readonly gameState = computed(() => this.state());
   readonly hasActiveGame = computed(() => {
@@ -62,11 +74,14 @@ export class GameService {
   });
 
   readonly unlockedCollectibles = computed<Collectible[]>(() => {
-    const unlockedIds = new Set(this.state()?.unlockedCollectibleIds ?? []);
+    const unlockedIds = new Set(
+      this.toSortedUniqueIds([...(this.state()?.unlockedCollectibleIds ?? []), ...this.persistedUnlockedCollectibleIds()])
+    );
     return this.collectiblesState().filter((collectible) => unlockedIds.has(collectible.id));
   });
 
-  readonly walletCoins = computed(() => this.state()?.coins ?? 0);
+  readonly walletCoins = computed(() => this.state()?.coins ?? this.persistedWallet().coins);
+  readonly walletPoints = computed(() => this.state()?.score ?? this.persistedWallet().points);
 
   readonly progressText = computed(() => {
     const session = this.state();
@@ -97,6 +112,8 @@ export class GameService {
       this.questionBankState.set([]);
       this.collectiblesState.set([]);
       this.stickersState.set([]);
+      this.persistedUnlockedCollectibleIds.set([]);
+      this.persistedWallet.set({ coins: 0, points: 0 });
       return;
     }
 
@@ -115,6 +132,16 @@ export class GameService {
     this.http.get<StickerAvatar[]>(`${apiBase}/api/stickers`).subscribe({
       next: (stickers) => this.stickersState.set(stickers ?? []),
       error: () => this.stickersState.set([])
+    });
+
+    this.http.get<UserCollectiblesResponse>(`${apiBase}/api/users/me/collectibles`).subscribe({
+      next: (response) => this.applyPersistedCollectibleIds(response?.collectibleIds ?? []),
+      error: () => this.persistedUnlockedCollectibleIds.set([])
+    });
+
+    this.http.get<UserWalletResponse>(`${apiBase}/api/users/me/wallet`).subscribe({
+      next: (response) => this.applyPersistedWallet(response),
+      error: () => this.persistedWallet.set({ coins: 0, points: 0 })
     });
   }
 
@@ -136,7 +163,7 @@ export class GameService {
       roundSize: selectedQuestions.length,
       questionIds: selectedQuestions,
       currentQuestion: 0,
-      score: 0,
+      score: profile.points,
       streak: 0,
       bestStreak: 0,
       answers: [],
@@ -191,8 +218,26 @@ export class GameService {
       sessionsPlayed: isLastQuestion ? session.sessionsPlayed + 1 : session.sessionsPlayed
     };
 
-    this.state.set(this.applyCollectibleUnlocks(nextState));
+    const unlockedState = this.applyCollectibleUnlocks(nextState);
+    const mergedUnlockedIds = this.toSortedUniqueIds([
+      ...unlockedState.unlockedCollectibleIds,
+      ...this.persistedUnlockedCollectibleIds()
+    ]);
+
+    const finalState: GameSessionState = {
+      ...unlockedState,
+      unlockedCollectibleIds: mergedUnlockedIds
+    };
+
+    this.state.set(finalState);
     this.persistState();
+
+    if (!this.sameIds(mergedUnlockedIds, this.persistedUnlockedCollectibleIds())) {
+      this.persistedUnlockedCollectibleIds.set(mergedUnlockedIds);
+      this.persistUnlockedCollectiblesToServer(mergedUnlockedIds);
+    }
+
+    this.persistWalletToServer(finalState.coins, finalState.score);
 
     return { isCorrect, correctIndex: question.correctIndex, coinsAwarded };
   }
@@ -236,6 +281,7 @@ export class GameService {
     if (!success) {
       this.state.set(baseState);
       this.persistState();
+      this.persistWalletToServer(baseState.coins, baseState.score);
       return {
         offer,
         success: false,
@@ -259,6 +305,7 @@ export class GameService {
 
     this.state.set(nextState);
     this.persistState();
+    this.persistWalletToServer(nextState.coins, nextState.score);
 
     return {
       offer,
@@ -272,10 +319,10 @@ export class GameService {
 
   canAffordOffer(offer: StickerRollOffer): boolean {
     const session = this.state();
-    if (!session) {
-      return false;
-    }
-    return offer.currency === 'coins' ? session.coins >= offer.cost : session.score >= offer.cost;
+    const coins = session?.coins ?? this.persistedWallet().coins;
+    const points = session?.score ?? this.persistedWallet().points;
+
+    return offer.currency === 'coins' ? coins >= offer.cost : points >= offer.cost;
   }
 
   getOfferForSticker(sticker: StickerAvatar): StickerRollOffer {
@@ -290,30 +337,82 @@ export class GameService {
     };
   }
 
+  getStickerSalePrice(sticker: StickerAvatar): number {
+    return this.calculateSalePrice(this.getOfferForSticker(sticker));
+  }
+
+  sellSticker(stickerId: string): { salePrice: number; remainingCount: number; remainingCoins: number } | null {
+    const session = this.state();
+    const sticker = this.stickersState().find((entry) => entry.id === stickerId);
+    if (!session || !sticker) {
+      return null;
+    }
+
+    const currentCount = session.stickerInventory[stickerId] ?? 0;
+    if (currentCount <= 0) {
+      return null;
+    }
+
+    const salePrice = this.getStickerSalePrice(sticker);
+    const nextCount = currentCount - 1;
+    const nextInventory = { ...session.stickerInventory };
+
+    if (nextCount <= 0) {
+      delete nextInventory[stickerId];
+    } else {
+      nextInventory[stickerId] = nextCount;
+    }
+
+    const nextState: GameSessionState = {
+      ...session,
+      coins: session.coins + salePrice,
+      stickerInventory: nextInventory
+    };
+
+    this.state.set(nextState);
+    this.persistState();
+    this.persistWalletToServer(nextState.coins, nextState.score);
+
+    return {
+      salePrice,
+      remainingCount: nextCount,
+      remainingCoins: nextState.coins
+    };
+  }
   resetProgress(): void {
     this.state.set(null);
     sessionStorage.removeItem(STORAGE_KEY);
     sessionStorage.removeItem(LEGACY_STORAGE_KEY);
   }
 
-  private currentProfile(): Pick<
-    GameSessionState,
-    'unlockedCollectibleIds' | 'stickerInventory' | 'coins' | 'sessionsPlayed'
-  > {
+  private currentProfile(): {
+    unlockedCollectibleIds: string[];
+    stickerInventory: Record<string, number>;
+    coins: number;
+    points: number;
+    sessionsPlayed: number;
+  } {
     const session = this.state();
+    const unlockedCollectibleIds = this.toSortedUniqueIds([
+      ...(session?.unlockedCollectibleIds ?? []),
+      ...this.persistedUnlockedCollectibleIds()
+    ]);
+
     if (!session) {
       return {
-        unlockedCollectibleIds: [],
+        unlockedCollectibleIds,
         stickerInventory: {},
-        coins: 0,
+        coins: this.persistedWallet().coins,
+        points: this.persistedWallet().points,
         sessionsPlayed: 0
       };
     }
 
     return {
-      unlockedCollectibleIds: session.unlockedCollectibleIds,
+      unlockedCollectibleIds,
       stickerInventory: session.stickerInventory,
       coins: session.coins,
+      points: session.score,
       sessionsPlayed: session.sessionsPlayed
     };
   }
@@ -342,8 +441,124 @@ export class GameService {
 
     return {
       ...session,
-      unlockedCollectibleIds: Array.from(unlocked)
+      unlockedCollectibleIds: this.toSortedUniqueIds(Array.from(unlocked))
     };
+  }
+
+  private applyPersistedCollectibleIds(serverCollectibleIds: string[]): void {
+    const serverIds = this.toSortedUniqueIds(serverCollectibleIds);
+    this.persistedUnlockedCollectibleIds.set(serverIds);
+
+    const session = this.state();
+    if (!session) {
+      return;
+    }
+
+    const mergedIds = this.toSortedUniqueIds([...serverIds, ...session.unlockedCollectibleIds]);
+    if (!this.sameIds(mergedIds, session.unlockedCollectibleIds)) {
+      this.state.set({
+        ...session,
+        unlockedCollectibleIds: mergedIds
+      });
+      this.persistState();
+    }
+
+    if (!this.sameIds(mergedIds, serverIds)) {
+      this.persistedUnlockedCollectibleIds.set(mergedIds);
+      this.persistUnlockedCollectiblesToServer(mergedIds);
+    }
+  }
+
+  private applyPersistedWallet(response: UserWalletResponse): void {
+    const wallet = {
+      coins: Math.max(0, response?.coins ?? 0),
+      points: Math.max(0, response?.points ?? 0)
+    };
+    this.persistedWallet.set(wallet);
+
+    const session = this.state();
+    if (!session) {
+      return;
+    }
+
+    if (session.coins === wallet.coins && session.score === wallet.points) {
+      return;
+    }
+
+    this.state.set({
+      ...session,
+      coins: wallet.coins,
+      score: wallet.points
+    });
+    this.persistState();
+  }
+
+  private persistUnlockedCollectiblesToServer(unlockedCollectibleIds: string[]): void {
+    const token = sessionStorage.getItem('auth_token');
+    if (!token) {
+      return;
+    }
+
+    const apiBase = this.appConfig.apiBaseUrl;
+    this.http
+      .put<UserCollectiblesResponse>(`${apiBase}/api/users/me/collectibles`, {
+        collectibleIds: this.toSortedUniqueIds(unlockedCollectibleIds)
+      })
+      .subscribe({
+        next: (response) => {
+          this.persistedUnlockedCollectibleIds.set(this.toSortedUniqueIds(response?.collectibleIds ?? []));
+        },
+        error: () => {
+          // Keep optimistic client state even if persistence fails temporarily.
+        }
+      });
+  }
+
+  private calculateSalePrice(offer: StickerRollOffer): number {
+    // Worth is implied by cost and drop chance: worth = cost / chance.
+    const worth = offer.successRate > 0 ? offer.cost / offer.successRate : 0;
+    return Math.max(0, Math.floor(worth * 0.4));
+  }
+
+  private persistWalletToServer(coins: number, points: number): void {
+    const token = sessionStorage.getItem('auth_token');
+    if (!token) {
+      return;
+    }
+
+    const normalized = { coins: Math.max(0, coins), points: Math.max(0, points) };
+    this.persistedWallet.set(normalized);
+
+    const apiBase = this.appConfig.apiBaseUrl;
+    this.http.put<UserWalletResponse>(`${apiBase}/api/users/me/wallet`, normalized).subscribe({
+      next: (response) => {
+        this.persistedWallet.set({
+          coins: Math.max(0, response?.coins ?? 0),
+          points: Math.max(0, response?.points ?? 0)
+        });
+      },
+      error: () => {
+        // Keep optimistic client state even if persistence fails temporarily.
+      }
+    });
+  }
+
+  private toSortedUniqueIds(ids: string[]): string[] {
+    return Array.from(new Set(ids.filter((entry) => !!entry))).sort((a, b) => a.localeCompare(b));
+  }
+
+  private sameIds(left: string[], right: string[]): boolean {
+    if (left.length !== right.length) {
+      return false;
+    }
+
+    for (let i = 0; i < left.length; i += 1) {
+      if (left[i] !== right[i]) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   private loadState(): GameSessionState | null {

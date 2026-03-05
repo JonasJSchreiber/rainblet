@@ -60,7 +60,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 + "?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8)
                 + "&name=" + URLEncoder.encode(name, StandardCharsets.UTF_8)
                 + "&email=" + URLEncoder.encode(email, StandardCharsets.UTF_8)
-                + "&picture=" + URLEncoder.encode(picture, StandardCharsets.UTF_8);
+                + "&picture=" + URLEncoder.encode(picture, StandardCharsets.UTF_8)
+                + "&provider=" + URLEncoder.encode("google", StandardCharsets.UTF_8);
 
         response.sendRedirect(redirectUrl);
     }
