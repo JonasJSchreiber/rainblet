@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -32,17 +33,34 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             throws IOException, ServletException {
 
         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
+
+        String subject = getAttribute(oauthUser, "sub", authentication.getName());
         String email = getAttribute(oauthUser, "email", authentication.getName());
         String name = getAttribute(oauthUser, "name", email);
+        String givenName = getAttribute(oauthUser, "given_name", "");
+        String familyName = getAttribute(oauthUser, "family_name", "");
+        String picture = getAttribute(oauthUser, "picture", "");
+        String locale = getAttribute(oauthUser, "locale", "");
+        boolean emailVerified = getBooleanAttribute(oauthUser, "email_verified", false);
 
-        String token = jwtService.generateToken(
-                email,
-                Map.of("name", name, "email", email)
-        );
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("provider", "google");
+        claims.put("sub", subject);
+        claims.put("email", email);
+        claims.put("name", name);
+        claims.put("given_name", givenName);
+        claims.put("family_name", familyName);
+        claims.put("picture", picture);
+        claims.put("locale", locale);
+        claims.put("email_verified", emailVerified);
+
+        String token = jwtService.generateToken(email, claims);
 
         String redirectUrl = successRedirect
                 + "?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8)
-                + "&name=" + URLEncoder.encode(name, StandardCharsets.UTF_8);
+                + "&name=" + URLEncoder.encode(name, StandardCharsets.UTF_8)
+                + "&email=" + URLEncoder.encode(email, StandardCharsets.UTF_8)
+                + "&picture=" + URLEncoder.encode(picture, StandardCharsets.UTF_8);
 
         response.sendRedirect(redirectUrl);
     }
@@ -50,5 +68,16 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private String getAttribute(OAuth2User user, String key, String fallback) {
         Object value = user.getAttributes().get(key);
         return value == null ? fallback : String.valueOf(value);
+    }
+
+    private boolean getBooleanAttribute(OAuth2User user, String key, boolean fallback) {
+        Object value = user.getAttributes().get(key);
+        if (value instanceof Boolean boolValue) {
+            return boolValue;
+        }
+        if (value instanceof String stringValue) {
+            return Boolean.parseBoolean(stringValue);
+        }
+        return fallback;
     }
 }

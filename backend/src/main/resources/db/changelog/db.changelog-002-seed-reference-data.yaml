@@ -1,0 +1,189 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-001-create-stickers-table
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: stickers
+      changes:
+        - createTable:
+            tableName: stickers
+            columns:
+              - column:
+                  name: id
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_stickers
+              - column:
+                  name: name
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rarity
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: emoji
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 002-002-seed-collectibles
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: collectibles
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM collectibles
+      changes:
+        - insert:
+            tableName: collectibles
+            columns:
+              - column: { name: id, value: "spark-seed" }
+              - column: { name: name, value: "Spark Seed" }
+              - column: { name: description, value: "Awarded the first time you answer correctly." }
+              - column: { name: rarity, value: "common" }
+              - column: { name: unlock_rule, value: "Get 1 correct answer." }
+        - insert:
+            tableName: collectibles
+            columns:
+              - column: { name: id, value: "streak-3" }
+              - column: { name: name, value: "Streak Stone" }
+              - column: { name: description, value: "You held focus with a 3-answer streak." }
+              - column: { name: rarity, value: "common" }
+              - column: { name: unlock_rule, value: "Reach a 3-answer streak." }
+        - insert:
+            tableName: collectibles
+            columns:
+              - column: { name: id, value: "score-60" }
+              - column: { name: name, value: "Scholar Crest" }
+              - column: { name: description, value: "A badge for high-scoring knowledge runs." }
+              - column: { name: rarity, value: "rare" }
+              - column: { name: unlock_rule, value: "Score at least 60 points in one round." }
+        - insert:
+            tableName: collectibles
+            columns:
+              - column: { name: id, value: "perfect-run" }
+              - column: { name: name, value: "Perfect Prism" }
+              - column: { name: description, value: "Granted only to players with a flawless round." }
+              - column: { name: rarity, value: "epic" }
+              - column: { name: unlock_rule, value: "Answer every question correctly." }
+        - insert:
+            tableName: collectibles
+            columns:
+              - column: { name: id, value: "veteran-5" }
+              - column: { name: name, value: "Rain Veteran Medal" }
+              - column: { name: description, value: "Shows long-term persistence and repeated play." }
+              - column: { name: rarity, value: "rare" }
+              - column: { name: unlock_rule, value: "Finish 5 sessions in this browser tab session." }
+
+  - changeSet:
+      id: 002-003-seed-questions
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: questions
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM questions
+      changes:
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "math-1" } }, { column: { name: prompt, value: "What is 12 x 8?" } }, { column: { name: correct_index, valueNumeric: 1 } }, { column: { name: topic, value: "Math" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "math-2" } }, { column: { name: prompt, value: "Solve: 45 + 27" } }, { column: { name: correct_index, valueNumeric: 1 } }, { column: { name: topic, value: "Math" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "science-1" } }, { column: { name: prompt, value: "Which planet is known as the Red Planet?" } }, { column: { name: correct_index, valueNumeric: 0 } }, { column: { name: topic, value: "Science" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "science-2" } }, { column: { name: prompt, value: "Water freezes at what temperature in Celsius?" } }, { column: { name: correct_index, valueNumeric: 1 } }, { column: { name: topic, value: "Science" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "history-1" } }, { column: { name: prompt, value: "Who was the first U.S. president?" } }, { column: { name: correct_index, valueNumeric: 2 } }, { column: { name: topic, value: "History" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "history-2" } }, { column: { name: prompt, value: "The pyramids are primarily associated with which civilization?" } }, { column: { name: correct_index, valueNumeric: 2 } }, { column: { name: topic, value: "History" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "language-1" } }, { column: { name: prompt, value: "What is a synonym for \"rapid\"?" } }, { column: { name: correct_index, valueNumeric: 1 } }, { column: { name: topic, value: "Language" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "language-2" } }, { column: { name: prompt, value: "Which sentence is punctuated correctly?" } }, { column: { name: correct_index, valueNumeric: 2 } }, { column: { name: topic, value: "Language" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "geo-1" } }, { column: { name: prompt, value: "Which is the largest ocean on Earth?" } }, { column: { name: correct_index, valueNumeric: 3 } }, { column: { name: topic, value: "Geography" } } ] }
+        - insert: { tableName: questions, columns: [ { column: { name: id, value: "geo-2" } }, { column: { name: prompt, value: "What is the capital of Japan?" } }, { column: { name: correct_index, valueNumeric: 1 } }, { column: { name: topic, value: "Geography" } } ] }
+
+  - changeSet:
+      id: 002-004-seed-question-options
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: question_options
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM question_options
+      changes:
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "math-1" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "84" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "math-1" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "96" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "math-1" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "104" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "math-1" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "108" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "math-2" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "62" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "math-2" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "72" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "math-2" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "82" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "math-2" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "92" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "science-1" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "Mars" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "science-1" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "Venus" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "science-1" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "Jupiter" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "science-1" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "Mercury" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "science-2" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "-10" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "science-2" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "0" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "science-2" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "10" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "science-2" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "32" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "history-1" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "Thomas Jefferson" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "history-1" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "Abraham Lincoln" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "history-1" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "George Washington" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "history-1" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "John Adams" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "history-2" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "Roman" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "history-2" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "Mayan" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "history-2" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "Egyptian" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "history-2" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "Greek" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "language-1" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "Slow" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "language-1" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "Quick" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "language-1" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "Heavy" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "language-1" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "Tiny" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "language-2" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "Lets eat, grandma." } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "language-2" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "Let's eat grandma." } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "language-2" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "Let's eat, grandma." } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "language-2" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "Lets eat grandma." } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "geo-1" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "Atlantic" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "geo-1" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "Indian" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "geo-1" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "Arctic" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "geo-1" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "Pacific" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "geo-2" } }, { column: { name: option_order, valueNumeric: 0 } }, { column: { name: option_text, value: "Seoul" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "geo-2" } }, { column: { name: option_order, valueNumeric: 1 } }, { column: { name: option_text, value: "Tokyo" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "geo-2" } }, { column: { name: option_order, valueNumeric: 2 } }, { column: { name: option_text, value: "Kyoto" } } ] }
+        - insert: { tableName: question_options, columns: [ { column: { name: question_id, value: "geo-2" } }, { column: { name: option_order, valueNumeric: 3 } }, { column: { name: option_text, value: "Beijing" } } ] }
+
+  - changeSet:
+      id: 002-005-seed-stickers
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: stickers
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM stickers
+      changes:
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "astro-cub" } }, { column: { name: name, value: "Astro Cub" } }, { column: { name: rarity, value: "common" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "lightning-gecko" } }, { column: { name: name, value: "Lightning Gecko" } }, { column: { name: rarity, value: "common" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "chalk-owl" } }, { column: { name: name, value: "Chalk Owl" } }, { column: { name: rarity, value: "common" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "quiz-fox" } }, { column: { name: name, value: "Quiz Fox" } }, { column: { name: rarity, value: "common" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "pixel-panda" } }, { column: { name: name, value: "Pixel Panda" } }, { column: { name: rarity, value: "rare" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "crown-hamster" } }, { column: { name: name, value: "Crown Hamster" } }, { column: { name: rarity, value: "rare" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "neon-shark" } }, { column: { name: name, value: "Neon Shark" } }, { column: { name: rarity, value: "rare" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "thunder-phoenix" } }, { column: { name: name, value: "Thunder Phoenix" } }, { column: { name: rarity, value: "epic" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "epic-bratwurst-debra" } }, { column: { name: name, value: "Epic Bratwurst Debra" } }, { column: { name: rarity, value: "epic" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "laser-dragon" } }, { column: { name: name, value: "Laser Dragon" } }, { column: { name: rarity, value: "epic" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "rainbow-yeti" } }, { column: { name: name, value: "Rainbow Yeti" } }, { column: { name: rarity, value: "legendary" } }, { column: { name: emoji, value: "??" } } ] }
+        - insert: { tableName: stickers, columns: [ { column: { name: id, value: "chroma-starfish-zing" } }, { column: { name: name, value: "Chroma Starfish Zing" } }, { column: { name: rarity, value: "chroma" } }, { column: { name: emoji, value: "??" } } ] }

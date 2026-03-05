@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-001-fix-users-email-verified-type
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: users
+          - columnExists:
+              tableName: users
+              columnName: email_verified
+      changes:
+        - modifyDataType:
+            tableName: users
+            columnName: email_verified
+            newDataType: bit(1)

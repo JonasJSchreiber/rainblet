@@ -1,0 +1,49 @@
+<div class="sparkles"></div>
+<div class="shell">
+  <header class="header">
+    <div>
+      <h1>Rainblet</h1>
+      <p>Fast quiz rounds. Big shiny rewards.</p>
+    </div>
+    <div class="header-right">
+      <div class="wallet">Coins: {{ coins() }}</div>
+      @if (isAuthenticated()) {
+        <div class="profile-menu" [class.open]="isProfileMenuOpen()">
+          <button class="profile-trigger" type="button" (click)="toggleProfileMenu()" [attr.aria-expanded]="isProfileMenuOpen()">
+            @if (authPicture()) {
+              <img class="profile-avatar" [src]="authPicture()" alt="User avatar" />
+            } @else {
+              <span class="profile-avatar fallback">{{ authInitials() }}</span>
+            }
+            <span class="profile-email">{{ authEmail() }}</span>
+          </button>
+
+          @if (isProfileMenuOpen()) {
+            <div class="profile-dropdown" role="menu">
+              <button class="sign-out-link" type="button" role="menuitem" (click)="logout()">Sign out</button>
+            </div>
+          }
+        </div>
+      } @else {
+        <button class="auth-btn" type="button" (click)="loginWithGoogle()">Login with Google</button>
+      }
+    </div>
+  </header>
+
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/play" routerLinkActive="active">Play</a>
+    <a routerLink="/results" routerLinkActive="active">Results</a>
+    <a routerLink="/store" routerLinkActive="active">Store</a>
+    <a routerLink="/collection" routerLinkActive="active">Collection</a>
+  </nav>
+
+  <main>
+    <router-outlet />
+  </main>
+
+  <footer>
+    <span>Player: {{ playerName() }}</span>
+    <span>Stickers: {{ ownedStickers() }}</span>
+  </footer>
+</div>

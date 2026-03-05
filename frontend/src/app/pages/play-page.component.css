@@ -1,0 +1,55 @@
+.play h2,
+.play h3 {
+  margin: 0;
+}
+
+.play header p {
+  margin: 0.35rem 0 0.8rem;
+  color: #43609d;
+  font-weight: 700;
+}
+
+.options {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+
+.options button {
+  text-align: left;
+  border: 1px solid #c1d7ff;
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: #f4f9ff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.options button.correct {
+  border-color: #33b861;
+  background: #e6faee;
+}
+
+.options button.incorrect {
+  border-color: #c34a4a;
+  background: #ffecec;
+}
+
+.feedback {
+  margin: 0.8rem 0 0.6rem;
+  color: #1e8a4d;
+  font-weight: 900;
+}
+
+.feedback.bad {
+  color: #a13232;
+}
+
+.next {
+  border: 0;
+  border-radius: 10px;
+  padding: 0.55rem 0.9rem;
+  background: linear-gradient(120deg, #ffbf2f, #ffeb65);
+  color: #3d3000;
+  font-weight: 900;
+}

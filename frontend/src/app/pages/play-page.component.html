@@ -1,0 +1,39 @@
+@if (question(); as q) {
+  <section class="card play">
+    <header>
+      <h2>Question {{ progress() }}</h2>
+      <p>Topic: {{ q.topic }}</p>
+    </header>
+
+    <h3>{{ q.prompt }}</h3>
+
+    <div class="options">
+      @for (option of q.options; track $index) {
+        <button
+          [disabled]="resultReady()"
+          [class.correct]="resultReady() && $index === lastCorrectIndex()"
+          [class.incorrect]="resultReady() && $index === selectedOption() && !lastWasCorrect()"
+          (click)="selectAnswer($index)">
+          {{ option }}
+        </button>
+      }
+    </div>
+
+    @if (resultReady()) {
+      <p class="feedback" [class.bad]="!lastWasCorrect()">
+        @if (lastWasCorrect()) {
+          Correct! +10 score and +{{ lastCoinsAwarded() }} coins
+        } @else {
+          Not this time. Keep going.
+        }
+      </p>
+
+      <button class="next" (click)="next()">{{ nextLabel() }}</button>
+    }
+  </section>
+} @else {
+  <section class="card">
+    <h2>No active game</h2>
+    <p>Start a new session from the home page.</p>
+  </section>
+}

@@ -1,0 +1,247 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-collectibles
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: collectibles
+      changes:
+        - createTable:
+            tableName: collectibles
+            columns:
+              - column:
+                  name: id
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_collectibles
+              - column:
+                  name: name
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rarity
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: unlock_rule
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 002-create-questions
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: questions
+      changes:
+        - createTable:
+            tableName: questions
+            columns:
+              - column:
+                  name: id
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_questions
+              - column:
+                  name: prompt
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: correct_index
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: topic
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 003-create-question-options
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: question_options
+      changes:
+        - createTable:
+            tableName: question_options
+            columns:
+              - column:
+                  name: question_id
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: option_order
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: option_text
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 004-add-question-options-pk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: question_options
+          - not:
+              primaryKeyExists:
+                tableName: question_options
+      changes:
+        - addPrimaryKey:
+            tableName: question_options
+            columnNames: question_id, option_order
+            constraintName: pk_question_options
+
+  - changeSet:
+      id: 005-add-question-options-fk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: question_options
+          - tableExists:
+              tableName: questions
+          - not:
+              foreignKeyConstraintExists:
+                foreignKeyName: fk_question_options_question
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: question_options
+            baseColumnNames: question_id
+            referencedTableName: questions
+            referencedColumnNames: id
+            constraintName: fk_question_options_question
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 006-create-users
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: users
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+              - column:
+                  name: email
+                  type: varchar(320)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: display_name
+                  type: varchar(200)
+              - column:
+                  name: given_name
+                  type: varchar(120)
+              - column:
+                  name: family_name
+                  type: varchar(120)
+              - column:
+                  name: picture_url
+                  type: varchar(500)
+              - column:
+                  name: locale
+                  type: varchar(64)
+              - column:
+                  name: email_verified
+                  type: bit(1)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sso_provider
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sso_subject
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_login_at
+                  type: datetime(6)
+              - column:
+                  name: created_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 007-add-users-email-uk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: users
+          - not:
+              uniqueConstraintExists:
+                tableName: users
+                constraintName: uk_users_email
+      changes:
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: email
+            constraintName: uk_users_email
+
+  - changeSet:
+      id: 008-add-users-provider-subject-uk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: users
+          - not:
+              uniqueConstraintExists:
+                tableName: users
+                constraintName: uk_users_provider_subject
+      changes:
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: sso_provider, sso_subject
+            constraintName: uk_users_provider_subject

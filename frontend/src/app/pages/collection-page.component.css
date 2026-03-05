@@ -1,0 +1,162 @@
+.collection h2,
+.collection h3 {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0.3rem 0 0.7rem;
+  color: #43609d;
+  font-weight: 700;
+}
+
+.collection h3 {
+  margin-top: 0.8rem;
+}
+
+.grid {
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.65rem;
+}
+
+article {
+  border: 1px solid #d7e4ff;
+  border-radius: 12px;
+  padding: 0.65rem;
+  background: #f9fbff;
+}
+
+article.locked {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+}
+
+article.clickable {
+  cursor: pointer;
+}
+
+article.clickable:hover {
+  transform: translateY(-2px);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+span {
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 999px;
+  font-weight: 900;
+}
+
+.common {
+  background: #e8f6ed;
+  color: #2c7645;
+}
+
+.rare {
+  background: #e4edff;
+  color: #3158a6;
+}
+
+.epic {
+  background: #ffe8d6;
+  color: #a45521;
+}
+
+.legendary {
+  background: #fff2be;
+  color: #7f5600;
+}
+
+.chroma {
+  background: #f1e6ff;
+  color: #6e2bb5;
+}
+
+p {
+  margin: 0.45rem 0;
+}
+
+.view-hint {
+  font-weight: 800;
+  color: #3158a6;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 22, 51, 0.55);
+  display: grid;
+  place-items: center;
+  z-index: 30;
+  padding: 1rem;
+}
+
+.modal-card {
+  width: min(50vw, 580px);
+  min-height: 42vh;
+  border-radius: 20px;
+  border: 3px solid #d7e3ff;
+  background: #f7fbff;
+  box-shadow: 0 26px 50px rgba(0, 0, 0, 0.25);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 1.1rem;
+  position: relative;
+}
+
+.modal-emoji {
+  font-size: clamp(4rem, 11vw, 8rem);
+  line-height: 1;
+}
+
+.modal-card h3 {
+  margin: 0.3rem 0 0;
+  font-size: 1.5rem;
+}
+
+.modal-card p {
+  margin: 0.25rem 0 0;
+  font-weight: 800;
+}
+
+.owned-count {
+  color: #3158a6;
+}
+
+.close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 900;
+  background: #e6efff;
+  color: #284682;
+  cursor: pointer;
+}
+
+.modal-card.common { border-color: #bce5c8; background: #eaf9ef; }
+.modal-card.rare { border-color: #bbcdfa; background: #eaf0ff; }
+.modal-card.epic { border-color: #f6c69f; background: #fff0e3; }
+.modal-card.legendary { border-color: #f3d46a; background: #fff8de; }
+.modal-card.chroma {
+  border-color: #d8b8ff;
+  background: linear-gradient(120deg, #f9efff, #dffcff);
+}
+
+@media (max-width: 900px) {
+  .modal-card {
+    width: min(92vw, 580px);
+    min-height: 46vh;
+  }
+}

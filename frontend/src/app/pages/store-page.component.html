@@ -1,0 +1,61 @@
+<section class="card store">
+  <h2>Sticker Store</h2>
+  <p class="subtitle">Tap the sticker you want and roll for that exact avatar.</p>
+
+  <div class="banner">
+    <div><strong>Coins:</strong> {{ game.walletCoins() }}</div>
+    <div><strong>Points:</strong> {{ game.gameState()?.score ?? 0 }}</div>
+  </div>
+
+  @if (lastResult(); as result) {
+    <article class="drop" [class]="result.success ? 'success ' + result.offer.rarity : 'fail'">
+      <div class="emoji" [class.pop]="result.success">{{ result.sticker?.emoji }}</div>
+      <div>
+        @if (result.success) {
+          <h3>You won {{ result.sticker?.name }}!</h3>
+          <p>{{ result.offer.rarity | titlecase }} hit.</p>
+          <small>@if (result.isNew) { New sticker unlocked! } @else { Duplicate added. }</small>
+        } @else {
+          <h3>No drop for {{ result.sticker?.name }}</h3>
+          <p>Try again after earning more coins/points.</p>
+        }
+      </div>
+    </article>
+  }
+
+  <div class="sticker-grid">
+    @for (sticker of game.allStickers(); track sticker.id) {
+      <article class="sticker-card" [class]="'sticker-card ' + sticker.rarity">
+        <div class="sticker-emoji">{{ sticker.emoji }}</div>
+        <div class="name">{{ sticker.name }}</div>
+        <div class="rarity">{{ sticker.rarity | titlecase }}</div>
+        <div class="owned">Owned: {{ ownedCount(sticker) }}</div>
+
+        @if (offer(sticker); as currentOffer) {
+          <button [disabled]="!canAfford(sticker)" (click)="openPreview(sticker)">
+            Try: {{ currentOffer.cost }} {{ currentOffer.currency }} · {{ percent(currentOffer.successRate) }}
+          </button>
+        }
+      </article>
+    }
+  </div>
+
+  @if (selectedSticker(); as sticker) {
+    <div class="modal-backdrop" (click)="closePreview()">
+      <article class="modal-card" [class]="'modal-card ' + sticker.rarity" (click)="$event.stopPropagation()">
+        <button class="close" (click)="closePreview()">x</button>
+        <div class="modal-emoji">{{ sticker.emoji }}</div>
+        <h3>{{ sticker.name }}</h3>
+        <p>{{ sticker.rarity | titlecase }}</p>
+        @if (offer(sticker); as currentOffer) {
+          <p class="modal-meta">
+            Cost: {{ currentOffer.cost }} {{ currentOffer.currency }} | Win chance: {{ percent(currentOffer.successRate) }}
+          </p>
+          <button class="confirm" [disabled]="!canAfford(sticker)" (click)="confirmRoll(sticker)">
+            Roll for {{ sticker.name }}
+          </button>
+        }
+      </article>
+    </div>
+  }
+</section>

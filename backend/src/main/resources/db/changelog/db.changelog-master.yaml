@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/db.changelog-001-baseline.yaml
+  - include:
+      file: db/changelog/db.changelog-002-seed-reference-data.yaml
+  - include:
+      file: db/changelog/db.changelog-003-fix-boolean-types.yaml

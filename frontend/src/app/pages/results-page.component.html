@@ -1,0 +1,25 @@
+@if (state(); as session) {
+  <section class="card results">
+    <h2>Round Results</h2>
+    <p><strong>{{ session.playerName }}</strong>, nice run. You scored <strong>{{ session.score }}</strong>.</p>
+
+    <ul>
+      <li>Questions answered: {{ session.answers.length }} / {{ session.roundSize }}</li>
+      <li>Correct answers: {{ correctCount() }}</li>
+      <li>Best streak: {{ session.bestStreak }}</li>
+      <li>Coins in wallet: {{ session.coins }}</li>
+      <li>Sticker avatars unlocked: {{ stickerCount() }}</li>
+    </ul>
+
+    <div class="actions">
+      <button (click)="playAgain()">Play Again</button>
+      <button class="gold" (click)="toStore()">Open Store</button>
+      <button class="secondary" (click)="toCollection()">Collection</button>
+    </div>
+  </section>
+} @else {
+  <section class="card">
+    <h2>No results yet</h2>
+    <p>Start a game to generate round stats.</p>
+  </section>
+}

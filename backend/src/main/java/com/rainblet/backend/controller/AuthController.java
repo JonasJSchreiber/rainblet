@@ -50,21 +50,25 @@ public class AuthController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not authenticated");
         }
 
-        String subject = String.valueOf(authentication.getPrincipal());
-        String name = subject;
+        String principal = String.valueOf(authentication.getPrincipal());
+        String id = principal;
+        String email = principal;
+        String name = principal;
+        String picture = "";
 
         Object details = authentication.getDetails();
         if (details instanceof Claims claims) {
-            Object claimName = claims.get("name");
-            if (claimName != null) {
-                name = String.valueOf(claimName);
-            }
+            id = claimAsString(claims, "sub", id);
+            email = claimAsString(claims, "email", email);
+            name = claimAsString(claims, "name", name);
+            picture = claimAsString(claims, "picture", picture);
         }
 
         return Map.of(
-                "id", subject,
-                "email", subject,
-                "name", name
+                "id", id,
+                "email", email,
+                "name", name,
+                "pictureUrl", picture
         );
     }
 
@@ -72,6 +76,16 @@ public class AuthController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logout() {
         // Stateless JWT logout happens client-side by dropping the token.
+    }
+
+    private String claimAsString(Claims claims, String key, String fallback) {
+        Object value = claims.get(key);
+        if (value == null) {
+            return fallback;
+        }
+
+        String stringValue = String.valueOf(value);
+        return StringUtils.hasText(stringValue) ? stringValue : fallback;
     }
 
     private boolean googleOauthEnabled() {

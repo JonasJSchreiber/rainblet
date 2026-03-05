@@ -1,7 +1,6 @@
-import { Injectable, computed, signal } from '@angular/core';
-import { COLLECTIBLES } from '../data/collectibles';
-import { QUESTION_BANK } from '../data/questions';
-import { STICKERS } from '../data/stickers';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { AppConfigService } from '../config/app-config.service';
 import {
   AnswerRecord,
   Collectible,
@@ -32,7 +31,13 @@ const RARITY_RULES: Record<Rarity, { cost: number; currency: OfferCurrency; succ
   providedIn: 'root'
 })
 export class GameService {
+  private readonly http = inject(HttpClient);
+  private readonly appConfig = inject(AppConfigService);
+
   private readonly state = signal<GameSessionState | null>(this.loadState());
+  private readonly questionBankState = signal<Question[]>([]);
+  private readonly collectiblesState = signal<Collectible[]>([]);
+  private readonly stickersState = signal<StickerAvatar[]>([]);
 
   readonly gameState = computed(() => this.state());
   readonly hasActiveGame = computed(() => {
@@ -40,8 +45,11 @@ export class GameService {
     return !!session && session.completedAt === null;
   });
   readonly isRoundComplete = computed(() => this.state()?.completedAt !== null);
-  readonly allCollectibles = COLLECTIBLES;
-  readonly allStickers = STICKERS;
+  readonly allCollectibles = computed(() => this.collectiblesState());
+  readonly allStickers = computed(() => this.stickersState());
+  readonly hasReferenceData = computed(
+    () => this.questionBankState().length > 0 && this.collectiblesState().length > 0 && this.stickersState().length > 0
+  );
 
   readonly currentQuestion = computed<Question | null>(() => {
     const session = this.state();
@@ -50,12 +58,12 @@ export class GameService {
     }
 
     const questionId = session.questionIds[session.currentQuestion];
-    return QUESTION_BANK.find((question) => question.id === questionId) ?? null;
+    return this.questionBankState().find((question) => question.id === questionId) ?? null;
   });
 
   readonly unlockedCollectibles = computed<Collectible[]>(() => {
     const unlockedIds = new Set(this.state()?.unlockedCollectibleIds ?? []);
-    return COLLECTIBLES.filter((collectible) => unlockedIds.has(collectible.id));
+    return this.collectiblesState().filter((collectible) => unlockedIds.has(collectible.id));
   });
 
   readonly walletCoins = computed(() => this.state()?.coins ?? 0);
@@ -79,10 +87,46 @@ export class GameService {
     return Object.values(inventory).reduce((sum, value) => sum + value, 0);
   });
 
+  constructor() {
+    this.refreshReferenceData();
+  }
+
+  refreshReferenceData(): void {
+    const token = sessionStorage.getItem('auth_token');
+    if (!token) {
+      this.questionBankState.set([]);
+      this.collectiblesState.set([]);
+      this.stickersState.set([]);
+      return;
+    }
+
+    const apiBase = this.appConfig.apiBaseUrl;
+
+    this.http.get<Question[]>(`${apiBase}/api/questions`).subscribe({
+      next: (questions) => this.questionBankState.set(questions ?? []),
+      error: () => this.questionBankState.set([])
+    });
+
+    this.http.get<Collectible[]>(`${apiBase}/api/collectibles`).subscribe({
+      next: (collectibles) => this.collectiblesState.set(collectibles ?? []),
+      error: () => this.collectiblesState.set([])
+    });
+
+    this.http.get<StickerAvatar[]>(`${apiBase}/api/stickers`).subscribe({
+      next: (stickers) => this.stickersState.set(stickers ?? []),
+      error: () => this.stickersState.set([])
+    });
+  }
+
   startGame(playerName: string, roundSize = DEFAULT_ROUND_SIZE): void {
+    const questionBank = this.questionBankState();
+    if (!questionBank.length) {
+      return;
+    }
+
     const safeName = playerName.trim() || this.state()?.playerName || 'Player';
-    const selectedQuestions = this.shuffle([...QUESTION_BANK])
-      .slice(0, Math.min(roundSize, QUESTION_BANK.length))
+    const selectedQuestions = this.shuffle([...questionBank])
+      .slice(0, Math.min(roundSize, questionBank.length))
       .map((question) => question.id);
 
     const profile = this.currentProfile();
@@ -172,7 +216,7 @@ export class GameService {
 
   buyStickerChance(stickerId: string): StickerRollResult | null {
     const session = this.state();
-    const sticker = STICKERS.find((entry) => entry.id === stickerId);
+    const sticker = this.stickersState().find((entry) => entry.id === stickerId);
     if (!session || !sticker) {
       return null;
     }
@@ -334,7 +378,6 @@ export class GameService {
       answers: state.answers ?? [],
       unlockedCollectibleIds: state.unlockedCollectibleIds ?? [],
       stickerInventory: state.stickerInventory ?? {},
-      // Migrate legacy sessions created before the coin system existed.
       coins: state.coins ?? migratedCoins,
       sessionsPlayed: state.sessionsPlayed ?? 0,
       startedAt: state.startedAt ?? '',

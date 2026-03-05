@@ -1,0 +1,26 @@
+<section class="card home">
+  <h2>Play. Win. Collect.</h2>
+  <p>Beat quiz rounds, stack coins, and pull shiny avatar stickers in the store.</p>
+
+  <div class="stats">
+    <div><strong>Coins:</strong> {{ game.walletCoins() }}</div>
+    <div><strong>Sticker Avatars:</strong> {{ game.ownedStickerCount() }}</div>
+  </div>
+
+  <label for="name">Player name</label>
+  <input id="name" type="text" maxlength="24" [(ngModel)]="playerName" placeholder="Type your name" />
+
+  <div class="actions">
+    <button [disabled]="!canPlay()" (click)="startGame()">Start Quiz</button>
+    <button class="secondary" (click)="goStore()">Go to Store</button>
+    <button class="danger" (click)="reset()">Reset Session Data</button>
+  </div>
+
+  @if (!isAuthenticated()) {
+    <small class="note">Login is required to play.</small>
+  } @else if (!game.hasReferenceData()) {
+    <small class="note">Loading questions, collectibles, and stickers from the backend...</small>
+  } @else if (sessionStarted()) {
+    <small class="note">Session progress saves in this browser tab session.</small>
+  }
+</section>

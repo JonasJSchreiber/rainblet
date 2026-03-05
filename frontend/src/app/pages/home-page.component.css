@@ -1,0 +1,74 @@
+.home h2 {
+  margin-top: 0;
+  margin-bottom: 0.3rem;
+}
+
+.home p {
+  margin-top: 0;
+  color: #365796;
+  font-weight: 700;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.5rem;
+}
+
+.stats div {
+  background: #f1f8ff;
+  border: 1px solid #c5dbff;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+label {
+  display: block;
+  margin: 0.8rem 0 0.35rem;
+  font-weight: 800;
+}
+
+input {
+  width: 100%;
+  border: 1px solid #b8d2ff;
+  border-radius: 10px;
+  padding: 0.65rem;
+  font-size: 1rem;
+}
+
+.actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 0.55rem 0.95rem;
+  font-weight: 900;
+  cursor: pointer;
+  background: linear-gradient(120deg, #1c53ff, #43a1ff);
+  color: #fff;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.secondary {
+  background: linear-gradient(120deg, #16b45d, #42d695);
+}
+
+.danger {
+  background: #f2f4fb;
+  color: #29467f;
+}
+
+.note {
+  display: block;
+  margin-top: 0.7rem;
+  color: #5f6d8c;
+}
