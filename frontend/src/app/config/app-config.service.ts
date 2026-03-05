@@ -4,8 +4,18 @@ export interface AppConfig {
   apiBaseUrl: string;
 }
 
+declare const API_BASE_URL: string | undefined;
+
+const resolvedApiBaseUrl = (
+  (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : undefined) ??
+  (globalThis as { API_BASE_URL?: string }).API_BASE_URL ??
+  'http://localhost:8080'
+)
+  .trim()
+  .replace(/\/$/, '');
+
 const DEFAULT_CONFIG: AppConfig = {
-  apiBaseUrl: 'http://localhost:8080'
+  apiBaseUrl: resolvedApiBaseUrl
 };
 
 @Injectable({ providedIn: 'root' })
