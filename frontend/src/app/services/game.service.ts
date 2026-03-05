@@ -260,9 +260,9 @@ export class GameService {
   }
 
   buyStickerChance(stickerId: string): StickerRollResult | null {
-    const session = this.state();
+    const session = this.ensureProfileSession();
     const sticker = this.stickersState().find((entry) => entry.id === stickerId);
-    if (!session || !sticker) {
+    if (!sticker) {
       return null;
     }
 
@@ -342,9 +342,9 @@ export class GameService {
   }
 
   sellSticker(stickerId: string): { salePrice: number; remainingCount: number; remainingCoins: number } | null {
-    const session = this.state();
+    const session = this.ensureProfileSession();
     const sticker = this.stickersState().find((entry) => entry.id === stickerId);
-    if (!session || !sticker) {
+    if (!sticker) {
       return null;
     }
 
@@ -383,6 +383,34 @@ export class GameService {
     this.state.set(null);
     sessionStorage.removeItem(STORAGE_KEY);
     sessionStorage.removeItem(LEGACY_STORAGE_KEY);
+  }
+  private ensureProfileSession(): GameSessionState {
+    const existing = this.state();
+    if (existing) {
+      return existing;
+    }
+
+    const profile = this.currentProfile();
+    const fallbackState: GameSessionState = {
+      playerName: 'Learner',
+      roundSize: 0,
+      questionIds: [],
+      currentQuestion: 0,
+      score: profile.points,
+      streak: 0,
+      bestStreak: 0,
+      answers: [],
+      unlockedCollectibleIds: profile.unlockedCollectibleIds,
+      stickerInventory: profile.stickerInventory,
+      coins: profile.coins,
+      sessionsPlayed: profile.sessionsPlayed,
+      startedAt: new Date().toISOString(),
+      completedAt: new Date().toISOString()
+    };
+
+    this.state.set(fallbackState);
+    this.persistState();
+    return fallbackState;
   }
 
   private currentProfile(): {

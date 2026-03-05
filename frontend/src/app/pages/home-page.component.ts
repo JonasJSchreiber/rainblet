@@ -1,18 +1,14 @@
 import { Component, computed, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { GameService } from '../services/game.service';
 
 @Component({
   standalone: true,
-  imports: [FormsModule],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent {
-  protected playerName = 'Learner';
-
   readonly game = inject(GameService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
@@ -25,7 +21,7 @@ export class HomePageComponent {
       return;
     }
 
-    this.game.startGame(this.playerName);
+    this.game.startGame('Learner');
     this.router.navigateByUrl('/play');
   }
 
@@ -35,6 +31,5 @@ export class HomePageComponent {
 
   reset(): void {
     this.game.resetProgress();
-    this.playerName = 'Learner';
   }
 }

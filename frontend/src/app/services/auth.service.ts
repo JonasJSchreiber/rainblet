@@ -3,12 +3,18 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AppConfigService } from '../config/app-config.service';
 import { GameService } from './game.service';
+import { CookieService } from './cookie.service';
+
+const AUTH_TOKEN_KEY = 'auth_token';
+const AUTH_TOKEN_COOKIE_DAYS = 14;
 
 interface AuthUser {
   id: string;
   email: string;
   name: string;
   pictureUrl?: string;
+  picture?: string;
+  avatarUrl?: string;
 }
 
 interface AuthResponse {
@@ -17,6 +23,8 @@ interface AuthResponse {
   email: string;
   name: string;
   pictureUrl?: string;
+  picture?: string;
+  avatarUrl?: string;
 }
 
 interface AuthMessagePayload {
@@ -26,6 +34,8 @@ interface AuthMessagePayload {
   email?: string;
   name?: string;
   pictureUrl?: string;
+  picture?: string;
+  avatarUrl?: string;
   provider?: string;
 }
 
@@ -36,6 +46,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly appConfig = inject(AppConfigService);
   private readonly game = inject(GameService);
+  private readonly cookie = inject(CookieService);
   private readonly tokenState = signal<string | null>(null);
   private readonly userState = signal<AuthUser | null>(null);
 
@@ -99,7 +110,7 @@ export class AuthService {
         id: payload.id ?? '',
         email: payload.email ?? '',
         name: payload.name ?? '',
-        pictureUrl: payload.pictureUrl ?? ''
+        pictureUrl: payload.pictureUrl ?? payload.picture ?? payload.avatarUrl ?? ''
       },
       payload.provider === 'google'
     );
@@ -110,7 +121,7 @@ export class AuthService {
     const tokenFromCallback = params.get('token');
     const nameFromCallback = params.get('name');
     const emailFromCallback = params.get('email');
-    const pictureFromCallback = params.get('picture');
+    const pictureFromCallback = params.get('picture') ?? params.get('pictureUrl') ?? params.get('avatarUrl');
     const providerFromCallback = params.get('provider') ?? '';
 
     if (tokenFromCallback) {
@@ -145,6 +156,8 @@ export class AuthService {
       params.delete('name');
       params.delete('email');
       params.delete('picture');
+      params.delete('pictureUrl');
+      params.delete('avatarUrl');
       params.delete('provider');
       const nextQuery = params.toString();
       const nextUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ''}${window.location.hash}`;
@@ -152,10 +165,9 @@ export class AuthService {
       return;
     }
 
-    const savedToken = sessionStorage.getItem('auth_token');
+    const savedToken = sessionStorage.getItem(AUTH_TOKEN_KEY) ?? this.cookie.get(AUTH_TOKEN_KEY);
     if (savedToken) {
-      this.tokenState.set(savedToken);
-      this.game.refreshReferenceData();
+      this.setSession(savedToken);
       this.fetchCurrentUser(false);
     }
   }
@@ -163,7 +175,7 @@ export class AuthService {
   private fetchCurrentUser(triggerSsoUpsert: boolean): void {
     this.http.get<AuthUser>(`${this.getApiBase()}/api/auth/me`).subscribe({
       next: (user) => {
-        this.userState.set(user);
+        this.userState.set(this.normalizeUser(user));
         this.game.refreshReferenceData();
         if (triggerSsoUpsert) {
           this.upsertUserFromSso();
@@ -182,7 +194,7 @@ export class AuthService {
       id: response.id,
       email: response.email,
       name: response.name,
-      pictureUrl: response.pictureUrl ?? ''
+      pictureUrl: this.resolvePictureUrl(response)
     });
 
     if (triggerSsoUpsert) {
@@ -202,14 +214,16 @@ export class AuthService {
 
   private setSession(token: string): void {
     this.tokenState.set(token);
-    sessionStorage.setItem('auth_token', token);
+    sessionStorage.setItem(AUTH_TOKEN_KEY, token);
+    this.cookie.set(AUTH_TOKEN_KEY, token, { days: AUTH_TOKEN_COOKIE_DAYS, path: '/', sameSite: 'Lax' });
     this.game.refreshReferenceData();
   }
 
   private clearSession(): void {
     this.tokenState.set(null);
     this.userState.set(null);
-    sessionStorage.removeItem('auth_token');
+    sessionStorage.removeItem(AUTH_TOKEN_KEY);
+    this.cookie.remove(AUTH_TOKEN_KEY);
     this.game.refreshReferenceData();
   }
 
@@ -236,5 +250,25 @@ export class AuthService {
     }
 
     return error;
+  }
+
+  private normalizeUser(user: AuthUser): AuthUser {
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      pictureUrl: this.resolvePictureUrl(user)
+    };
+  }
+
+  private resolvePictureUrl(source: { pictureUrl?: string; picture?: string; avatarUrl?: string }): string {
+    const candidates = [source.pictureUrl, source.picture, source.avatarUrl];
+    for (const candidate of candidates) {
+      if (typeof candidate === 'string' && candidate.trim().length > 0) {
+        return candidate.trim();
+      }
+    }
+
+    return '';
   }
 }

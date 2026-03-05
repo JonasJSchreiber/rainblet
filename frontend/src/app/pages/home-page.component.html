@@ -7,9 +7,6 @@
     <div><strong>Sticker Avatars:</strong> {{ game.ownedStickerCount() }}</div>
   </div>
 
-  <label for="name">Player name</label>
-  <input id="name" type="text" maxlength="24" [(ngModel)]="playerName" placeholder="Type your name" />
-
   <div class="actions">
     <button [disabled]="!canPlay()" (click)="startGame()">Start Quiz</button>
     <button class="secondary" (click)="goStore()">Go to Store</button>

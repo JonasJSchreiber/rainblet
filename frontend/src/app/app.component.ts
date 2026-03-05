@@ -1,5 +1,5 @@
 import { FormsModule } from '@angular/forms';
-import { Component, ElementRef, HostListener, computed, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, computed, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { GameService } from './services/game.service';
@@ -23,7 +23,9 @@ export class AppComponent {
   readonly isAuthenticated = this.auth.isAuthenticated;
   readonly authName = computed(() => this.auth.user()?.name || 'User');
   readonly authEmail = computed(() => this.auth.user()?.email || this.authName());
-  readonly authPicture = computed(() => this.auth.user()?.pictureUrl || '');
+  private readonly authPictureSource = computed(() => this.auth.user()?.pictureUrl || '');
+  readonly profileImageErrored = signal(false);
+  readonly authPicture = computed(() => (this.profileImageErrored() ? '' : this.authPictureSource()));
   readonly authInitials = computed(() => {
     const source = this.auth.user()?.name || this.auth.user()?.email || 'U';
     const first = source.trim().charAt(0);
@@ -35,6 +37,21 @@ export class AppComponent {
   readonly loginPassword = signal('');
   readonly loginError = signal('');
   readonly isLoginSubmitting = signal(false);
+
+  constructor() {
+    effect(() => {
+      this.authPictureSource();
+      this.profileImageErrored.set(false);
+    });
+
+    effect(() => {
+      const loggedIn = this.isAuthenticated();
+      const loginModalOpen = this.isLoginModalOpen();
+      if (loggedIn && loginModalOpen) {
+        this.closeLoginModal();
+      }
+    });
+  }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -95,6 +112,10 @@ export class AppComponent {
     this.isProfileMenuOpen.update((open) => !open);
   }
 
+  onProfileImageError(): void {
+    this.profileImageErrored.set(true);
+  }
+
   logout(): void {
     this.isProfileMenuOpen.set(false);
     this.auth.logout();
@@ -111,3 +132,6 @@ export class AppComponent {
     return fallback;
   }
 }
+
+
+

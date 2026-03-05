@@ -44,11 +44,13 @@
 
         @if (offer(sticker); as currentOffer) {
           <button [disabled]="!canAfford(sticker)" (click)="openPreview(sticker)">
-            Try: {{ currentOffer.cost }} {{ currentOffer.currency }} Â· {{ percent(currentOffer.successRate) }}
+            Try: {{ currentOffer.cost }} {{ currentOffer.currency }} · {{ percent(currentOffer.successRate) }}
           </button>
-          <button class="sell" [disabled]="ownedCount(sticker) === 0" (click)="sellSticker(sticker)">
-            Sell: {{ salePrice(sticker) }} coins
-          </button>
+          @if (ownedCount(sticker) > 0) {
+            <button class="sell" (click)="sellSticker(sticker)">
+              Sell: {{ salePrice(sticker) }} coins
+            </button>
+          }
         }
       </article>
     }
@@ -68,9 +70,11 @@
           <button class="confirm" [disabled]="!canAfford(sticker)" (click)="confirmRoll(sticker)">
             Roll for {{ sticker.name }}
           </button>
-          <button class="confirm sell" [disabled]="ownedCount(sticker) === 0" (click)="sellSticker(sticker)">
-            Sell 1 copy for {{ salePrice(sticker) }} coins
-          </button>
+          @if (ownedCount(sticker) > 0) {
+            <button class="confirm sell" (click)="sellSticker(sticker)">
+              Sell 1 copy for {{ salePrice(sticker) }} coins
+            </button>
+          }
         }
       </article>
     </div>

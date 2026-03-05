@@ -11,7 +11,7 @@
         <div class="profile-menu" [class.open]="isProfileMenuOpen()">
           <button class="profile-trigger" type="button" (click)="toggleProfileMenu()" [attr.aria-expanded]="isProfileMenuOpen()">
             @if (authPicture()) {
-              <img class="profile-avatar" [src]="authPicture()" alt="User avatar" />
+              <img class="profile-avatar" [src]="authPicture()" alt="User avatar" referrerpolicy="no-referrer" (error)="onProfileImageError()" />
             } @else {
               <span class="profile-avatar fallback">{{ authInitials() }}</span>
             }
@@ -41,14 +41,9 @@
   <main>
     <router-outlet />
   </main>
-
-  <footer>
-    <span>Player: {{ playerName() }}</span>
-    <span>Stickers: {{ ownedStickers() }}</span>
-  </footer>
 </div>
 
-@if (isLoginModalOpen()) {
+@if (isLoginModalOpen() && !isAuthenticated()) {
   <div class="modal-backdrop" (click)="closeLoginModal()">
     <article class="auth-modal" (click)="$event.stopPropagation()">
       <button class="close" type="button" (click)="closeLoginModal()">x</button>
@@ -81,3 +76,6 @@
     </article>
   </div>
 }
+
+
+
