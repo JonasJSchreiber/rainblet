@@ -1,6 +1,6 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { RARITY_DISPLAY_ORDER, StickerAvatar } from '../models/game.models';
+import { RARITY_DISPLAY_ORDER, StickerAvatar, StickerRollResult } from '../models/game.models';
 import { GameService } from '../services/game.service';
 
 @Component({
@@ -11,9 +11,9 @@ import { GameService } from '../services/game.service';
 })
 export class StorePageComponent {
   readonly game = inject(GameService);
-  readonly lastResult = signal<ReturnType<GameService['buyStickerChance']>>(null);
-  readonly lastSale = signal<ReturnType<GameService['sellSticker']>>(null);
-  readonly inventory = computed(() => this.game.gameState()?.stickerInventory ?? {});
+  readonly lastResult = signal<StickerRollResult | null>(null);
+  readonly lastSale = signal<{ salePrice: number; remainingCount: number; remainingCoins: number } | null>(null);
+  readonly inventory = computed(() => this.game.stickerInventory());
   readonly selectedSticker = signal<StickerAvatar | null>(null);
 
   readonly sortedStoreStickers = computed(() => {
@@ -40,9 +40,11 @@ export class StorePageComponent {
   }
 
   confirmRoll(sticker: StickerAvatar): void {
-    this.lastResult.set(this.game.buyStickerChance(sticker.id));
-    this.lastSale.set(null);
-    this.closePreview();
+    this.game.buyStickerChance(sticker.id).subscribe((result) => {
+      this.lastResult.set(result);
+      this.lastSale.set(null);
+      this.closePreview();
+    });
   }
 
   salePrice(sticker: StickerAvatar): number {
@@ -50,8 +52,10 @@ export class StorePageComponent {
   }
 
   sellSticker(sticker: StickerAvatar): void {
-    this.lastSale.set(this.game.sellSticker(sticker.id));
-    this.lastResult.set(null);
+    this.game.sellSticker(sticker.id).subscribe((sale) => {
+      this.lastSale.set(sale);
+      this.lastResult.set(null);
+    });
   }
 
   offer(sticker: StickerAvatar) {

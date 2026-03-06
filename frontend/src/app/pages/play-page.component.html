@@ -26,7 +26,7 @@
       <div class="options">
         @for (option of shuffledOptions(); track option.originalIndex) {
           <button
-            [disabled]="resultReady()"
+            [disabled]="resultReady() || isSubmitting()"
             [class.correct]="resultReady() && option.originalIndex === lastCorrectIndex()"
             [class.incorrect]="resultReady() && option.originalIndex === selectedOption() && !lastWasCorrect()"
             (click)="selectAnswer(option.originalIndex)">
@@ -54,3 +54,4 @@
     </section>
   }
 }
+

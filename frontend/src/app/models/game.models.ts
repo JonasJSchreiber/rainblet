@@ -2,7 +2,6 @@ export interface Question {
   id: string;
   prompt: string;
   options: string[];
-  correctIndex: number;
   topic: string;
 }
 
@@ -67,3 +66,4 @@ export interface GameSessionState {
   startedAt: string;
   completedAt: string | null;
 }
+

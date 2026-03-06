@@ -27,4 +27,5 @@ databaseChangeLog:
       file: db/changelog/db.changelog-013-remove-history-timeline-which-questions.yaml
   - include:
       file: db/changelog/db.changelog-014-user-activity.yaml
-
+  - include:
+      file: db/changelog/db.changelog-015-user-stickers.yaml

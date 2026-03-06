@@ -1,5 +1,8 @@
 package com.rainblet.backend.controller;
 
+import com.rainblet.backend.dto.QuestionPromptResponse;
+import com.rainblet.backend.dto.QuestionValidationRequest;
+import com.rainblet.backend.dto.QuestionValidationResponse;
 import com.rainblet.backend.entity.Question;
 import com.rainblet.backend.repository.QuestionRepository;
 import jakarta.validation.Valid;
@@ -27,14 +30,35 @@ public class QuestionController {
     }
 
     @GetMapping
-    public List<Question> list() {
-        return questionRepository.findAll();
+    public List<QuestionPromptResponse> list() {
+        return questionRepository.findAll().stream().map(this::toPromptResponse).toList();
     }
 
     @GetMapping("/{id}")
     public Question getById(@PathVariable String id) {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Question not found: " + id));
+    }
+
+    @PostMapping("/{id}/validate")
+    public QuestionValidationResponse validateAnswer(
+            @PathVariable String id,
+            @RequestBody(required = false) QuestionValidationRequest request
+    ) {
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Question not found: " + id));
+
+        if (request == null || request.getSelectedIndex() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "selectedIndex is required");
+        }
+
+        int selectedIndex = request.getSelectedIndex();
+        if (selectedIndex < 0 || selectedIndex >= question.getOptions().size()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "selectedIndex must be within options bounds");
+        }
+
+        int correctIndex = question.getCorrectIndex();
+        return new QuestionValidationResponse(selectedIndex == correctIndex, correctIndex);
     }
 
     @PostMapping
@@ -74,5 +98,14 @@ public class QuestionController {
         if (question.getCorrectIndex() >= question.getOptions().size()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "correctIndex must be within options bounds");
         }
+    }
+
+    private QuestionPromptResponse toPromptResponse(Question question) {
+        return new QuestionPromptResponse(
+                question.getId(),
+                question.getPrompt(),
+                question.getOptions(),
+                question.getTopic()
+        );
     }
 }

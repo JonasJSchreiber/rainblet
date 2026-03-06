@@ -12,7 +12,7 @@ import { GameService } from '../services/game.service';
 export class CollectionPageComponent {
   readonly game = inject(GameService);
 
-  readonly inventory = computed(() => this.game.gameState()?.stickerInventory ?? {});
+  readonly inventory = computed(() => this.game.stickerInventory());
   readonly selectedSticker = signal<StickerAvatar | null>(null);
   readonly sortedCollectionStickers = computed(() => {
     const rarityRank = new Map(RARITY_DISPLAY_ORDER.map((rarity, index) => [rarity, index]));
@@ -64,10 +64,11 @@ export class CollectionPageComponent {
   }
 
   sellSticker(sticker: StickerAvatar): void {
-    this.game.sellSticker(sticker.id);
-    if (this.stickerCount(sticker.id) <= 0) {
-      this.closeSticker();
-    }
+    this.game.sellSticker(sticker.id).subscribe(() => {
+      if (this.stickerCount(sticker.id) <= 0) {
+        this.closeSticker();
+      }
+    });
   }
 
   closeSticker(): void {

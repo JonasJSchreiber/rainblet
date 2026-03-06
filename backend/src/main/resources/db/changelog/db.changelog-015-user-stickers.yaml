@@ -1,0 +1,326 @@
+databaseChangeLog:
+  - changeSet:
+      id: 015-001-create-user-stickers
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: user_stickers
+      changes:
+        - createTable:
+            tableName: user_stickers
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user_stickers
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sticker_id
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sticker_count
+                  type: int
+                  defaultValueNumeric: 1
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_obtained_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_obtained_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 015-002-add-user-stickers-uk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_stickers
+          - not:
+              uniqueConstraintExists:
+                tableName: user_stickers
+                constraintName: uk_user_stickers_user_sticker
+      changes:
+        - addUniqueConstraint:
+            tableName: user_stickers
+            constraintName: uk_user_stickers_user_sticker
+            columnNames: user_id, sticker_id
+
+  - changeSet:
+      id: 015-003-add-user-stickers-user-fk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_stickers
+          - tableExists:
+              tableName: users
+          - not:
+              foreignKeyConstraintExists:
+                foreignKeyName: fk_user_stickers_user
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: user_stickers
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_user_stickers_user
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 015-004-add-user-stickers-sticker-fk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_stickers
+          - tableExists:
+              tableName: stickers
+          - not:
+              foreignKeyConstraintExists:
+                foreignKeyName: fk_user_stickers_sticker
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: user_stickers
+            baseColumnNames: sticker_id
+            referencedTableName: stickers
+            referencedColumnNames: id
+            constraintName: fk_user_stickers_sticker
+            onDelete: RESTRICT
+
+  - changeSet:
+      id: 015-005-add-user-stickers-user-idx
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_stickers
+          - not:
+              indexExists:
+                tableName: user_stickers
+                indexName: idx_user_stickers_user
+      changes:
+        - createIndex:
+            tableName: user_stickers
+            indexName: idx_user_stickers_user
+            columns:
+              - column:
+                  name: user_id
+
+  - changeSet:
+      id: 015-006-create-roll-user-sticker-procedure
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        dbms:
+          type: mysql
+      changes:
+        - sql:
+            splitStatements: false
+            stripComments: false
+            sql: |
+              DROP PROCEDURE IF EXISTS roll_user_sticker;
+
+  - changeSet:
+      id: 015-007-create-roll-user-sticker-procedure-body
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        dbms:
+          type: mysql
+      changes:
+        - sql:
+            splitStatements: false
+            stripComments: false
+            sql: |
+              CREATE PROCEDURE roll_user_sticker(
+                  IN p_user_id BIGINT,
+                  IN p_sticker_id VARCHAR(120),
+                  IN p_cost INT,
+                  IN p_currency VARCHAR(16),
+                  IN p_success_rate DECIMAL(8,6)
+              )
+              BEGIN
+                  DECLARE v_wallet_rows INT DEFAULT 0;
+                  DECLARE v_success TINYINT DEFAULT 0;
+                  DECLARE v_previous_count INT DEFAULT 0;
+                  DECLARE v_new_count INT DEFAULT 0;
+                  DECLARE v_remaining_coins INT DEFAULT 0;
+                  DECLARE v_remaining_points INT DEFAULT 0;
+
+                  INSERT INTO user_wallets (user_id, coins, points, created_at, updated_at)
+                  SELECT p_user_id, 0, 0, NOW(6), NOW(6)
+                  WHERE NOT EXISTS (
+                      SELECT 1 FROM user_wallets WHERE user_id = p_user_id
+                  );
+
+                  IF p_currency = 'coins' THEN
+                      UPDATE user_wallets
+                      SET coins = coins - p_cost, updated_at = NOW(6)
+                      WHERE user_id = p_user_id AND coins >= p_cost;
+                  ELSEIF p_currency = 'score' THEN
+                      UPDATE user_wallets
+                      SET points = points - p_cost, updated_at = NOW(6)
+                      WHERE user_id = p_user_id AND points >= p_cost;
+                  ELSE
+                      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Unsupported sticker roll currency';
+                  END IF;
+
+                  SET v_wallet_rows = ROW_COUNT();
+
+                  IF v_wallet_rows = 1 THEN
+                      SET v_success = IF(RAND() < p_success_rate, 1, 0);
+
+                      IF v_success = 1 THEN
+                          SELECT COALESCE((
+                              SELECT sticker_count
+                              FROM user_stickers
+                              WHERE user_id = p_user_id AND sticker_id = p_sticker_id
+                              LIMIT 1
+                          ), 0) INTO v_previous_count;
+
+                          INSERT INTO user_stickers (
+                              user_id,
+                              sticker_id,
+                              sticker_count,
+                              first_obtained_at,
+                              last_obtained_at
+                          ) VALUES (
+                              p_user_id,
+                              p_sticker_id,
+                              1,
+                              NOW(6),
+                              NOW(6)
+                          )
+                          ON DUPLICATE KEY UPDATE
+                              sticker_count = sticker_count + 1,
+                              last_obtained_at = VALUES(last_obtained_at);
+
+                          SELECT sticker_count
+                          INTO v_new_count
+                          FROM user_stickers
+                          WHERE user_id = p_user_id AND sticker_id = p_sticker_id
+                          LIMIT 1;
+                      END IF;
+                  END IF;
+
+                  SELECT coins, points
+                  INTO v_remaining_coins, v_remaining_points
+                  FROM user_wallets
+                  WHERE user_id = p_user_id
+                  LIMIT 1;
+
+                  SELECT
+                      (v_wallet_rows = 1) AS affordable,
+                      (v_success = 1) AS success,
+                      (v_success = 1 AND v_previous_count = 0) AS is_new,
+                      v_new_count AS owned_count,
+                      v_remaining_coins AS remaining_coins,
+                      v_remaining_points AS remaining_points;
+              END;
+
+  - changeSet:
+      id: 015-008-create-sell-user-sticker-procedure
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        dbms:
+          type: mysql
+      changes:
+        - sql:
+            splitStatements: false
+            stripComments: false
+            sql: |
+              DROP PROCEDURE IF EXISTS sell_user_sticker;
+
+  - changeSet:
+      id: 015-009-create-sell-user-sticker-procedure-body
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        dbms:
+          type: mysql
+      changes:
+        - sql:
+            splitStatements: false
+            stripComments: false
+            sql: |
+              CREATE PROCEDURE sell_user_sticker(
+                  IN p_user_id BIGINT,
+                  IN p_sticker_id VARCHAR(120),
+                  IN p_sale_price INT
+              )
+              BEGIN
+                  DECLARE v_sold TINYINT DEFAULT 0;
+                  DECLARE v_remaining_count INT DEFAULT 0;
+                  DECLARE v_remaining_coins INT DEFAULT 0;
+                  DECLARE v_remaining_points INT DEFAULT 0;
+
+                  INSERT INTO user_wallets (user_id, coins, points, created_at, updated_at)
+                  SELECT p_user_id, 0, 0, NOW(6), NOW(6)
+                  WHERE NOT EXISTS (
+                      SELECT 1 FROM user_wallets WHERE user_id = p_user_id
+                  );
+
+                  UPDATE user_stickers
+                  SET sticker_count = sticker_count - 1,
+                      last_obtained_at = NOW(6)
+                  WHERE user_id = p_user_id
+                    AND sticker_id = p_sticker_id
+                    AND sticker_count > 0;
+
+                  IF ROW_COUNT() = 1 THEN
+                      SET v_sold = 1;
+
+                      SELECT sticker_count
+                      INTO v_remaining_count
+                      FROM user_stickers
+                      WHERE user_id = p_user_id AND sticker_id = p_sticker_id
+                      LIMIT 1;
+
+                      IF v_remaining_count <= 0 THEN
+                          DELETE FROM user_stickers
+                          WHERE user_id = p_user_id AND sticker_id = p_sticker_id;
+                          SET v_remaining_count = 0;
+                      END IF;
+
+                      UPDATE user_wallets
+                      SET coins = coins + p_sale_price,
+                          updated_at = NOW(6)
+                      WHERE user_id = p_user_id;
+                  END IF;
+
+                  SELECT coins, points
+                  INTO v_remaining_coins, v_remaining_points
+                  FROM user_wallets
+                  WHERE user_id = p_user_id
+                  LIMIT 1;
+
+                  SELECT
+                      (v_sold = 1) AS sold,
+                      v_remaining_count AS remaining_count,
+                      v_remaining_coins AS remaining_coins,
+                      v_remaining_points AS remaining_points;
+              END;
+

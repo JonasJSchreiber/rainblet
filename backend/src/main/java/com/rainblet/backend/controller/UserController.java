@@ -1,6 +1,11 @@
 package com.rainblet.backend.controller;
 
 import com.rainblet.backend.dto.UserCollectiblesRequest;
+import com.rainblet.backend.dto.UserStickerRollRequest;
+import com.rainblet.backend.dto.UserStickerRollResponse;
+import com.rainblet.backend.dto.UserStickerSellRequest;
+import com.rainblet.backend.dto.UserStickerSellResponse;
+import com.rainblet.backend.dto.UserStickersResponse;
 import com.rainblet.backend.dto.UserUpsertRequest;
 import com.rainblet.backend.dto.UserWalletRequest;
 import com.rainblet.backend.dto.UserWalletResponse;
@@ -9,6 +14,7 @@ import com.rainblet.backend.entity.UserWallet;
 import com.rainblet.backend.repository.UserRepository;
 import com.rainblet.backend.service.UserCollectibleService;
 import com.rainblet.backend.service.UserService;
+import com.rainblet.backend.service.UserStickerService;
 import com.rainblet.backend.service.UserWalletService;
 import io.jsonwebtoken.Claims;
 import jakarta.validation.Valid;
@@ -35,17 +41,20 @@ public class UserController {
     private final UserService userService;
     private final UserCollectibleService userCollectibleService;
     private final UserWalletService userWalletService;
+    private final UserStickerService userStickerService;
 
     public UserController(
             UserRepository userRepository,
             UserService userService,
             UserCollectibleService userCollectibleService,
-            UserWalletService userWalletService
+            UserWalletService userWalletService,
+            UserStickerService userStickerService
     ) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.userCollectibleService = userCollectibleService;
         this.userWalletService = userWalletService;
+        this.userStickerService = userStickerService;
     }
 
     @GetMapping
@@ -113,6 +122,38 @@ public class UserController {
         List<String> collectibleIds = request == null ? List.of() : request.getCollectibleIds();
         List<String> persisted = userCollectibleService.replaceCollectibles(user.getId(), collectibleIds);
         return Map.of("collectibleIds", persisted);
+    }
+
+    @GetMapping("/me/stickers")
+    public UserStickersResponse getMyStickers(Authentication authentication) {
+        User user = userService.resolveAuthenticatedUser(authentication);
+        return new UserStickersResponse(userStickerService.getStickerInventory(user.getId()));
+    }
+
+    @PostMapping("/me/stickers/roll")
+    public UserStickerRollResponse rollMySticker(
+            Authentication authentication,
+            @RequestBody(required = false) UserStickerRollRequest request
+    ) {
+        if (request == null || request.getStickerId() == null || request.getStickerId().trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "stickerId is required");
+        }
+
+        User user = userService.resolveAuthenticatedUser(authentication);
+        return userStickerService.rollSticker(user.getId(), request.getStickerId());
+    }
+
+    @PostMapping("/me/stickers/sell")
+    public UserStickerSellResponse sellMySticker(
+            Authentication authentication,
+            @RequestBody(required = false) UserStickerSellRequest request
+    ) {
+        if (request == null || request.getStickerId() == null || request.getStickerId().trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "stickerId is required");
+        }
+
+        User user = userService.resolveAuthenticatedUser(authentication);
+        return userStickerService.sellSticker(user.getId(), request.getStickerId());
     }
 
     @GetMapping("/me/wallet")

@@ -26,6 +26,7 @@ export class PlayPageComponent {
   });
 
   protected readonly resultReady = signal(false);
+  protected readonly isSubmitting = signal(false);
   protected readonly selectedOption = signal<number | null>(null);
   protected readonly lastWasCorrect = signal(false);
   protected readonly lastCorrectIndex = signal<number | null>(null);
@@ -65,20 +66,28 @@ export class PlayPageComponent {
   }
 
   selectAnswer(index: number): void {
-    if (this.resultReady()) {
+    if (this.resultReady() || this.isSubmitting()) {
       return;
     }
 
-    const result = this.game.submitAnswer(index);
-    this.selectedOption.set(index);
-    this.lastWasCorrect.set(result.isCorrect);
-    this.lastCorrectIndex.set(result.correctIndex);
-    this.lastCoinsAwarded.set(result.coinsAwarded);
-    this.resultReady.set(true);
+    this.isSubmitting.set(true);
+    this.game.submitAnswer(index).subscribe((result) => {
+      this.isSubmitting.set(false);
+      if (!result) {
+        return;
+      }
+
+      this.selectedOption.set(index);
+      this.lastWasCorrect.set(result.isCorrect);
+      this.lastCorrectIndex.set(result.correctIndex);
+      this.lastCoinsAwarded.set(result.coinsAwarded);
+      this.resultReady.set(true);
+    });
   }
 
   next(): void {
     this.resultReady.set(false);
+    this.isSubmitting.set(false);
     this.selectedOption.set(null);
     this.lastCorrectIndex.set(null);
     this.game.advanceQuestion();
@@ -90,6 +99,7 @@ export class PlayPageComponent {
 
   playAgain(): void {
     this.resultReady.set(false);
+    this.isSubmitting.set(false);
     this.selectedOption.set(null);
     this.lastCorrectIndex.set(null);
     this.lastWasCorrect.set(false);
