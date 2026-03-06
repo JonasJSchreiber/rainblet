@@ -10,7 +10,6 @@
   <div class="actions">
     <button [disabled]="!canPlay()" (click)="startGame()">Start Quiz</button>
     <button class="secondary" (click)="goStore()">Go to Store</button>
-    <button class="danger" (click)="reset()">Reset Session Data</button>
   </div>
 
   @if (!isAuthenticated()) {

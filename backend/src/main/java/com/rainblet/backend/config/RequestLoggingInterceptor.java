@@ -2,6 +2,7 @@ package com.rainblet.backend.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Collections;
@@ -13,7 +14,10 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
@@ -34,15 +38,28 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         request.setAttribute(START_TIME_ATTRIBUTE, System.nanoTime());
+        String principalEmail = resolvePrincipalEmail();
 
-        log.info(
-                "{} {}: {} {}, headers: {}",
-                GREEN_CIRCLE,
-                request.getMethod(),
-                request.getRequestURI(),
-                request.getQueryString() == null ? "" : request.getQueryString(),
-                headersToJson(request)
-        );
+        if (principalEmail != null) {
+            log.info(
+                    "{} {}: {} {}, headers: {}, principalEmail: {}",
+                    GREEN_CIRCLE,
+                    request.getMethod(),
+                    request.getRequestURI(),
+                    request.getQueryString() == null ? "" : request.getQueryString(),
+                    headersToJson(request),
+                    principalEmail
+            );
+        } else {
+            log.info(
+                    "{} {}: {} {}, headers: {}",
+                    GREEN_CIRCLE,
+                    request.getMethod(),
+                    request.getRequestURI(),
+                    request.getQueryString() == null ? "" : request.getQueryString(),
+                    headersToJson(request)
+            );
+        }
 
         return true;
     }
@@ -112,6 +129,39 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
             return "***";
         }
         return headerValue;
+    }
+
+    @Nullable
+    private String resolvePrincipalEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+
+        Object details = authentication.getDetails();
+        if (details instanceof Claims claims) {
+            Object emailClaim = claims.get("email");
+            if (emailClaim != null) {
+                String email = String.valueOf(emailClaim).trim();
+                if (StringUtils.hasText(email)) {
+                    return email;
+                }
+            }
+        }
+
+        Object principal = authentication.getPrincipal();
+        if (principal != null) {
+            String principalValue = String.valueOf(principal).trim();
+            if (StringUtils.hasText(principalValue) && !"anonymousUser".equalsIgnoreCase(principalValue)) {
+                return principalValue;
+            }
+        }
+
+        String name = authentication.getName();
+        if (StringUtils.hasText(name) && !"anonymousUser".equalsIgnoreCase(name.trim())) {
+            return name.trim();
+        }
+        return null;
     }
 
     private long durationMillis(HttpServletRequest request) {

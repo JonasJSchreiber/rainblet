@@ -62,11 +62,6 @@ button:disabled {
   background: linear-gradient(120deg, #16b45d, #42d695);
 }
 
-.danger {
-  background: #f2f4fb;
-  color: #29467f;
-}
-
 .note {
   display: block;
   margin-top: 0.7rem;

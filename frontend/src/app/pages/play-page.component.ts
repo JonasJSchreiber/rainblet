@@ -11,8 +11,10 @@ export class PlayPageComponent {
   private readonly game = inject(GameService);
   private readonly router = inject(Router);
 
+  readonly gameState = this.game.gameState;
   readonly question = this.game.currentQuestion;
   readonly progress = this.game.progressText;
+  readonly isRoundComplete = this.game.isRoundComplete;
   readonly shuffledOptions = computed(() => {
     const currentQuestion = this.question();
     if (!currentQuestion) {
@@ -30,14 +32,23 @@ export class PlayPageComponent {
   protected readonly lastCoinsAwarded = signal(0);
   private readonly hasRequestedRefresh = signal(false);
 
-  readonly nextLabel = computed(() => (this.game.isRoundComplete() ? 'Back to Home' : 'Next Question'));
+  readonly correctAnswers = computed(() => this.gameState()?.answers.filter((answer) => answer.isCorrect).length ?? 0);
+  readonly totalQuestions = computed(() => this.gameState()?.roundSize ?? 0);
+  readonly correctPercentage = computed(() => {
+    const total = this.totalQuestions();
+    if (total <= 0) {
+      return 0;
+    }
+
+    return Math.round((this.correctAnswers() / total) * 100);
+  });
 
   constructor() {
     effect(() => {
-      const hasActiveGame = this.game.hasActiveGame();
+      const session = this.gameState();
       const ready = this.game.hasReferenceData();
 
-      if (!hasActiveGame && !ready && !this.hasRequestedRefresh()) {
+      if (!session && !ready && !this.hasRequestedRefresh()) {
         untracked(() => {
           this.hasRequestedRefresh.set(true);
           this.game.refreshReferenceData();
@@ -45,7 +56,7 @@ export class PlayPageComponent {
         return;
       }
 
-      if (!hasActiveGame && ready) {
+      if (!session && ready) {
         untracked(() => {
           this.game.startGame('Learner');
         });
@@ -70,13 +81,20 @@ export class PlayPageComponent {
     this.resultReady.set(false);
     this.selectedOption.set(null);
     this.lastCorrectIndex.set(null);
-
-    if (this.game.isRoundComplete()) {
-      this.router.navigateByUrl('/');
-      return;
-    }
-
     this.game.advanceQuestion();
+  }
+
+  backToHome(): void {
+    this.router.navigateByUrl('/');
+  }
+
+  playAgain(): void {
+    this.resultReady.set(false);
+    this.selectedOption.set(null);
+    this.lastCorrectIndex.set(null);
+    this.lastWasCorrect.set(false);
+    this.lastCoinsAwarded.set(0);
+    this.game.startGame('Learner');
   }
 
   private shuffle<T>(items: T[]): T[] {
@@ -89,4 +107,3 @@ export class PlayPageComponent {
     return shuffled;
   }
 }
-

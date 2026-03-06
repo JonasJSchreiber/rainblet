@@ -1,39 +1,56 @@
-@if (question(); as q) {
-  <section class="card play">
+@if (isRoundComplete()) {
+  <section class="card">
     <header>
-      <h2>Question {{ progress() }}</h2>
-      <p>Topic: {{ q.topic }}</p>
+      <h2>Quiz Summary</h2>
+      <p>You completed all {{ totalQuestions() }} questions.</p>
     </header>
 
-    <h3>{{ q.prompt }}</h3>
+    <h3>{{ correctAnswers() }} / {{ totalQuestions() }} correct</h3>
+    <p><strong>{{ correctPercentage() }}%</strong> accuracy</p>
 
-    <div class="options">
-      @for (option of shuffledOptions(); track option.originalIndex) {
-        <button
-          [disabled]="resultReady()"
-          [class.correct]="resultReady() && option.originalIndex === lastCorrectIndex()"
-          [class.incorrect]="resultReady() && option.originalIndex === selectedOption() && !lastWasCorrect()"
-          (click)="selectAnswer(option.originalIndex)">
-          {{ option.label }}
-        </button>
-      }
+    <div class="summary-actions">
+      <button class="next" (click)="playAgain()">Play Again</button>
+      <button class="next secondary" (click)="backToHome()">Back to Home</button>
     </div>
-
-    @if (resultReady()) {
-      <p class="feedback" [class.bad]="!lastWasCorrect()">
-        @if (lastWasCorrect()) {
-          Correct! +10 score and +{{ lastCoinsAwarded() }} coins
-        } @else {
-          Not this time. Keep going.
-        }
-      </p>
-
-      <button class="next" (click)="next()">{{ nextLabel() }}</button>
-    }
   </section>
 } @else {
-  <section class="card">
-    <h2>Preparing quiz...</h2>
-    <p>Loading questions and starting your round automatically.</p>
-  </section>
+  @if (question(); as q) {
+    <section class="card play">
+      <header>
+        <h2>Question {{ progress() }}</h2>
+        <p>Topic: {{ q.topic }}</p>
+      </header>
+
+      <h3>{{ q.prompt }}</h3>
+
+      <div class="options">
+        @for (option of shuffledOptions(); track option.originalIndex) {
+          <button
+            [disabled]="resultReady()"
+            [class.correct]="resultReady() && option.originalIndex === lastCorrectIndex()"
+            [class.incorrect]="resultReady() && option.originalIndex === selectedOption() && !lastWasCorrect()"
+            (click)="selectAnswer(option.originalIndex)">
+            {{ option.label }}
+          </button>
+        }
+      </div>
+
+      @if (resultReady()) {
+        <p class="feedback" [class.bad]="!lastWasCorrect()">
+          @if (lastWasCorrect()) {
+            Correct! +10 score and +{{ lastCoinsAwarded() }} coins
+          } @else {
+            Not this time. Keep going.
+          }
+        </p>
+
+        <button class="next" (click)="next()">Next Question</button>
+      }
+    </section>
+  } @else {
+    <section class="card">
+      <h2>Preparing quiz...</h2>
+      <p>Loading questions and starting your round automatically.</p>
+    </section>
+  }
 }

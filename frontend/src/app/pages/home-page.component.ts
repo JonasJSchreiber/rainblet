@@ -28,8 +28,4 @@ export class HomePageComponent {
   goStore(): void {
     this.router.navigateByUrl('/store');
   }
-
-  reset(): void {
-    this.game.resetProgress();
-  }
 }
