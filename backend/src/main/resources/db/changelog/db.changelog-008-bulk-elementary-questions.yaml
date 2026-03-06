@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 008-001-load-elementary-questions
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: questions
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM questions WHERE id LIKE 'math-%-0001'
+      changes:
+        - loadData:
+            file: db/changelog/data/elementary-questions.csv
+            tableName: questions
+            encoding: UTF-8
+            separator: ","
+            quotchar: '"'
+
+  - changeSet:
+      id: 008-002-load-elementary-question-options
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: question_options
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM question_options WHERE question_id LIKE 'math-%-0001'
+      changes:
+        - loadData:
+            file: db/changelog/data/elementary-question-options.csv
+            tableName: question_options
+            encoding: UTF-8
+            separator: ","
+            quotchar: '"'

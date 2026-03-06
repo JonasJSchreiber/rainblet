@@ -13,6 +13,15 @@ export class PlayPageComponent {
 
   readonly question = this.game.currentQuestion;
   readonly progress = this.game.progressText;
+  readonly shuffledOptions = computed(() => {
+    const currentQuestion = this.question();
+    if (!currentQuestion) {
+      return [];
+    }
+
+    const options = currentQuestion.options.map((label, originalIndex) => ({ label, originalIndex }));
+    return this.shuffle(options);
+  });
 
   protected readonly resultReady = signal(false);
   protected readonly selectedOption = signal<number | null>(null);
@@ -21,7 +30,7 @@ export class PlayPageComponent {
   protected readonly lastCoinsAwarded = signal(0);
   private readonly hasRequestedRefresh = signal(false);
 
-  readonly nextLabel = computed(() => (this.game.isRoundComplete() ? 'See Results' : 'Next Question'));
+  readonly nextLabel = computed(() => (this.game.isRoundComplete() ? 'Back to Home' : 'Next Question'));
 
   constructor() {
     effect(() => {
@@ -63,10 +72,21 @@ export class PlayPageComponent {
     this.lastCorrectIndex.set(null);
 
     if (this.game.isRoundComplete()) {
-      this.router.navigateByUrl('/results');
+      this.router.navigateByUrl('/');
       return;
     }
 
     this.game.advanceQuestion();
   }
+
+  private shuffle<T>(items: T[]): T[] {
+    const shuffled = [...items];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled;
+  }
 }
+

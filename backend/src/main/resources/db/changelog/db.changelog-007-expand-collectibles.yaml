@@ -1,0 +1,60 @@
+﻿databaseChangeLog:
+  - changeSet:
+      id: 007-001-expand-collectibles
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        tableExists:
+          tableName: collectibles
+      changes:
+        - sql:
+            splitStatements: true
+            stripComments: true
+            sql: |
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'score-40', '📘 Blue Ribbon', 'Strong start: you reached 40 points in one round.', 'common', 'Score at least 40 points in one round.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'score-40');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'streak-5', '🔥 Fire Trail', 'You kept focus with a 5-answer streak.', 'rare', 'Reach a 5-answer streak.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'streak-5');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'streak-8', '🌈 Rainbow Streak', 'A perfect 8-answer streak in a standard round.', 'epic', 'Reach an 8-answer streak.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'streak-8');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'score-80', '🏆 Golden Cloud Cup', 'Top-tier quiz run with 80 or more points.', 'rare', 'Score at least 80 points in one round.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'score-80');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'coins-50', '🪙 Coin Pouch', 'You saved up 50 coins.', 'common', 'Reach 50 coins.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'coins-50');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'coins-150', '💰 Treasure Satchel', 'Big saver milestone: 150 coins.', 'rare', 'Reach 150 coins.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'coins-150');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'sessions-10', '🗓️ Study Buddy Badge', 'You completed 10 sessions.', 'rare', 'Finish 10 sessions.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'sessions-10');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'sessions-25', '🎓 Rain Scholar Medal', 'A long-term learner: 25 sessions completed.', 'epic', 'Finish 25 sessions.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'sessions-25');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'first-sticker', '✨ Sticker Spark', 'You won your first sticker avatar.', 'common', 'Own at least 1 sticker.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'first-sticker');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'sticker-set-5', '🧩 Sticker Squad', 'You collected 5 different sticker avatars.', 'rare', 'Own 5 different stickers.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'sticker-set-5');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'sticker-copies-20', '📚 Sticker Stack', 'Your collection reached 20 total sticker copies.', 'epic', 'Own 20 total sticker copies.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'sticker-copies-20');
+
+              INSERT INTO collectibles (id, name, description, rarity, unlock_rule)
+              SELECT 'bounce-back', '🌤️ Bounce Back', 'You missed one but still got 3 or more right in the same round.', 'common', 'Get at least 3 correct answers in a round with at least 1 wrong answer.'
+              WHERE NOT EXISTS (SELECT 1 FROM collectibles WHERE id = 'bounce-back');

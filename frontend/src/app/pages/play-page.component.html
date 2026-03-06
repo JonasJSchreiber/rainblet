@@ -8,13 +8,13 @@
     <h3>{{ q.prompt }}</h3>
 
     <div class="options">
-      @for (option of q.options; track $index) {
+      @for (option of shuffledOptions(); track option.originalIndex) {
         <button
           [disabled]="resultReady()"
-          [class.correct]="resultReady() && $index === lastCorrectIndex()"
-          [class.incorrect]="resultReady() && $index === selectedOption() && !lastWasCorrect()"
-          (click)="selectAnswer($index)">
-          {{ option }}
+          [class.correct]="resultReady() && option.originalIndex === lastCorrectIndex()"
+          [class.incorrect]="resultReady() && option.originalIndex === selectedOption() && !lastWasCorrect()"
+          (click)="selectAnswer(option.originalIndex)">
+          {{ option.label }}
         </button>
       }
     </div>

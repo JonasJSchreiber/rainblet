@@ -1,0 +1,19 @@
+﻿databaseChangeLog:
+  - changeSet:
+      id: 009-001-load-emoji-collectibles-bulk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: collectibles
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM collectibles WHERE id LIKE 'emoji-%'
+      changes:
+        - loadData:
+            file: db/changelog/data/collectibles-emoji-bulk.csv
+            tableName: collectibles
+            encoding: UTF-8
+            separator: ","
+            quotchar: '"'

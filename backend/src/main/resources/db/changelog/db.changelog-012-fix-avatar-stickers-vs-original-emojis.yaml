@@ -1,0 +1,18 @@
+﻿databaseChangeLog:
+  - changeSet:
+      id: 012-001-replace-avatar-stickers-excluding-original-emojis
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        tableExists:
+          tableName: stickers
+      changes:
+        - delete:
+            tableName: stickers
+            where: id LIKE 'avatar-sticker-%'
+        - loadData:
+            file: db/changelog/data/avatar-stickers-unique-emoji-v2.csv
+            tableName: stickers
+            encoding: UTF-8
+            separator: ","
+            quotchar: '"'

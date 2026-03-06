@@ -14,6 +14,20 @@ export class CollectionPageComponent {
 
   readonly inventory = computed(() => this.game.gameState()?.stickerInventory ?? {});
   readonly selectedSticker = signal<StickerAvatar | null>(null);
+  readonly sortedCollectionStickers = computed(() => {
+    const rarityRank = new Map(RARITY_DISPLAY_ORDER.map((rarity, index) => [rarity, index]));
+
+    return [...this.game.allStickers()].sort((a, b) => {
+      const rankA = rarityRank.get(a.rarity) ?? Number.MAX_SAFE_INTEGER;
+      const rankB = rarityRank.get(b.rarity) ?? Number.MAX_SAFE_INTEGER;
+
+      if (rankA !== rankB) {
+        return rankA - rankB;
+      }
+
+      return a.name.localeCompare(b.name);
+    });
+  });
 
   readonly sortedCollectibles = computed(() => {
     const rarityRank = new Map(RARITY_DISPLAY_ORDER.map((rarity, index) => [rarity, index]));

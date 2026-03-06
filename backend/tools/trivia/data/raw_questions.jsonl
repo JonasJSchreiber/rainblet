@@ -1,0 +1,615 @@
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 12 + 19?","correctAnswer":"31","distractors":["30","33","40"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 13 + 20?","correctAnswer":"33","distractors":["32","35","42"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 14 + 7?","correctAnswer":"21","distractors":["20","23","30"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 15 + 8?","correctAnswer":"23","distractors":["22","25","32"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 16 + 9?","correctAnswer":"25","distractors":["24","27","34"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 17 + 10?","correctAnswer":"27","distractors":["26","29","36"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 18 + 11?","correctAnswer":"29","distractors":["28","31","38"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 19 + 12?","correctAnswer":"31","distractors":["30","33","40"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 20 + 13?","correctAnswer":"33","distractors":["32","35","42"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 21 + 14?","correctAnswer":"35","distractors":["34","37","44"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 22 + 15?","correctAnswer":"37","distractors":["36","39","46"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 23 + 16?","correctAnswer":"39","distractors":["38","41","48"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 24 + 17?","correctAnswer":"41","distractors":["40","43","50"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 25 + 18?","correctAnswer":"43","distractors":["42","45","52"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 26 + 19?","correctAnswer":"45","distractors":["44","47","54"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 27 + 20?","correctAnswer":"47","distractors":["46","49","56"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 28 + 7?","correctAnswer":"35","distractors":["34","37","44"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 29 + 8?","correctAnswer":"37","distractors":["36","39","46"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 30 + 9?","correctAnswer":"39","distractors":["38","41","48"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 31 + 10?","correctAnswer":"41","distractors":["40","43","50"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 32 + 11?","correctAnswer":"43","distractors":["42","45","52"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 33 + 12?","correctAnswer":"45","distractors":["44","47","54"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 34 + 13?","correctAnswer":"47","distractors":["46","49","56"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 35 + 14?","correctAnswer":"49","distractors":["48","51","58"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 36 + 15?","correctAnswer":"51","distractors":["50","53","60"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 37 + 16?","correctAnswer":"53","distractors":["52","55","62"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 38 + 17?","correctAnswer":"55","distractors":["54","57","64"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 39 + 18?","correctAnswer":"57","distractors":["56","59","66"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 40 + 19?","correctAnswer":"59","distractors":["58","61","68"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 41 + 20?","correctAnswer":"61","distractors":["60","63","70"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 42 + 7?","correctAnswer":"49","distractors":["48","51","58"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 43 + 8?","correctAnswer":"51","distractors":["50","53","60"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 44 + 9?","correctAnswer":"53","distractors":["52","55","62"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 45 + 10?","correctAnswer":"55","distractors":["54","57","64"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 46 + 11?","correctAnswer":"57","distractors":["56","59","66"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 47 + 12?","correctAnswer":"59","distractors":["58","61","68"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 48 + 13?","correctAnswer":"61","distractors":["60","63","70"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 49 + 14?","correctAnswer":"63","distractors":["62","65","72"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 50 + 15?","correctAnswer":"65","distractors":["64","67","74"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 51 + 16?","correctAnswer":"67","distractors":["66","69","76"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 52 + 17?","correctAnswer":"69","distractors":["68","71","78"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 53 + 18?","correctAnswer":"71","distractors":["70","73","80"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 54 + 19?","correctAnswer":"73","distractors":["72","75","82"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 55 + 20?","correctAnswer":"75","distractors":["74","77","84"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 56 + 7?","correctAnswer":"63","distractors":["62","65","72"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 57 + 8?","correctAnswer":"65","distractors":["64","67","74"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 58 + 9?","correctAnswer":"67","distractors":["66","69","76"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 59 + 10?","correctAnswer":"69","distractors":["68","71","78"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 60 + 11?","correctAnswer":"71","distractors":["70","73","80"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 61 + 12?","correctAnswer":"73","distractors":["72","75","82"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 62 + 13?","correctAnswer":"75","distractors":["74","77","84"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 63 + 14?","correctAnswer":"77","distractors":["76","79","86"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 64 + 15?","correctAnswer":"79","distractors":["78","81","88"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 65 + 16?","correctAnswer":"81","distractors":["80","83","90"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 66 + 17?","correctAnswer":"83","distractors":["82","85","92"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 67 + 18?","correctAnswer":"85","distractors":["84","87","94"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 68 + 19?","correctAnswer":"87","distractors":["86","89","96"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 69 + 20?","correctAnswer":"89","distractors":["88","91","98"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 70 + 7?","correctAnswer":"77","distractors":["76","79","86"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 71 + 8?","correctAnswer":"79","distractors":["78","81","88"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 72 + 9?","correctAnswer":"81","distractors":["80","83","90"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 73 + 10?","correctAnswer":"83","distractors":["82","85","92"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 74 + 11?","correctAnswer":"85","distractors":["84","87","94"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 75 + 12?","correctAnswer":"87","distractors":["86","89","96"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 76 + 13?","correctAnswer":"89","distractors":["88","91","98"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 77 + 14?","correctAnswer":"91","distractors":["90","93","100"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 78 + 15?","correctAnswer":"93","distractors":["92","95","102"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 79 + 16?","correctAnswer":"95","distractors":["94","97","104"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 30 - 13?","correctAnswer":"17","distractors":["15","18","25"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 31 - 14?","correctAnswer":"17","distractors":["15","18","25"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 32 - 15?","correctAnswer":"17","distractors":["15","18","25"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 33 - 5?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 34 - 6?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 35 - 7?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 36 - 8?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 37 - 9?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 38 - 10?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 39 - 11?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 40 - 12?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 41 - 13?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 42 - 14?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 43 - 15?","correctAnswer":"28","distractors":["26","29","36"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 44 - 5?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 45 - 6?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 46 - 7?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 47 - 8?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 48 - 9?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 49 - 10?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 50 - 11?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 51 - 12?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 52 - 13?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 53 - 14?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 54 - 15?","correctAnswer":"39","distractors":["37","40","47"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 55 - 5?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 56 - 6?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 57 - 7?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 58 - 8?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 59 - 9?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 60 - 10?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 61 - 11?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 62 - 12?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 63 - 13?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 64 - 14?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 65 - 15?","correctAnswer":"50","distractors":["48","51","58"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 66 - 5?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 67 - 6?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 68 - 7?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 69 - 8?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 70 - 9?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 71 - 10?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 72 - 11?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 73 - 12?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 74 - 13?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 75 - 14?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 76 - 15?","correctAnswer":"61","distractors":["59","62","69"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 77 - 5?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 78 - 6?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 79 - 7?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 80 - 8?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 81 - 9?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 82 - 10?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 83 - 11?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 84 - 12?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 85 - 13?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 86 - 14?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 87 - 15?","correctAnswer":"72","distractors":["70","73","80"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 88 - 5?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 89 - 6?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 90 - 7?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 91 - 8?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 92 - 9?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 93 - 10?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 94 - 11?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 95 - 12?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 96 - 13?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 97 - 14?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 98 - 15?","correctAnswer":"83","distractors":["81","84","91"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 99 - 5?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 100 - 6?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 101 - 7?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 102 - 8?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 103 - 9?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 104 - 10?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 105 - 11?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 106 - 12?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 107 - 13?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 108 - 14?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 109 - 15?","correctAnswer":"94","distractors":["92","95","102"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 110 - 5?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 111 - 6?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 112 - 7?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 113 - 8?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 114 - 9?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 115 - 10?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 116 - 11?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 117 - 12?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 118 - 13?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 119 - 14?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 120 - 15?","correctAnswer":"105","distractors":["103","106","113"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 121 - 5?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 122 - 6?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 123 - 7?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 124 - 8?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 125 - 9?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 126 - 10?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 127 - 11?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 128 - 12?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 129 - 13?","correctAnswer":"116","distractors":["114","117","124"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 3 x 4?","correctAnswer":"12","distractors":["9","16","18"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 3 x 5?","correctAnswer":"15","distractors":["12","20","21"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 3 x 6?","correctAnswer":"18","distractors":["15","24","24"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 3 x 7?","correctAnswer":"21","distractors":["18","28","27"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 3 x 8?","correctAnswer":"24","distractors":["21","32","30"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 3 x 9?","correctAnswer":"27","distractors":["24","36","33"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 3 x 10?","correctAnswer":"30","distractors":["27","40","36"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 3 x 11?","correctAnswer":"33","distractors":["30","44","39"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 4 x 4?","correctAnswer":"16","distractors":["12","20","22"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 4 x 5?","correctAnswer":"20","distractors":["16","25","26"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 4 x 6?","correctAnswer":"24","distractors":["20","30","30"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 4 x 7?","correctAnswer":"28","distractors":["24","35","34"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 4 x 8?","correctAnswer":"32","distractors":["28","40","38"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 4 x 9?","correctAnswer":"36","distractors":["32","45","42"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 4 x 10?","correctAnswer":"40","distractors":["36","50","46"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 4 x 11?","correctAnswer":"44","distractors":["40","55","50"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 5 x 4?","correctAnswer":"20","distractors":["15","24","26"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 5 x 5?","correctAnswer":"25","distractors":["20","30","31"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 5 x 6?","correctAnswer":"30","distractors":["25","36","36"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 5 x 7?","correctAnswer":"35","distractors":["30","42","41"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 5 x 8?","correctAnswer":"40","distractors":["35","48","46"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 5 x 9?","correctAnswer":"45","distractors":["40","54","51"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 5 x 10?","correctAnswer":"50","distractors":["45","60","56"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 5 x 11?","correctAnswer":"55","distractors":["50","66","61"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 6 x 4?","correctAnswer":"24","distractors":["18","28","30"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 6 x 5?","correctAnswer":"30","distractors":["24","35","36"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 6 x 6?","correctAnswer":"36","distractors":["30","42","42"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 6 x 7?","correctAnswer":"42","distractors":["36","49","48"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 6 x 8?","correctAnswer":"48","distractors":["42","56","54"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 6 x 9?","correctAnswer":"54","distractors":["48","63","60"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 6 x 10?","correctAnswer":"60","distractors":["54","70","66"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 6 x 11?","correctAnswer":"66","distractors":["60","77","72"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 7 x 4?","correctAnswer":"28","distractors":["21","32","34"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 7 x 5?","correctAnswer":"35","distractors":["28","40","41"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 7 x 6?","correctAnswer":"42","distractors":["35","48","48"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 7 x 7?","correctAnswer":"49","distractors":["42","56","55"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 7 x 8?","correctAnswer":"56","distractors":["49","64","62"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 7 x 9?","correctAnswer":"63","distractors":["56","72","69"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 7 x 10?","correctAnswer":"70","distractors":["63","80","76"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 7 x 11?","correctAnswer":"77","distractors":["70","88","83"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 8 x 4?","correctAnswer":"32","distractors":["24","36","38"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 8 x 5?","correctAnswer":"40","distractors":["32","45","46"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 8 x 6?","correctAnswer":"48","distractors":["40","54","54"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 8 x 7?","correctAnswer":"56","distractors":["48","63","62"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 8 x 8?","correctAnswer":"64","distractors":["56","72","70"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 8 x 9?","correctAnswer":"72","distractors":["64","81","78"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 8 x 10?","correctAnswer":"80","distractors":["72","90","86"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 8 x 11?","correctAnswer":"88","distractors":["80","99","94"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 9 x 4?","correctAnswer":"36","distractors":["27","40","42"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 9 x 5?","correctAnswer":"45","distractors":["36","50","51"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 9 x 6?","correctAnswer":"54","distractors":["45","60","60"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 9 x 7?","correctAnswer":"63","distractors":["54","70","69"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 9 x 8?","correctAnswer":"72","distractors":["63","80","78"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 9 x 9?","correctAnswer":"81","distractors":["72","90","87"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 9 x 10?","correctAnswer":"90","distractors":["81","100","96"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 9 x 11?","correctAnswer":"99","distractors":["90","110","105"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 10 x 4?","correctAnswer":"40","distractors":["30","44","46"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 10 x 5?","correctAnswer":"50","distractors":["40","55","56"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 10 x 6?","correctAnswer":"60","distractors":["50","66","66"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 10 x 7?","correctAnswer":"70","distractors":["60","77","76"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 10 x 8?","correctAnswer":"80","distractors":["70","88","86"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 10 x 9?","correctAnswer":"90","distractors":["80","99","96"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 10 x 10?","correctAnswer":"100","distractors":["90","110","106"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 10 x 11?","correctAnswer":"110","distractors":["100","121","116"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 11 x 4?","correctAnswer":"44","distractors":["33","48","50"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 11 x 5?","correctAnswer":"55","distractors":["44","60","61"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 11 x 6?","correctAnswer":"66","distractors":["55","72","72"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 11 x 7?","correctAnswer":"77","distractors":["66","84","83"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 11 x 8?","correctAnswer":"88","distractors":["77","96","94"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 11 x 9?","correctAnswer":"99","distractors":["88","108","105"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 11 x 10?","correctAnswer":"110","distractors":["99","120","116"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 11 x 11?","correctAnswer":"121","distractors":["110","132","127"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 12 x 4?","correctAnswer":"48","distractors":["36","52","54"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 12 x 5?","correctAnswer":"60","distractors":["48","65","66"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 12 x 6?","correctAnswer":"72","distractors":["60","78","78"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 12 x 7?","correctAnswer":"84","distractors":["72","91","90"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 12 x 8?","correctAnswer":"96","distractors":["84","104","102"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 12 x 9?","correctAnswer":"108","distractors":["96","117","114"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 12 x 10?","correctAnswer":"120","distractors":["108","130","126"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 12 x 11?","correctAnswer":"132","distractors":["120","143","138"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 13 x 4?","correctAnswer":"52","distractors":["39","56","58"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 13 x 5?","correctAnswer":"65","distractors":["52","70","71"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 13 x 6?","correctAnswer":"78","distractors":["65","84","84"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 13 x 7?","correctAnswer":"91","distractors":["78","98","97"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 13 x 8?","correctAnswer":"104","distractors":["91","112","110"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 13 x 9?","correctAnswer":"117","distractors":["104","126","123"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 13 x 10?","correctAnswer":"130","distractors":["117","140","136"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 13 x 11?","correctAnswer":"143","distractors":["130","154","149"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 14 x 4?","correctAnswer":"56","distractors":["42","60","62"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 14 x 5?","correctAnswer":"70","distractors":["56","75","76"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 14 x 6?","correctAnswer":"84","distractors":["70","90","90"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 14 x 7?","correctAnswer":"98","distractors":["84","105","104"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 14 x 8?","correctAnswer":"112","distractors":["98","120","118"]}
+{"source":"curated-core-v1","topic":"Math","prompt":"What is 14 x 9?","correctAnswer":"126","distractors":["112","135","132"]}
+{"source":"classroom-practice-v1","topic":"Math","prompt":"What is 14 x 10?","correctAnswer":"140","distractors":["126","150","146"]}
+{"source":"kid-quiz-archive-v1","topic":"Math","prompt":"What is 14 x 11?","correctAnswer":"154","distractors":["140","165","160"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"Which part of your body pumps blood?","correctAnswer":"Heart","distractors":["Lungs","Liver","Stomach"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Which body part helps you smell?","correctAnswer":"Nose","distractors":["Toes","Shoulder","Wrist"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Which plant part takes in water from soil?","correctAnswer":"Roots","distractors":["Leaves","Petals","Fruit"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What do plants need to make food?","correctAnswer":"Sunlight","distractors":["Plastic","Sand","Metal"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What weather often has thunder and lightning?","correctAnswer":"Thunderstorm","distractors":["Heat wave","Dry season","Calm day"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What gas do people need to breathe?","correctAnswer":"Oxygen","distractors":["Gold","Chlorine","Sand"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What season comes after spring?","correctAnswer":"Summer","distractors":["Winter","Autumn","Monsoon"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Which tool measures temperature outside?","correctAnswer":"Thermometer","distractors":["Ruler","Compass","Scale"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is rock at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is pencil at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is desk at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is spoon at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is book at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is coin at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is brick at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is ruler at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is eraser at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is helmet at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is chalk at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is plate at room temperature?","correctAnswer":"Solid","distractors":["Liquid","Gas","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is milk at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is juice at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is water at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is oil at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is soup at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is rain at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is paint at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is tea at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is lava at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is syrup at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is broth at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is ink at room temperature?","correctAnswer":"Liquid","distractors":["Solid","Gas","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is oxygen at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is steam at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is helium at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is air at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is carbon dioxide at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is water vapor at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is neon at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is nitrogen at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is argon at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What state of matter is hydrogen at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What state of matter is methane at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What state of matter is ozone at room temperature?","correctAnswer":"Gas","distractors":["Solid","Liquid","Plasma"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Which sense helps you notice bell ringing?","correctAnswer":"Ears","distractors":["Eyes","Nose","Tongue"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"Which sense helps you notice fresh bread smell?","correctAnswer":"Nose","distractors":["Eyes","Ears","Tongue"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Which sense helps you notice lemon flavor?","correctAnswer":"Tongue","distractors":["Eyes","Ears","Nose"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Which sense helps you notice sunset colors?","correctAnswer":"Eyes","distractors":["Ears","Nose","Tongue"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"Which sense helps you notice soft blanket?","correctAnswer":"Skin","distractors":["Eyes","Ears","Nose"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Which sense helps you notice bird song?","correctAnswer":"Ears","distractors":["Eyes","Nose","Tongue"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Which sense helps you notice flower scent?","correctAnswer":"Nose","distractors":["Eyes","Ears","Tongue"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"Which sense helps you notice ice cream taste?","correctAnswer":"Tongue","distractors":["Eyes","Ears","Nose"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Which sense helps you notice rainbow shape?","correctAnswer":"Eyes","distractors":["Ears","Nose","Tongue"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Which sense helps you notice warm mug?","correctAnswer":"Skin","distractors":["Eyes","Ears","Nose"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What number planet from the Sun is Mercury?","correctAnswer":"1","distractors":["2","4","4"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What number planet from the Sun is Venus?","correctAnswer":"2","distractors":["1","3","4"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What number planet from the Sun is Earth?","correctAnswer":"3","distractors":["2","4","4"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What number planet from the Sun is Mars?","correctAnswer":"4","distractors":["3","5","4"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What number planet from the Sun is Jupiter?","correctAnswer":"5","distractors":["4","6","4"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"What number planet from the Sun is Saturn?","correctAnswer":"6","distractors":["5","7","4"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"What number planet from the Sun is Uranus?","correctAnswer":"7","distractors":["6","8","4"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"What number planet from the Sun is Neptune?","correctAnswer":"8","distractors":["7","1","4"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Is sunlight renewable or nonrenewable energy?","correctAnswer":"Renewable","distractors":["Nonrenewable","Mechanical","Chemical"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"Is wind renewable or nonrenewable energy?","correctAnswer":"Renewable","distractors":["Nonrenewable","Mechanical","Chemical"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Is moving water renewable or nonrenewable energy?","correctAnswer":"Renewable","distractors":["Nonrenewable","Mechanical","Chemical"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Is coal renewable or nonrenewable energy?","correctAnswer":"Nonrenewable","distractors":["Renewable","Mechanical","Chemical"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"Is oil renewable or nonrenewable energy?","correctAnswer":"Nonrenewable","distractors":["Renewable","Mechanical","Chemical"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Is natural gas renewable or nonrenewable energy?","correctAnswer":"Nonrenewable","distractors":["Renewable","Mechanical","Chemical"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Is solar power renewable or nonrenewable energy?","correctAnswer":"Renewable","distractors":["Nonrenewable","Mechanical","Chemical"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"Is geothermal heat renewable or nonrenewable energy?","correctAnswer":"Renewable","distractors":["Nonrenewable","Mechanical","Chemical"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Is propane renewable or nonrenewable energy?","correctAnswer":"Nonrenewable","distractors":["Renewable","Mechanical","Chemical"]}
+{"source":"kid-quiz-archive-v1","topic":"Science","prompt":"Is gasoline renewable or nonrenewable energy?","correctAnswer":"Nonrenewable","distractors":["Renewable","Mechanical","Chemical"]}
+{"source":"curated-core-v1","topic":"Science","prompt":"Is hydroelectric power renewable or nonrenewable energy?","correctAnswer":"Renewable","distractors":["Nonrenewable","Mechanical","Chemical"]}
+{"source":"classroom-practice-v1","topic":"Science","prompt":"Is biomass renewable or nonrenewable energy?","correctAnswer":"Renewable","distractors":["Nonrenewable","Mechanical","Chemical"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of France?","correctAnswer":"Paris","distractors":["Tokyo","Ottawa","Brasilia"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Paris is the capital of which country?","correctAnswer":"France","distractors":["Japan","Canada","Brazil"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of Japan?","correctAnswer":"Tokyo","distractors":["Paris","Ottawa","Brasilia"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Tokyo is the capital of which country?","correctAnswer":"Japan","distractors":["France","Canada","Brazil"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Canada?","correctAnswer":"Ottawa","distractors":["Paris","Tokyo","Brasilia"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Ottawa is the capital of which country?","correctAnswer":"Canada","distractors":["France","Japan","Brazil"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of Brazil?","correctAnswer":"Brasilia","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Brasilia is the capital of which country?","correctAnswer":"Brazil","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of Australia?","correctAnswer":"Canberra","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Canberra is the capital of which country?","correctAnswer":"Australia","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of India?","correctAnswer":"New Delhi","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"New Delhi is the capital of which country?","correctAnswer":"India","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of Egypt?","correctAnswer":"Cairo","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Cairo is the capital of which country?","correctAnswer":"Egypt","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of Kenya?","correctAnswer":"Nairobi","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Nairobi is the capital of which country?","correctAnswer":"Kenya","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Mexico?","correctAnswer":"Mexico City","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Mexico City is the capital of which country?","correctAnswer":"Mexico","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of Spain?","correctAnswer":"Madrid","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Madrid is the capital of which country?","correctAnswer":"Spain","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of Italy?","correctAnswer":"Rome","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Rome is the capital of which country?","correctAnswer":"Italy","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Norway?","correctAnswer":"Oslo","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Oslo is the capital of which country?","correctAnswer":"Norway","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of Sweden?","correctAnswer":"Stockholm","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Stockholm is the capital of which country?","correctAnswer":"Sweden","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of Finland?","correctAnswer":"Helsinki","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Helsinki is the capital of which country?","correctAnswer":"Finland","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Greece?","correctAnswer":"Athens","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Athens is the capital of which country?","correctAnswer":"Greece","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of Argentina?","correctAnswer":"Buenos Aires","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Buenos Aires is the capital of which country?","correctAnswer":"Argentina","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of Chile?","correctAnswer":"Santiago","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Santiago is the capital of which country?","correctAnswer":"Chile","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Peru?","correctAnswer":"Lima","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Lima is the capital of which country?","correctAnswer":"Peru","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of South Korea?","correctAnswer":"Seoul","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Seoul is the capital of which country?","correctAnswer":"South Korea","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of Thailand?","correctAnswer":"Bangkok","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Bangkok is the capital of which country?","correctAnswer":"Thailand","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Turkey?","correctAnswer":"Ankara","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Ankara is the capital of which country?","correctAnswer":"Turkey","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of Nigeria?","correctAnswer":"Abuja","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Abuja is the capital of which country?","correctAnswer":"Nigeria","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of South Africa?","correctAnswer":"Pretoria","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Pretoria is the capital of which country?","correctAnswer":"South Africa","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Indonesia?","correctAnswer":"Jakarta","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Jakarta is the capital of which country?","correctAnswer":"Indonesia","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of Vietnam?","correctAnswer":"Hanoi","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Hanoi is the capital of which country?","correctAnswer":"Vietnam","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of New Zealand?","correctAnswer":"Wellington","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Wellington is the capital of which country?","correctAnswer":"New Zealand","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Portugal?","correctAnswer":"Lisbon","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Lisbon is the capital of which country?","correctAnswer":"Portugal","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is the capital of Poland?","correctAnswer":"Warsaw","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Warsaw is the capital of which country?","correctAnswer":"Poland","distractors":["France","Japan","Canada"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What is the capital of Ireland?","correctAnswer":"Dublin","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Dublin is the capital of which country?","correctAnswer":"Ireland","distractors":["France","Japan","Canada"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What is the capital of Morocco?","correctAnswer":"Rabat","distractors":["Paris","Tokyo","Ottawa"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"Rabat is the capital of which country?","correctAnswer":"Morocco","distractors":["France","Japan","Canada"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is India?","correctAnswer":"Asia","distractors":["Africa","Europe","South America"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Japan?","correctAnswer":"Asia","distractors":["Africa","Europe","South America"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Thailand?","correctAnswer":"Asia","distractors":["Africa","Europe","South America"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Vietnam?","correctAnswer":"Asia","distractors":["Africa","Europe","South America"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is South Korea?","correctAnswer":"Asia","distractors":["Africa","Europe","South America"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Mongolia?","correctAnswer":"Asia","distractors":["Africa","Europe","South America"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Kenya?","correctAnswer":"Africa","distractors":["Asia","Europe","South America"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Egypt?","correctAnswer":"Africa","distractors":["Asia","Europe","South America"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Morocco?","correctAnswer":"Africa","distractors":["Asia","Europe","South America"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Nigeria?","correctAnswer":"Africa","distractors":["Asia","Europe","South America"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Ghana?","correctAnswer":"Africa","distractors":["Asia","Europe","South America"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Ethiopia?","correctAnswer":"Africa","distractors":["Asia","Europe","South America"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is France?","correctAnswer":"Europe","distractors":["Asia","Africa","South America"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Spain?","correctAnswer":"Europe","distractors":["Asia","Africa","South America"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Italy?","correctAnswer":"Europe","distractors":["Asia","Africa","South America"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Germany?","correctAnswer":"Europe","distractors":["Asia","Africa","South America"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Poland?","correctAnswer":"Europe","distractors":["Asia","Africa","South America"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Greece?","correctAnswer":"Europe","distractors":["Asia","Africa","South America"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Brazil?","correctAnswer":"South America","distractors":["Asia","Africa","Europe"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Chile?","correctAnswer":"South America","distractors":["Asia","Africa","Europe"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Peru?","correctAnswer":"South America","distractors":["Asia","Africa","Europe"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Argentina?","correctAnswer":"South America","distractors":["Asia","Africa","Europe"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Colombia?","correctAnswer":"South America","distractors":["Asia","Africa","Europe"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Ecuador?","correctAnswer":"South America","distractors":["Asia","Africa","Europe"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Canada?","correctAnswer":"North America","distractors":["Asia","Africa","Europe"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Mexico?","correctAnswer":"North America","distractors":["Asia","Africa","Europe"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is United States?","correctAnswer":"North America","distractors":["Asia","Africa","Europe"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Guatemala?","correctAnswer":"North America","distractors":["Asia","Africa","Europe"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Panama?","correctAnswer":"North America","distractors":["Asia","Africa","Europe"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Cuba?","correctAnswer":"North America","distractors":["Asia","Africa","Europe"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Australia?","correctAnswer":"Oceania","distractors":["Asia","Africa","Europe"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is New Zealand?","correctAnswer":"Oceania","distractors":["Asia","Africa","Europe"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Fiji?","correctAnswer":"Oceania","distractors":["Asia","Africa","Europe"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"On which continent is Samoa?","correctAnswer":"Oceania","distractors":["Asia","Africa","Europe"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"On which continent is Tonga?","correctAnswer":"Oceania","distractors":["Asia","Africa","Europe"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"On which continent is Vanuatu?","correctAnswer":"Oceania","distractors":["Asia","Africa","Europe"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"If you move up on most maps, which direction are you going?","correctAnswer":"North","distractors":["South","East","West"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"If the sun rises, which direction is it?","correctAnswer":"East","distractors":["North","South","West"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"If the sun sets, which direction is it?","correctAnswer":"West","distractors":["North","South","East"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"Which ocean is the largest on Earth?","correctAnswer":"Pacific Ocean","distractors":["Atlantic Ocean","Indian Ocean","Arctic Ocean"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"Which continent is largest by land area?","correctAnswer":"Asia","distractors":["Africa","Europe","Australia"]}
+{"source":"classroom-practice-v1","topic":"Geography","prompt":"What do we call land completely surrounded by water?","correctAnswer":"Island","distractors":["Desert","Canyon","Plateau"]}
+{"source":"kid-quiz-archive-v1","topic":"Geography","prompt":"What is low land between hills or mountains called?","correctAnswer":"Valley","distractors":["Glacier","Volcano","Reef"]}
+{"source":"curated-core-v1","topic":"Geography","prompt":"What do we call a very high natural landform?","correctAnswer":"Mountain","distractors":["Valley","Beach","Harbor"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Who was the first U.S. president?","correctAnswer":"George Washington","distractors":["Abraham Lincoln","Martin Luther King Jr.","Susan B. Anthony"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Who led the U.S. during the Civil War?","correctAnswer":"Abraham Lincoln","distractors":["George Washington","Martin Luther King Jr.","Susan B. Anthony"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Who fought for civil rights with peaceful protest?","correctAnswer":"Martin Luther King Jr.","distractors":["George Washington","Abraham Lincoln","Susan B. Anthony"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Who worked for women's voting rights?","correctAnswer":"Susan B. Anthony","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Who helped enslaved people escape on the Underground Railroad?","correctAnswer":"Harriet Tubman","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"curated-core-v1","topic":"History","prompt":"Who refused to give up her bus seat in Montgomery?","correctAnswer":"Rosa Parks","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Who invented practical electric light bulbs?","correctAnswer":"Thomas Edison","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Who invented the telephone?","correctAnswer":"Alexander Graham Bell","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"curated-core-v1","topic":"History","prompt":"Who built and flew an early airplane?","correctAnswer":"Wright brothers","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Who was first person to walk on the Moon?","correctAnswer":"Neil Armstrong","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Who was a famous early woman pilot?","correctAnswer":"Amelia Earhart","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"curated-core-v1","topic":"History","prompt":"Who organized farm workers for better rights?","correctAnswer":"Cesar Chavez","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Who helped guide the Lewis and Clark expedition?","correctAnswer":"Sacagawea","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Who helped write and sign key U.S. founding documents?","correctAnswer":"Benjamin Franklin","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"curated-core-v1","topic":"History","prompt":"Who sailed from Europe to the Americas in 1492?","correctAnswer":"Christopher Columbus","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Who made major discoveries in radioactivity?","correctAnswer":"Marie Curie","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Who helped create modern nursing?","correctAnswer":"Florence Nightingale","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"curated-core-v1","topic":"History","prompt":"Who helped fly one of the first successful airplanes?","correctAnswer":"Orville Wright","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Who was the first woman in space?","correctAnswer":"Valentina Tereshkova","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Who helped build the U.S. financial system?","correctAnswer":"Alexander Hamilton","distractors":["George Washington","Abraham Lincoln","Martin Luther King Jr."]}
+{"source":"curated-core-v1","topic":"History","prompt":"In what year did this happen: U.S. Declaration of Independence was signed?","correctAnswer":"1776","distractors":["1766","1781","1796"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Which event happened in 1776?","correctAnswer":"U.S. Declaration of Independence was signed","distractors":["American Civil War began","American Civil War ended","World War I began"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"In what year did this happen: American Civil War began?","correctAnswer":"1861","distractors":["1851","1866","1881"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Which event happened in 1861?","correctAnswer":"American Civil War began","distractors":["U.S. Declaration of Independence was signed","American Civil War ended","World War I began"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"In what year did this happen: American Civil War ended?","correctAnswer":"1865","distractors":["1855","1870","1885"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Which event happened in 1865?","correctAnswer":"American Civil War ended","distractors":["U.S. Declaration of Independence was signed","American Civil War began","World War I began"]}
+{"source":"curated-core-v1","topic":"History","prompt":"In what year did this happen: World War I began?","correctAnswer":"1914","distractors":["1904","1919","1934"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Which event happened in 1914?","correctAnswer":"World War I began","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"In what year did this happen: World War II ended?","correctAnswer":"1945","distractors":["1935","1950","1965"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Which event happened in 1945?","correctAnswer":"World War II ended","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"In what year did this happen: Apollo 11 landed on the Moon?","correctAnswer":"1969","distractors":["1959","1974","1989"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Which event happened in 1969?","correctAnswer":"Apollo 11 landed on the Moon","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"curated-core-v1","topic":"History","prompt":"In what year did this happen: Berlin Wall fell?","correctAnswer":"1989","distractors":["1979","1994","2009"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Which event happened in 1989?","correctAnswer":"Berlin Wall fell","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"In what year did this happen: First iPhone was released?","correctAnswer":"2007","distractors":["1997","2012","2027"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Which event happened in 2007?","correctAnswer":"First iPhone was released","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"In what year did this happen: Montgomery bus boycott started?","correctAnswer":"1955","distractors":["1945","1960","1975"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Which event happened in 1955?","correctAnswer":"Montgomery bus boycott started","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"curated-core-v1","topic":"History","prompt":"In what year did this happen: Printing press was invented by Gutenberg?","correctAnswer":"1440","distractors":["1430","1445","1460"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Which event happened in 1440?","correctAnswer":"Printing press was invented by Gutenberg","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"In what year did this happen: U.S. Constitution was signed?","correctAnswer":"1787","distractors":["1777","1792","1807"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Which event happened in 1787?","correctAnswer":"U.S. Constitution was signed","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"In what year did this happen: Louisiana Purchase?","correctAnswer":"1803","distractors":["1793","1808","1823"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Which event happened in 1803?","correctAnswer":"Louisiana Purchase","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"curated-core-v1","topic":"History","prompt":"In what year did this happen: Wright brothers first flight?","correctAnswer":"1903","distractors":["1893","1908","1923"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Which event happened in 1903?","correctAnswer":"Wright brothers first flight","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"In what year did this happen: Civil Rights Act was signed?","correctAnswer":"1964","distractors":["1954","1969","1984"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Which event happened in 1964?","correctAnswer":"Civil Rights Act was signed","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"In what year did this happen: United Nations was founded?","correctAnswer":"1945","distractors":["1935","1950","1965"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Which event happened in 1945?","correctAnswer":"United Nations was founded","distractors":["U.S. Declaration of Independence was signed","American Civil War began","American Civil War ended"]}
+{"source":"curated-core-v1","topic":"History","prompt":"pyramids at Giza is most closely linked to which place or civilization?","correctAnswer":"Ancient Egypt","distractors":["China","Ancient Greece","Ancient Rome"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Great Wall is most closely linked to which place or civilization?","correctAnswer":"China","distractors":["Ancient Egypt","Ancient Greece","Ancient Rome"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Parthenon is most closely linked to which place or civilization?","correctAnswer":"Ancient Greece","distractors":["Ancient Egypt","China","Ancient Rome"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Colosseum is most closely linked to which place or civilization?","correctAnswer":"Ancient Rome","distractors":["Ancient Egypt","China","Ancient Greece"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Machu Picchu is most closely linked to which place or civilization?","correctAnswer":"Inca civilization","distractors":["Ancient Egypt","China","Ancient Greece"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Taj Mahal is most closely linked to which place or civilization?","correctAnswer":"India","distractors":["Ancient Egypt","China","Ancient Greece"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Stonehenge is most closely linked to which place or civilization?","correctAnswer":"United Kingdom","distractors":["Ancient Egypt","China","Ancient Greece"]}
+{"source":"classroom-practice-v1","topic":"History","prompt":"Moai statues is most closely linked to which place or civilization?","correctAnswer":"Easter Island","distractors":["Ancient Egypt","China","Ancient Greece"]}
+{"source":"kid-quiz-archive-v1","topic":"History","prompt":"Chichen Itza is most closely linked to which place or civilization?","correctAnswer":"Maya civilization","distractors":["Ancient Egypt","China","Ancient Greece"]}
+{"source":"curated-core-v1","topic":"History","prompt":"Petra is most closely linked to which place or civilization?","correctAnswer":"Nabataean civilization","distractors":["Ancient Egypt","China","Ancient Greece"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'rapid'?","correctAnswer":"quick","distractors":["large","big","tiny"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'large'?","correctAnswer":"big","distractors":["rapid","quick","tiny"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'tiny'?","correctAnswer":"small","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'happy'?","correctAnswer":"glad","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'angry'?","correctAnswer":"mad","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'begin'?","correctAnswer":"start","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'finish'?","correctAnswer":"end","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'silent'?","correctAnswer":"quiet","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'smart'?","correctAnswer":"clever","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'brave'?","correctAnswer":"courageous","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'simple'?","correctAnswer":"easy","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'hard'?","correctAnswer":"difficult","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'clean'?","correctAnswer":"neat","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'messy'?","correctAnswer":"untidy","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'gift'?","correctAnswer":"present","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'job'?","correctAnswer":"task","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'look'?","correctAnswer":"see","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'shout'?","correctAnswer":"yell","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'fast'?","correctAnswer":"speedy","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'chilly'?","correctAnswer":"cold","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'warm'?","correctAnswer":"hot","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'truthful'?","correctAnswer":"honest","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'repair'?","correctAnswer":"fix","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'choose'?","correctAnswer":"select","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'empty'?","correctAnswer":"vacant","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'story'?","correctAnswer":"tale","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'jump'?","correctAnswer":"leap","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'eat'?","correctAnswer":"consume","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'sleepy'?","correctAnswer":"tired","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'friend'?","correctAnswer":"pal","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'funny'?","correctAnswer":"silly","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'stone'?","correctAnswer":"rock","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'glow'?","correctAnswer":"shine","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'tiny'?","correctAnswer":"mini","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'begin'?","correctAnswer":"commence","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'calm'?","correctAnswer":"peaceful","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'safe'?","correctAnswer":"secure","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'small'?","correctAnswer":"little","distractors":["rapid","quick","large"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'glad'?","correctAnswer":"pleased","distractors":["rapid","quick","large"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which word means about the same as 'smart'?","correctAnswer":"bright","distractors":["rapid","quick","large"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'hot'?","correctAnswer":"cold","distractors":["late","down","out"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'early'?","correctAnswer":"late","distractors":["cold","down","out"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'up'?","correctAnswer":"down","distractors":["cold","late","out"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'in'?","correctAnswer":"out","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'empty'?","correctAnswer":"full","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'day'?","correctAnswer":"night","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'open'?","correctAnswer":"closed","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'young'?","correctAnswer":"old","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'strong'?","correctAnswer":"weak","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'near'?","correctAnswer":"far","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'high'?","correctAnswer":"low","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'laugh'?","correctAnswer":"cry","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'win'?","correctAnswer":"lose","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'arrive'?","correctAnswer":"leave","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'add'?","correctAnswer":"subtract","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'accept'?","correctAnswer":"refuse","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'alive'?","correctAnswer":"dead","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'soft'?","correctAnswer":"hard","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'safe'?","correctAnswer":"dangerous","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'smooth'?","correctAnswer":"rough","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'front'?","correctAnswer":"back","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'thick'?","correctAnswer":"thin","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'sweet'?","correctAnswer":"sour","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'light'?","correctAnswer":"dark","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'clean'?","correctAnswer":"dirty","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'happy'?","correctAnswer":"sad","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'quiet'?","correctAnswer":"loud","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the opposite of 'inside'?","correctAnswer":"outside","distractors":["cold","late","down"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the opposite of 'build'?","correctAnswer":"destroy","distractors":["cold","late","down"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the opposite of 'borrow'?","correctAnswer":"lend","distractors":["cold","late","down"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which contraction matches 'do not'?","correctAnswer":"don't","distractors":["can't","won't","it's"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which contraction matches 'can not'?","correctAnswer":"can't","distractors":["don't","won't","it's"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which contraction matches 'will not'?","correctAnswer":"won't","distractors":["don't","can't","it's"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which contraction matches 'it is'?","correctAnswer":"it's","distractors":["don't","can't","won't"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which contraction matches 'I am'?","correctAnswer":"I'm","distractors":["don't","can't","won't"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which contraction matches 'they are'?","correctAnswer":"they're","distractors":["don't","can't","won't"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which contraction matches 'we are'?","correctAnswer":"we're","distractors":["don't","can't","won't"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which contraction matches 'she is'?","correctAnswer":"she's","distractors":["don't","can't","won't"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which contraction matches 'he is'?","correctAnswer":"he's","distractors":["don't","can't","won't"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which contraction matches 'you are'?","correctAnswer":"you're","distractors":["don't","can't","won't"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which contraction matches 'did not'?","correctAnswer":"didn't","distractors":["don't","can't","won't"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which contraction matches 'has not'?","correctAnswer":"hasn't","distractors":["don't","can't","won't"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which contraction matches 'have not'?","correctAnswer":"haven't","distractors":["don't","can't","won't"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which contraction matches 'is not'?","correctAnswer":"isn't","distractors":["don't","can't","won't"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which contraction matches 'are not'?","correctAnswer":"aren't","distractors":["don't","can't","won't"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Which contraction matches 'could not'?","correctAnswer":"couldn't","distractors":["don't","can't","won't"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which contraction matches 'should not'?","correctAnswer":"shouldn't","distractors":["don't","can't","won't"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which contraction matches 'would not'?","correctAnswer":"wouldn't","distractors":["don't","can't","won't"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'baby'?","correctAnswer":"babies","distractors":["cities","buses","boxes"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'city'?","correctAnswer":"cities","distractors":["babies","buses","boxes"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'bus'?","correctAnswer":"buses","distractors":["babies","cities","boxes"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'box'?","correctAnswer":"boxes","distractors":["babies","cities","buses"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'fox'?","correctAnswer":"foxes","distractors":["babies","cities","buses"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'leaf'?","correctAnswer":"leaves","distractors":["babies","cities","buses"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'wolf'?","correctAnswer":"wolves","distractors":["babies","cities","buses"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'story'?","correctAnswer":"stories","distractors":["babies","cities","buses"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'brush'?","correctAnswer":"brushes","distractors":["babies","cities","buses"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'dish'?","correctAnswer":"dishes","distractors":["babies","cities","buses"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'church'?","correctAnswer":"churches","distractors":["babies","cities","buses"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'hero'?","correctAnswer":"heroes","distractors":["babies","cities","buses"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'potato'?","correctAnswer":"potatoes","distractors":["babies","cities","buses"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'knife'?","correctAnswer":"knives","distractors":["babies","cities","buses"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'shelf'?","correctAnswer":"shelves","distractors":["babies","cities","buses"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'family'?","correctAnswer":"families","distractors":["babies","cities","buses"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'lady'?","correctAnswer":"ladies","distractors":["babies","cities","buses"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'tomato'?","correctAnswer":"tomatoes","distractors":["babies","cities","buses"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'life'?","correctAnswer":"lives","distractors":["babies","cities","buses"]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"What is the correct plural form of 'thief'?","correctAnswer":"thieves","distractors":["babies","cities","buses"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which sentence uses a comma correctly?","correctAnswer":"After lunch, we went outside.","distractors":["After lunch we, went outside.","After, lunch we went outside.","After lunch we went outside"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Choose the sentence with the correct apostrophe.","correctAnswer":"It's time to read.","distractors":["Its time to read.","Its' time to read.","It,s time to read."]}
+{"source":"curated-core-v1","topic":"Language/Reading","prompt":"Which sentence ends with the right punctuation?","correctAnswer":"Where is my backpack?","distractors":["Where is my backpack.","Where is my backpack!","Where is my backpack,"]}
+{"source":"classroom-practice-v1","topic":"Language/Reading","prompt":"Which sentence is punctuated correctly?","correctAnswer":"Let's eat, Grandma.","distractors":["Lets eat, Grandma.","Let's eat Grandma.","Lets eat Grandma"]}
+{"source":"kid-quiz-archive-v1","topic":"Language/Reading","prompt":"Pick the sentence with correct capitalization.","correctAnswer":"My friend lives in Texas.","distractors":["my friend lives in Texas.","My friend lives in texas.","my Friend lives in Texas."]}

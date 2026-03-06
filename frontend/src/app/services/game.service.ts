@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+﻿import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { AppConfigService } from '../config/app-config.service';
 import {
@@ -449,22 +449,61 @@ export class GameService {
     const unlocked = new Set(session.unlockedCollectibleIds);
 
     const correctCount = session.answers.filter((answer) => answer.isCorrect).length;
+    const wrongCount = session.answers.length - correctCount;
     const perfectRun = session.answers.length === session.roundSize && correctCount === session.roundSize;
+    const ownedStickerKinds = Object.keys(session.stickerInventory).length;
+    const totalStickerCopies = Object.values(session.stickerInventory).reduce((sum, value) => sum + value, 0);
 
     if (correctCount >= 1) {
       unlocked.add('spark-seed');
     }
+    if (correctCount >= 3 && wrongCount >= 1) {
+      unlocked.add('bounce-back');
+    }
     if (session.bestStreak >= 3) {
       unlocked.add('streak-3');
     }
+    if (session.bestStreak >= 5) {
+      unlocked.add('streak-5');
+    }
+    if (session.bestStreak >= 8) {
+      unlocked.add('streak-8');
+    }
+    if (session.score >= 40) {
+      unlocked.add('score-40');
+    }
     if (session.score >= 60) {
       unlocked.add('score-60');
+    }
+    if (session.score >= 80) {
+      unlocked.add('score-80');
+    }
+    if (session.coins >= 50) {
+      unlocked.add('coins-50');
+    }
+    if (session.coins >= 150) {
+      unlocked.add('coins-150');
+    }
+    if (ownedStickerKinds >= 1) {
+      unlocked.add('first-sticker');
+    }
+    if (ownedStickerKinds >= 5) {
+      unlocked.add('sticker-set-5');
+    }
+    if (totalStickerCopies >= 20) {
+      unlocked.add('sticker-copies-20');
     }
     if (perfectRun) {
       unlocked.add('perfect-run');
     }
     if (session.sessionsPlayed >= 5) {
       unlocked.add('veteran-5');
+    }
+    if (session.sessionsPlayed >= 10) {
+      unlocked.add('sessions-10');
+    }
+    if (session.sessionsPlayed >= 25) {
+      unlocked.add('sessions-25');
     }
 
     return {
@@ -647,3 +686,4 @@ export class GameService {
     return items;
   }
 }
+

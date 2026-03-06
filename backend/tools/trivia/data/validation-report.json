@@ -1,0 +1,16 @@
+{
+  "raw_rows": 615,
+  "normalized_rows": 615,
+  "valid_rows_before_balancing": 581,
+  "duplicates_removed": 17,
+  "final_rows": 500,
+  "expected_rows": 500,
+  "topic_counts": {
+    "Math": 100,
+    "Science": 100,
+    "Geography": 100,
+    "History": 100,
+    "Language/Reading": 100
+  },
+  "question_options_rows": 2000
+}

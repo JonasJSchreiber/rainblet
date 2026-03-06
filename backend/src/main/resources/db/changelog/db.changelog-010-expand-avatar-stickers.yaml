@@ -1,0 +1,19 @@
+﻿databaseChangeLog:
+  - changeSet:
+      id: 010-001-load-avatar-stickers-bulk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: stickers
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM stickers WHERE id = 'avatar-sticker-001'
+      changes:
+        - loadData:
+            file: db/changelog/data/avatar-stickers-bulk.csv
+            tableName: stickers
+            encoding: UTF-8
+            separator: ","
+            quotchar: '"'

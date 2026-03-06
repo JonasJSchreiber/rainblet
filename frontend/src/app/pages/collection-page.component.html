@@ -18,7 +18,7 @@
 
   <h3>Avatar Stickers</h3>
   <div class="grid stickers">
-    @for (sticker of game.allStickers(); track sticker.id) {
+    @for (sticker of sortedCollectionStickers(); track sticker.id) {
       <article
         [class.locked]="stickerCount(sticker.id) === 0"
         [class.clickable]="stickerCount(sticker.id) > 0"
