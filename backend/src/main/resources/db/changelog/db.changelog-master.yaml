@@ -25,4 +25,6 @@ databaseChangeLog:
       file: db/changelog/db.changelog-012-fix-avatar-stickers-vs-original-emojis.yaml
   - include:
       file: db/changelog/db.changelog-013-remove-history-timeline-which-questions.yaml
+  - include:
+      file: db/changelog/db.changelog-014-user-activity.yaml
 

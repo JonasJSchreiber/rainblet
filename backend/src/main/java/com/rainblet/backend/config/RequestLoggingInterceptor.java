@@ -2,6 +2,7 @@ package com.rainblet.backend.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rainblet.backend.service.UserActivityService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,6 +35,12 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
             "proxy-authorization",
             "x-api-key"
     );
+
+    private final UserActivityService userActivityService;
+
+    public RequestLoggingInterceptor(UserActivityService userActivityService) {
+        this.userActivityService = userActivityService;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -72,6 +79,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
             @Nullable Exception ex
     ) {
         long durationMs = durationMillis(request);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (ex != null) {
             log.error(
@@ -84,6 +92,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
                     ex.getClass().getSimpleName(),
                     ex
             );
+            userActivityService.record(request, authentication);
             return;
         }
 
@@ -95,6 +104,8 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
                 response.getStatus(),
                 durationMs
         );
+
+        userActivityService.record(request, authentication);
     }
 
     private String headersToJson(HttpServletRequest request) {
@@ -172,3 +183,4 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
         return -1L;
     }
 }
+

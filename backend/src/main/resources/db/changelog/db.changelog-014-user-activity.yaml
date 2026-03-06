@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: 014-create-user-activity
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: user_activity
+      changes:
+        - createTable:
+            tableName: user_activity
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user_activity
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_email
+                  type: varchar(320)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: resource_called
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: called_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 014-add-user-activity-user-id-idx
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_activity
+          - not:
+              indexExists:
+                tableName: user_activity
+                indexName: idx_user_activity_user_id
+      changes:
+        - createIndex:
+            tableName: user_activity
+            indexName: idx_user_activity_user_id
+            columns:
+              - column:
+                  name: user_id
+
+  - changeSet:
+      id: 014-add-user-activity-called-at-idx
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_activity
+          - not:
+              indexExists:
+                tableName: user_activity
+                indexName: idx_user_activity_called_at
+      changes:
+        - createIndex:
+            tableName: user_activity
+            indexName: idx_user_activity_called_at
+            columns:
+              - column:
+                  name: called_at
+
