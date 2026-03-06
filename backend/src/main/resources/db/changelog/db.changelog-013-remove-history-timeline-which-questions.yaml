@@ -12,9 +12,7 @@ databaseChangeLog:
       changes:
         - delete:
             tableName: question_options
-            where: question_id IN (
-              SELECT id FROM questions WHERE id LIKE 'history-history-timeline-%-which-%'
-            )
+            where: question_id IN (SELECT id FROM questions WHERE id LIKE 'history-history-timeline-%-which-%')
 
   - changeSet:
       id: 013-002-remove-history-timeline-which-questions
