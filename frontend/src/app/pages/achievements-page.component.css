@@ -1,0 +1,71 @@
+.achievements h2 {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0.3rem 0 0.7rem;
+  color: #43609d;
+  font-weight: 700;
+}
+
+.grid {
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.65rem;
+}
+
+article {
+  border: 1px solid #d7e4ff;
+  border-radius: 12px;
+  padding: 0.65rem;
+  background: #f9fbff;
+}
+
+article.locked {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+span {
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 999px;
+  font-weight: 900;
+}
+
+.common {
+  background: #e8f6ed;
+  color: #2c7645;
+}
+
+.rare {
+  background: #e4edff;
+  color: #3158a6;
+}
+
+.epic {
+  background: #ffe8d6;
+  color: #a45521;
+}
+
+.legendary {
+  background: #fff2be;
+  color: #7f5600;
+}
+
+.chroma {
+  background: #f1e6ff;
+  color: #6e2bb5;
+}
+
+p {
+  margin: 0.45rem 0;
+}

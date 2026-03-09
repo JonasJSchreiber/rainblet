@@ -1,6 +1,6 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { RARITY_DISPLAY_ORDER, StickerAvatar, StickerRollResult } from '../models/game.models';
+import { RARITY_DISPLAY_ORDER, Rarity, StickerAvatar, StickerRollResult } from '../models/game.models';
 import { GameService } from '../services/game.service';
 
 @Component({
@@ -14,7 +14,8 @@ export class StorePageComponent {
   readonly lastResult = signal<StickerRollResult | null>(null);
   readonly lastSale = signal<{ salePrice: number; remainingCount: number; remainingCoins: number } | null>(null);
   readonly inventory = computed(() => this.game.stickerInventory());
-  readonly selectedSticker = signal<StickerAvatar | null>(null);
+  readonly rarityOrder = RARITY_DISPLAY_ORDER;
+  readonly selectedPack = signal<Rarity | null>(null);
 
   readonly sortedStoreStickers = computed(() => {
     const rarityRank = new Map(RARITY_DISPLAY_ORDER.map((rarity, index) => [rarity, index]));
@@ -31,20 +32,40 @@ export class StorePageComponent {
     });
   });
 
-  openPreview(sticker: StickerAvatar): void {
-    this.selectedSticker.set(sticker);
+  openPackConfirm(rarity: Rarity): void {
+    if (!this.canBuyPack(rarity)) {
+      return;
+    }
+    this.selectedPack.set(rarity);
   }
 
-  closePreview(): void {
-    this.selectedSticker.set(null);
+  closePackConfirm(): void {
+    this.selectedPack.set(null);
   }
 
-  confirmRoll(sticker: StickerAvatar): void {
-    this.game.buyStickerChance(sticker.id).subscribe((result) => {
+  confirmPackPurchase(): void {
+    const rarity = this.selectedPack();
+    if (!rarity) {
+      return;
+    }
+
+    this.game.buyStickerPack(rarity).subscribe((result) => {
       this.lastResult.set(result);
       this.lastSale.set(null);
-      this.closePreview();
+      this.closePackConfirm();
     });
+  }
+
+  packCost(rarity: Rarity): number {
+    return this.game.getPackOffer(rarity).cost;
+  }
+
+  packCurrency(rarity: Rarity): string {
+    return this.game.getPackOffer(rarity).currency === 'coins' ? 'coins' : 'points';
+  }
+
+  canBuyPack(rarity: Rarity): boolean {
+    return this.game.canAffordPack(rarity);
   }
 
   salePrice(sticker: StickerAvatar): number {
@@ -58,19 +79,8 @@ export class StorePageComponent {
     });
   }
 
-  offer(sticker: StickerAvatar) {
-    return this.game.getOfferForSticker(sticker);
-  }
-
-  canAfford(sticker: StickerAvatar): boolean {
-    return this.game.canAffordOffer(this.offer(sticker));
-  }
-
-  percent(value: number): string {
-    return `${Math.round(value * 100)}%`;
-  }
-
   ownedCount(sticker: StickerAvatar): number {
     return this.inventory()[sticker.id] ?? 0;
   }
 }
+

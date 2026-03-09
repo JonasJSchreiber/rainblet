@@ -34,19 +34,23 @@
           </button>
         }
       </div>
-
-      @if (resultReady()) {
-        <p class="feedback" [class.bad]="!lastWasCorrect()">
-          @if (lastWasCorrect()) {
-            Correct! +10 score and +{{ lastCoinsAwarded() }} coins
-          } @else {
-            Not this time. Keep going.
-          }
-        </p>
-
-        <button class="next" (click)="next()">Next Question</button>
-      }
     </section>
+
+    @if (resultReady()) {
+      <div class="result-modal-backdrop">
+        <div class="result-modal" role="dialog" aria-modal="true" aria-label="Answer feedback">
+          <p class="feedback" [class.bad]="!lastWasCorrect()">
+            @if (lastWasCorrect()) {
+              Correct! +10 score and +{{ lastCoinsAwarded() }} coins
+            } @else {
+              Not this time. Keep going.
+            }
+          </p>
+
+          <button class="next" (click)="next()">Next Question</button>
+        </div>
+      </div>
+    }
   } @else {
     <section class="card">
       <h2>Preparing quiz...</h2>
@@ -54,4 +58,3 @@
     </section>
   }
 }
-

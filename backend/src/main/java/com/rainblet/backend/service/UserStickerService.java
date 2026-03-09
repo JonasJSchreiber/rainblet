@@ -4,14 +4,16 @@ import com.rainblet.backend.dto.UserStickerRollResponse;
 import com.rainblet.backend.dto.UserStickerSellResponse;
 import com.rainblet.backend.entity.Sticker;
 import com.rainblet.backend.entity.UserSticker;
+import com.rainblet.backend.entity.UserWallet;
 import com.rainblet.backend.repository.StickerRepository;
 import com.rainblet.backend.repository.UserRepository;
 import com.rainblet.backend.repository.UserStickerRepository;
-import java.math.BigDecimal;
+import com.rainblet.backend.repository.UserWalletRepository;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -24,17 +26,20 @@ public class UserStickerService {
     private final UserStickerRepository userStickerRepository;
     private final StickerRepository stickerRepository;
     private final UserRepository userRepository;
+    private final UserWalletRepository userWalletRepository;
     private final JdbcTemplate jdbcTemplate;
 
     public UserStickerService(
             UserStickerRepository userStickerRepository,
             StickerRepository stickerRepository,
             UserRepository userRepository,
+            UserWalletRepository userWalletRepository,
             JdbcTemplate jdbcTemplate
     ) {
         this.userStickerRepository = userStickerRepository;
         this.stickerRepository = stickerRepository;
         this.userRepository = userRepository;
+        this.userWalletRepository = userWalletRepository;
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -53,35 +58,57 @@ public class UserStickerService {
     }
 
     @Transactional
-    public UserStickerRollResponse rollSticker(Long userId, String stickerId) {
+    public UserStickerRollResponse rollSticker(Long userId, String rarity) {
         validateUserExists(userId);
 
-        Sticker sticker = stickerRepository.findById(normalizeStickerId(stickerId))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sticker not found: " + stickerId));
+        String normalizedRarity = normalizeRarity(rarity);
+        StickerPackRule packRule = resolvePackRule(normalizedRarity);
 
-        StickerOfferRule rule = resolveOfferRule(sticker);
-
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(
-                "CALL roll_user_sticker(?, ?, ?, ?, ?)",
-                userId,
-                sticker.getId(),
-                rule.cost(),
-                rule.currency(),
-                BigDecimal.valueOf(rule.successRate())
-        );
-
-        if (rows.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Sticker roll failed");
+        List<Sticker> stickers = stickerRepository.findByRarityIgnoreCaseOrderByNameAsc(normalizedRarity);
+        if (stickers.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No stickers found for rarity: " + normalizedRarity);
         }
 
-        Map<String, Object> row = rows.getFirst();
+        Sticker awardedSticker = stickers.get(ThreadLocalRandom.current().nextInt(stickers.size()));
+        UserWallet wallet = getOrCreateWallet(userId);
+
+        if (wallet.getCoins() < packRule.costCoins()) {
+            return new UserStickerRollResponse(
+                    false,
+                    false,
+                    false,
+                    0,
+                    wallet.getCoins(),
+                    wallet.getPoints(),
+                    null
+            );
+        }
+
+        wallet.setCoins(wallet.getCoins() - packRule.costCoins());
+        userWalletRepository.save(wallet);
+
+        UserSticker userSticker = userStickerRepository.findByUserIdAndStickerId(userId, awardedSticker.getId())
+                .orElseGet(() -> {
+                    UserSticker created = new UserSticker();
+                    created.setUserId(userId);
+                    created.setStickerId(awardedSticker.getId());
+                    created.setStickerCount(0);
+                    return created;
+                });
+
+        int previousCount = Math.max(0, userSticker.getStickerCount());
+        int nextCount = previousCount + 1;
+        userSticker.setStickerCount(nextCount);
+        userStickerRepository.save(userSticker);
+
         return new UserStickerRollResponse(
-                asBoolean(row.get("affordable")),
-                asBoolean(row.get("success")),
-                asBoolean(row.get("is_new")),
-                asInt(row.get("owned_count")),
-                asInt(row.get("remaining_coins")),
-                asInt(row.get("remaining_points"))
+                true,
+                true,
+                previousCount == 0,
+                nextCount,
+                wallet.getCoins(),
+                wallet.getPoints(),
+                awardedSticker.getId()
         );
     }
 
@@ -92,7 +119,7 @@ public class UserStickerService {
         Sticker sticker = stickerRepository.findById(normalizeStickerId(stickerId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sticker not found: " + stickerId));
 
-        int salePrice = calculateSalePrice(resolveOfferRule(sticker));
+        int salePrice = calculateSalePrice(resolveLegacyOfferRule(sticker));
 
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(
                 "CALL sell_user_sticker(?, ?, ?)",
@@ -116,7 +143,28 @@ public class UserStickerService {
         );
     }
 
-    private StickerOfferRule resolveOfferRule(Sticker sticker) {
+    private UserWallet getOrCreateWallet(Long userId) {
+        return userWalletRepository.findByUserId(userId).orElseGet(() -> {
+            UserWallet wallet = new UserWallet();
+            wallet.setUserId(userId);
+            wallet.setCoins(0);
+            wallet.setPoints(0);
+            return userWalletRepository.save(wallet);
+        });
+    }
+
+    private StickerPackRule resolvePackRule(String rarity) {
+        return switch (rarity) {
+            case "common" -> new StickerPackRule(5);
+            case "rare" -> new StickerPackRule(10);
+            case "epic" -> new StickerPackRule(15);
+            case "legendary" -> new StickerPackRule(30);
+            case "chroma" -> new StickerPackRule(50);
+            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported rarity pack: " + rarity);
+        };
+    }
+
+    private StickerOfferRule resolveLegacyOfferRule(Sticker sticker) {
         String rarity = Objects.requireNonNullElse(sticker.getRarity(), "").toLowerCase();
         return switch (rarity) {
             case "common" -> new StickerOfferRule(1, "coins", 0.2d);
@@ -126,7 +174,7 @@ public class UserStickerService {
             case "chroma" -> new StickerOfferRule(14, "score", 0.01d);
             default -> throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Unsupported sticker rarity for roll: " + sticker.getRarity()
+                    "Unsupported sticker rarity for sale: " + sticker.getRarity()
             );
         };
     }
@@ -140,6 +188,13 @@ public class UserStickerService {
         if (userId == null || !userRepository.existsById(userId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found: " + userId);
         }
+    }
+
+    private String normalizeRarity(String rarity) {
+        if (rarity == null || rarity.trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "rarity is required");
+        }
+        return rarity.trim().toLowerCase();
     }
 
     private String normalizeStickerId(String stickerId) {
@@ -168,4 +223,8 @@ public class UserStickerService {
 
     private record StickerOfferRule(int cost, String currency, double successRate) {
     }
+
+    private record StickerPackRule(int costCoins) {
+    }
 }
+

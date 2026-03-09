@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 018-001-fix-rarity-levels-is-active-type
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: rarity_levels
+          - columnExists:
+              tableName: rarity_levels
+              columnName: is_active
+      changes:
+        - modifyDataType:
+            tableName: rarity_levels
+            columnName: is_active
+            newDataType: bit(1)

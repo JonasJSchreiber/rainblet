@@ -35,8 +35,27 @@
   background: #ffecec;
 }
 
+.result-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 32, 52, 0.55);
+  display: grid;
+  place-items: start center;
+  padding: 1rem;
+  padding-top: clamp(5.5rem, 10vh, 7.5rem);
+  z-index: 1000;
+}
+
+.result-modal {
+  width: min(420px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px rgba(11, 24, 48, 0.28);
+  padding: 1.25rem;
+}
+
 .feedback {
-  margin: 0.8rem 0 0.6rem;
+  margin: 0 0 0.85rem;
   color: #1e8a4d;
   font-weight: 900;
 }
@@ -48,10 +67,17 @@
 .next {
   border: 0;
   border-radius: 10px;
-  padding: 0.55rem 0.9rem;
+  padding: 0.9rem 1rem;
   background: linear-gradient(120deg, #ffbf2f, #ffeb65);
   color: #3d3000;
   font-weight: 900;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  min-height: 3.25rem;
+}
+
+.result-modal .next {
+  width: 100%;
 }
 
 .summary-actions {

@@ -6,6 +6,7 @@ public record UserStickerRollResponse(
         boolean isNew,
         int ownedCount,
         int remainingCoins,
-        int remainingPoints
+        int remainingPoints,
+        String stickerId
 ) {
 }

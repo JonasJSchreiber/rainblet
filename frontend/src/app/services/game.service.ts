@@ -27,7 +27,13 @@ const RARITY_RULES: Record<Rarity, { cost: number; currency: OfferCurrency; succ
   legendary: { cost: 10, currency: 'score', successRate: 0.02 },
   chroma: { cost: 14, currency: 'score', successRate: 0.01 }
 };
-
+const PACK_RULES: Record<Rarity, { cost: number; currency: OfferCurrency }> = {
+  common: { cost: 5, currency: 'coins' },
+  rare: { cost: 10, currency: 'coins' },
+  epic: { cost: 15, currency: 'coins' },
+  legendary: { cost: 30, currency: 'coins' },
+  chroma: { cost: 50, currency: 'coins' }
+};
 interface UserCollectiblesResponse {
   collectibleIds: string[];
 }
@@ -49,6 +55,7 @@ interface UserStickerRollResponse {
   ownedCount: number;
   remainingCoins: number;
   remainingPoints: number;
+  stickerId: string | null;
 }
 
 interface UserStickerSellResponse {
@@ -362,6 +369,72 @@ export class GameService {
     );
   }
 
+  buyStickerPack(rarity: Rarity): Observable<StickerRollResult | null> {
+    const session = this.ensureProfileSession();
+    const stickersForRarity = this.stickersState().filter((entry) => entry.rarity === rarity);
+    if (!stickersForRarity.length) {
+      return of(null);
+    }
+
+    const offer = this.getPackOffer(rarity);
+    if (!this.canAffordOffer(offer)) {
+      return of(null);
+    }
+
+    const selectedSticker = stickersForRarity[Math.floor(Math.random() * stickersForRarity.length)];
+
+    const token = sessionStorage.getItem('auth_token');
+    if (!token) {
+      const localOffer = { ...offer, stickerId: selectedSticker.id };
+      return of(this.buyStickerChanceLocal(session, selectedSticker, localOffer));
+    }
+
+    const apiBase = this.appConfig.apiBaseUrl;
+    return this.http.post<UserStickerRollResponse>(`${apiBase}/api/users/me/stickers/roll`, { rarity }).pipe(
+      map((response) => {
+        if (!response?.affordable) {
+          return null;
+        }
+
+        const awardedStickerId = response.stickerId ?? selectedSticker.id;
+        const awardedSticker = this.stickersState().find((entry) => entry.id === awardedStickerId) ?? selectedSticker;
+        const currentCount = session.stickerInventory[awardedSticker.id] ?? 0;
+        const nextCount = response.success ? Math.max(0, response.ownedCount) : currentCount;
+
+        if (response.success) {
+          this.updateSessionWalletAndInventory(response.remainingCoins, response.remainingPoints, awardedSticker.id, nextCount);
+        }
+
+        return {
+          offer,
+          success: !!response.success,
+          sticker: awardedSticker,
+          isNew: !!response.isNew,
+          remainingCoins: response.remainingCoins,
+          remainingScore: response.remainingPoints
+        };
+      }),
+      catchError(() => of(null))
+    );
+  }
+
+  getPackOffer(rarity: Rarity): StickerRollOffer {
+    const packRule = PACK_RULES[rarity];
+    const rarityCount = Math.max(1, this.stickersState().filter((entry) => entry.rarity === rarity).length);
+
+    return {
+      id: `pack-${rarity}`,
+      stickerId: `pack-${rarity}`,
+      rarity,
+      cost: packRule.cost,
+      currency: packRule.currency,
+      successRate: 1 / rarityCount
+    };
+  }
+
+  canAffordPack(rarity: Rarity): boolean {
+    return this.canAffordOffer(this.getPackOffer(rarity));
+  }
   canAffordOffer(offer: StickerRollOffer): boolean {
     const session = this.state();
     const coins = session?.coins ?? this.persistedWallet().coins;
@@ -871,5 +944,10 @@ export class GameService {
     return items;
   }
 }
+
+
+
+
+
 
 

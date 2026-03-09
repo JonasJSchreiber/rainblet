@@ -1,0 +1,17 @@
+<section class="card achievements">
+  <h2>Achievements</h2>
+  <p class="subtitle">Collectibles unlocked by your progress milestones.</p>
+
+  <div class="grid">
+    @for (collectible of sortedCollectibles(); track collectible.id) {
+      <article [class.locked]="!isUnlocked(collectible.id)">
+        <header>
+          <strong>{{ collectible.name }}</strong>
+          <span [class]="collectible.rarity">{{ collectible.rarity }}</span>
+        </header>
+        <p>{{ collectible.description }}</p>
+        <small>{{ collectible.unlockRule }}</small>
+      </article>
+    }
+  </div>
+</section>

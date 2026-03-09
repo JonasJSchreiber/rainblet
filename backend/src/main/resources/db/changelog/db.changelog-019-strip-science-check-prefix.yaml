@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 019-001-strip-science-check-prefix-from-prompts
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: questions
+          - columnExists:
+              tableName: questions
+              columnName: prompt
+      changes:
+        - sql:
+            dbms: mysql
+            sql: |
+              UPDATE questions
+              SET prompt = TRIM(REGEXP_REPLACE(prompt, '^Science check [0-9]+:\\s*', ''))
+              WHERE prompt LIKE 'Science check%';

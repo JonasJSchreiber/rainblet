@@ -2,13 +2,13 @@ package com.rainblet.backend.dto;
 
 public class UserStickerRollRequest {
 
-    private String stickerId;
+    private String rarity;
 
-    public String getStickerId() {
-        return stickerId;
+    public String getRarity() {
+        return rarity;
     }
 
-    public void setStickerId(String stickerId) {
-        this.stickerId = stickerId;
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
     }
 }

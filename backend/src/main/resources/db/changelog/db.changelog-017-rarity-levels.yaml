@@ -1,0 +1,145 @@
+databaseChangeLog:
+  - changeSet:
+      id: 017-001-create-rarity-levels
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: rarity_levels
+      changes:
+        - createTable:
+            tableName: rarity_levels
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_rarity_levels
+              - column:
+                  name: code
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: display_name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rank_value
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(400)
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 017-002-add-rarity-levels-code-uk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: rarity_levels
+          - not:
+              uniqueConstraintExists:
+                tableName: rarity_levels
+                constraintName: uk_rarity_levels_code
+      changes:
+        - addUniqueConstraint:
+            tableName: rarity_levels
+            columnNames: code
+            constraintName: uk_rarity_levels_code
+
+  - changeSet:
+      id: 017-003-add-rarity-levels-rank-uk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: rarity_levels
+          - not:
+              uniqueConstraintExists:
+                tableName: rarity_levels
+                constraintName: uk_rarity_levels_rank
+      changes:
+        - addUniqueConstraint:
+            tableName: rarity_levels
+            columnNames: rank_value
+            constraintName: uk_rarity_levels_rank
+
+  - changeSet:
+      id: 017-004-add-rarity-levels-active-rank-idx
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: rarity_levels
+          - not:
+              indexExists:
+                tableName: rarity_levels
+                indexName: idx_rarity_levels_active_rank
+      changes:
+        - createIndex:
+            tableName: rarity_levels
+            indexName: idx_rarity_levels_active_rank
+            columns:
+              - column:
+                  name: is_active
+              - column:
+                  name: rank_value
+
+  - changeSet:
+      id: 017-005-seed-rarity-levels
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        tableExists:
+          tableName: rarity_levels
+      changes:
+        - sql:
+            splitStatements: true
+            stripComments: true
+            sql: |
+              INSERT INTO rarity_levels (code, display_name, rank_value, description, is_active, created_at, updated_at)
+              SELECT 'common', 'Common', 10, 'Baseline rarity with highest drop frequency.', TRUE, NOW(6), NOW(6)
+              WHERE NOT EXISTS (SELECT 1 FROM rarity_levels WHERE code = 'common');
+
+              INSERT INTO rarity_levels (code, display_name, rank_value, description, is_active, created_at, updated_at)
+              SELECT 'rare', 'Rare', 20, 'Uncommon rarity with moderate drop frequency.', TRUE, NOW(6), NOW(6)
+              WHERE NOT EXISTS (SELECT 1 FROM rarity_levels WHERE code = 'rare');
+
+              INSERT INTO rarity_levels (code, display_name, rank_value, description, is_active, created_at, updated_at)
+              SELECT 'epic', 'Epic', 30, 'High-value rarity with low drop frequency.', TRUE, NOW(6), NOW(6)
+              WHERE NOT EXISTS (SELECT 1 FROM rarity_levels WHERE code = 'epic');
+
+              INSERT INTO rarity_levels (code, display_name, rank_value, description, is_active, created_at, updated_at)
+              SELECT 'legendary', 'Legendary', 40, 'Very low drop frequency and premium value.', TRUE, NOW(6), NOW(6)
+              WHERE NOT EXISTS (SELECT 1 FROM rarity_levels WHERE code = 'legendary');
+
+              INSERT INTO rarity_levels (code, display_name, rank_value, description, is_active, created_at, updated_at)
+              SELECT 'chroma', 'Chroma', 50, 'Ultra-rare rarity tier for special variants.', TRUE, NOW(6), NOW(6)
+              WHERE NOT EXISTS (SELECT 1 FROM rarity_levels WHERE code = 'chroma');

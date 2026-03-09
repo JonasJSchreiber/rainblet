@@ -1,0 +1,48 @@
+<section class="card feedback">
+  <h2>Feedback</h2>
+  <p>Tell us what is working, what is broken, or what should be improved.</p>
+
+  <form class="form" (ngSubmit)="submit()">
+    <label for="feedback-type">Type</label>
+    <select id="feedback-type" [ngModel]="feedbackType()" (ngModelChange)="feedbackType.set($event)" name="feedbackType">
+      <option value="general">General</option>
+      <option value="bug">Bug</option>
+      <option value="feature">Feature Request</option>
+      <option value="ux">UX</option>
+      <option value="performance">Performance</option>
+    </select>
+
+    <label for="feedback-subject">Subject</label>
+    <input
+      id="feedback-subject"
+      type="text"
+      [ngModel]="subject()"
+      (ngModelChange)="subject.set($event)"
+      name="subject"
+      maxlength="200"
+      placeholder="Short summary" />
+
+    <label for="feedback-message">Message</label>
+    <textarea
+      id="feedback-message"
+      [ngModel]="message()"
+      (ngModelChange)="message.set($event)"
+      name="message"
+      rows="6"
+      maxlength="8000"
+      required
+      placeholder="Describe your feedback"></textarea>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    @if (success(); as result) {
+      <p class="success">Submitted as feedback #{{ result.id }} at {{ result.createdAt }}.</p>
+    }
+
+    <button type="submit" [disabled]="!canSubmit()">
+      @if (isSubmitting()) { Submitting... } @else { Submit feedback }
+    </button>
+  </form>
+</section>

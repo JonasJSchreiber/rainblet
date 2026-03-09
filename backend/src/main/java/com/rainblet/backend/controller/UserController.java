@@ -135,12 +135,12 @@ public class UserController {
             Authentication authentication,
             @RequestBody(required = false) UserStickerRollRequest request
     ) {
-        if (request == null || request.getStickerId() == null || request.getStickerId().trim().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "stickerId is required");
+        if (request == null || request.getRarity() == null || request.getRarity().trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "rarity is required");
         }
 
         User user = userService.resolveAuthenticatedUser(authentication);
-        return userStickerService.rollSticker(user.getId(), request.getStickerId());
+        return userStickerService.rollSticker(user.getId(), request.getRarity());
     }
 
     @PostMapping("/me/stickers/sell")

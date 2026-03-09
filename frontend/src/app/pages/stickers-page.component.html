@@ -1,0 +1,43 @@
+<section class="card stickers-page">
+  <h2>Stickers</h2>
+  <p class="subtitle">Avatar sticker inventory and sell actions.</p>
+
+  @for (group of groupedCollectionStickers(); track group.rarity) {
+    <section class="rarity-section">
+      <h3 class="rarity-heading">{{ group.rarity | titlecase }}</h3>
+
+      <div class="grid stickers">
+        @for (sticker of group.stickers; track sticker.id) {
+          <article
+            [class.locked]="stickerCount(sticker.id) === 0"
+            [class.clickable]="stickerCount(sticker.id) > 0"
+            (click)="openSticker(sticker)">
+            <header>
+              <strong>{{ sticker.emoji }} {{ sticker.name }}</strong>
+              <span [class]="sticker.rarity">{{ sticker.rarity }}</span>
+            </header>
+            <p>Owned: {{ stickerCount(sticker.id) }}</p>
+            @if (stickerCount(sticker.id) > 0) {
+              <small class="view-hint">Tap to view</small>
+            }
+          </article>
+        }
+      </div>
+    </section>
+  }
+
+  @if (selectedSticker(); as sticker) {
+    <div class="modal-backdrop" (click)="closeSticker()">
+      <article class="modal-card" [class]="'modal-card ' + sticker.rarity" (click)="$event.stopPropagation()">
+        <button class="close" (click)="closeSticker()">x</button>
+        <div class="modal-emoji">{{ sticker.emoji }}</div>
+        <h3>{{ sticker.name }}</h3>
+        <p>{{ sticker.rarity | titlecase }}</p>
+        <p class="owned-count">Owned: {{ stickerCount(sticker.id) }}</p>
+        <button class="sell" [disabled]="stickerCount(sticker.id) === 0" (click)="sellSticker(sticker)">
+          Sell 1 copy for {{ salePrice(sticker) }} coins
+        </button>
+      </article>
+    </div>
+  }
+</section>

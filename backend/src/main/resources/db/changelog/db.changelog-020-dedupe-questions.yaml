@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 020-001-remove-duplicate-questions-by-topic-and-prompt
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: questions
+      changes:
+        - sql:
+            dbms: mysql
+            sql: |
+              DELETE q_dup
+              FROM questions q_dup
+              JOIN questions q_keep
+                ON q_dup.topic = q_keep.topic
+               AND q_dup.prompt = q_keep.prompt
+               AND q_dup.id > q_keep.id;

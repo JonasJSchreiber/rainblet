@@ -1,0 +1,174 @@
+databaseChangeLog:
+  - changeSet:
+      id: 016-001-create-user-feedback
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: user_feedback
+      changes:
+        - createTable:
+            tableName: user_feedback
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user_feedback
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_email
+                  type: varchar(320)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: feedback_type
+                  type: varchar(64)
+                  defaultValue: general
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(32)
+                  defaultValue: NEW
+                  constraints:
+                    nullable: false
+              - column:
+                  name: source
+                  type: varchar(64)
+                  defaultValue: web-app
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject
+                  type: varchar(200)
+              - column:
+                  name: message
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: page_url
+                  type: varchar(1024)
+              - column:
+                  name: app_version
+                  type: varchar(64)
+              - column:
+                  name: context_json
+                  type: longtext
+              - column:
+                  name: metadata_json
+                  type: longtext
+              - column:
+                  name: review_notes
+                  type: text
+              - column:
+                  name: reviewed_by
+                  type: varchar(320)
+              - column:
+                  name: reviewed_at
+                  type: datetime(6)
+              - column:
+                  name: created_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime(6)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 016-002-add-user-feedback-user-fk
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_feedback
+          - tableExists:
+              tableName: users
+          - not:
+              foreignKeyConstraintExists:
+                foreignKeyName: fk_user_feedback_user
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: user_feedback
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_user_feedback_user
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 016-003-add-user-feedback-user-created-idx
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_feedback
+          - not:
+              indexExists:
+                tableName: user_feedback
+                indexName: idx_user_feedback_user_created
+      changes:
+        - createIndex:
+            tableName: user_feedback
+            indexName: idx_user_feedback_user_created
+            columns:
+              - column:
+                  name: user_id
+              - column:
+                  name: created_at
+
+  - changeSet:
+      id: 016-004-add-user-feedback-status-created-idx
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_feedback
+          - not:
+              indexExists:
+                tableName: user_feedback
+                indexName: idx_user_feedback_status_created
+      changes:
+        - createIndex:
+            tableName: user_feedback
+            indexName: idx_user_feedback_status_created
+            columns:
+              - column:
+                  name: status
+              - column:
+                  name: created_at
+
+  - changeSet:
+      id: 016-005-add-user-feedback-created-idx
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_feedback
+          - not:
+              indexExists:
+                tableName: user_feedback
+                indexName: idx_user_feedback_created
+      changes:
+        - createIndex:
+            tableName: user_feedback
+            indexName: idx_user_feedback_created
+            columns:
+              - column:
+                  name: created_at
