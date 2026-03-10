@@ -15,14 +15,12 @@
             [class.locked]="stickerCount(sticker.id) === 0"
             [class.clickable]="stickerCount(sticker.id) > 0"
             (click)="openSticker(sticker)">
-            <header>
-              <strong>{{ sticker.emoji }} {{ sticker.name }}</strong>
-              <span [class]="sticker.rarity">{{ sticker.rarity }}</span>
-            </header>
-            <p>Owned: {{ stickerCount(sticker.id) }}</p>
-            @if (stickerCount(sticker.id) > 0) {
-              <small class="view-hint">Tap to view</small>
-            }
+            <div class="tile-topline">
+              <span [class]="'tile-pill ' + sticker.rarity">{{ sticker.rarity }}</span>
+              <span class="tile-count">@if (stickerCount(sticker.id) > 0) { x{{ stickerCount(sticker.id) }} } @else { -- }</span>
+            </div>
+            <div class="sticker-visual">{{ sticker.emoji }}</div>
+            <strong class="tile-name">{{ sticker.name }}</strong>
           </article>
         }
       </div>

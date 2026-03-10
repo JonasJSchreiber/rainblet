@@ -3,9 +3,20 @@
   margin: 0;
 }
 
+.play h2 {
+  font-size: var(--size-section);
+  text-transform: uppercase;
+  text-shadow: 0 0 16px rgba(112, 235, 255, 0.14);
+}
+
+.play h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.95rem);
+  line-height: 1.08;
+}
+
 .play header p {
   margin: 0.35rem 0 0.8rem;
-  color: #43609d;
+  color: var(--text-secondary);
   font-weight: 700;
 }
 
@@ -17,22 +28,23 @@
 
 .options button {
   text-align: left;
-  border: 1px solid #c1d7ff;
-  border-radius: 12px;
-  padding: 0.75rem;
-  background: #f4f9ff;
+  border-color: var(--control-filter-border);
+  border-radius: 18px;
+  padding: 0.85rem 0.95rem;
+  background: var(--control-filter-bg);
   cursor: pointer;
   font-weight: 700;
+  color: var(--control-filter-text);
 }
 
 .options button.correct {
-  border-color: #33b861;
-  background: #e6faee;
+  border-color: var(--status-success-border);
+  background: var(--status-success-bg);
 }
 
 .options button.incorrect {
-  border-color: #c34a4a;
-  background: #ffecec;
+  border-color: var(--status-danger-border);
+  background: var(--status-danger-bg);
 }
 
 .result-modal-backdrop {
@@ -48,28 +60,29 @@
 
 .result-modal {
   width: min(420px, 100%);
-  background: #fff;
+  background: var(--surface-card);
+  border: 1px solid var(--border-strong);
   border-radius: 16px;
-  box-shadow: 0 20px 45px rgba(11, 24, 48, 0.28);
+  box-shadow: var(--shadow-shell);
   padding: 1.25rem;
 }
 
 .feedback {
   margin: 0 0 0.85rem;
-  color: #1e8a4d;
+  color: var(--status-success-text);
   font-weight: 900;
 }
 
 .feedback.bad {
-  color: #a13232;
+  color: var(--status-danger-text);
 }
 
 .next {
-  border: 0;
-  border-radius: 10px;
+  border-color: var(--control-primary-border);
+  border-radius: 18px;
   padding: 0.9rem 1rem;
-  background: linear-gradient(120deg, #ffbf2f, #ffeb65);
-  color: #3d3000;
+  background: var(--control-primary-bg);
+  color: var(--control-primary-text);
   font-weight: 900;
   font-size: 1.15rem;
   line-height: 1.2;
@@ -87,6 +100,7 @@
 }
 
 .next.secondary {
-  background: #dce8ff;
-  color: #234a91;
+  background: var(--control-secondary-bg);
+  border-color: var(--control-secondary-border);
+  color: var(--control-secondary-text);
 }

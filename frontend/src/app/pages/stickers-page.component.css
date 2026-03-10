@@ -10,35 +10,71 @@
   margin: 0;
 }
 
+.page-hero h2 {
+  font-size: var(--size-display);
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px var(--heading-glow);
+}
+
 .subtitle {
   margin: 0.3rem 0 0;
-  color: #43609d;
+  color: var(--text-secondary);
   font-weight: 700;
 }
 
 .rarity-heading {
   margin-bottom: 0.55rem;
-  font-size: 1.05rem;
-  color: #223a6d;
+  font-size: var(--size-section);
+  color: var(--text-strong);
+  text-transform: uppercase;
 }
 
 .grid {
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.7rem;
+}
+
+.rarity-section {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 30%),
+    var(--pattern-chevron),
+    var(--surface-panel);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    var(--shadow-card);
 }
 
 article {
-  border: 1px solid #d7e4ff;
-  border-radius: 12px;
-  padding: 0.65rem;
-  background: #f9fbff;
+  position: relative;
+  overflow: hidden;
+  min-height: 184px;
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 0.7rem;
+  background: linear-gradient(180deg, rgba(46, 19, 115, 0.52), rgba(7, 74, 109, 0.42));
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.5rem;
+}
+
+article::before,
+.modal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 84% 16%, rgba(255, 255, 255, 0.12) 0 2px, transparent 3px),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0 12px, transparent 12px 24px);
+  opacity: 0.38;
+  pointer-events: none;
 }
 
 article.locked {
-  opacity: 0.45;
-  filter: grayscale(0.7);
+  opacity: 0.5;
+  filter: grayscale(0.78);
 }
 
 article.clickable {
@@ -49,52 +85,88 @@ article.clickable:hover {
   transform: translateY(-2px);
 }
 
-header {
+.tile-topline {
   display: flex;
   justify-content: space-between;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  z-index: 1;
 }
 
-span {
-  text-transform: uppercase;
-  font-size: 0.68rem;
-  padding: 0.2rem 0.4rem;
+.tile-pill,
+.tile-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.55rem;
   border-radius: 999px;
+  padding: 0.15rem 0.45rem;
+  font-family: var(--font-utility);
+  font-size: 0.68rem;
   font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tile-pill {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.tile-count {
+  background: rgba(7, 18, 55, 0.34);
+  color: var(--text-secondary);
 }
 
 .common {
-  background: #e8f6ed;
-  color: #2c7645;
+  color: var(--rarity-common-text);
 }
 
 .rare {
-  background: #e4edff;
-  color: #3158a6;
+  color: var(--rarity-rare-text);
 }
 
 .epic {
-  background: #ffe8d6;
-  color: #a45521;
+  color: var(--rarity-epic-text);
 }
 
 .legendary {
-  background: #fff2be;
-  color: #7f5600;
+  color: var(--rarity-legendary-text);
 }
 
 .chroma {
-  background: #f1e6ff;
-  color: #6e2bb5;
+  color: var(--rarity-chroma-text);
 }
 
-p {
-  margin: 0.45rem 0;
+.sticker-visual {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: min(92px, 100%);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 16px 26px rgba(8, 8, 34, 0.22);
+  font-size: 3rem;
+  line-height: 1;
 }
 
-.view-hint {
-  font-weight: 800;
-  color: #3158a6;
+.tile-name {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-section);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .modal-backdrop {
@@ -110,10 +182,11 @@ p {
 .modal-card {
   width: min(50vw, 580px);
   min-height: 42vh;
+  overflow: hidden;
   border-radius: 20px;
-  border: 3px solid #d7e3ff;
-  background: #f7fbff;
-  box-shadow: 0 26px 50px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-shell);
   display: grid;
   place-items: center;
   text-align: center;
@@ -128,7 +201,8 @@ p {
 
 .modal-card h3 {
   margin: 0.3rem 0 0;
-  font-size: 1.5rem;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  text-transform: uppercase;
 }
 
 .modal-card p {
@@ -137,7 +211,7 @@ p {
 }
 
 .owned-count {
-  color: #3158a6;
+  color: var(--text-secondary);
 }
 
 .close {
@@ -146,21 +220,37 @@ p {
   right: 0.6rem;
   width: 2rem;
   height: 2rem;
-  border: 0;
+  border-color: rgba(127, 232, 255, 0.2);
   border-radius: 999px;
   font-weight: 900;
-  background: #e6efff;
-  color: #284682;
+  background: var(--control-filter-bg);
+  color: var(--text-primary);
   cursor: pointer;
 }
 
-.modal-card.common { border-color: #bce5c8; background: #eaf9ef; }
-.modal-card.rare { border-color: #bbcdfa; background: #eaf0ff; }
-.modal-card.epic { border-color: #f6c69f; background: #fff0e3; }
-.modal-card.legendary { border-color: #f3d46a; background: #fff8de; }
+.modal-card.common {
+  border-color: var(--rarity-common-border);
+  background: var(--rarity-common-bg);
+}
+
+.modal-card.rare {
+  border-color: var(--rarity-rare-border);
+  background: var(--rarity-rare-bg);
+}
+
+.modal-card.epic {
+  border-color: var(--rarity-epic-border);
+  background: var(--rarity-epic-bg);
+}
+
+.modal-card.legendary {
+  border-color: var(--rarity-legendary-border);
+  background: var(--rarity-legendary-bg);
+}
+
 .modal-card.chroma {
-  border-color: #d8b8ff;
-  background: linear-gradient(120deg, #f9efff, #dffcff);
+  border-color: var(--rarity-chroma-border);
+  background: var(--rarity-chroma-bg);
 }
 
 @media (max-width: 900px) {
@@ -172,21 +262,20 @@ p {
 
 .sell {
   margin-top: 0.65rem;
-  border: 0;
-  border-radius: 12px;
+  border-color: var(--control-secondary-border);
+  border-radius: 16px;
   padding: 0.68rem 1rem;
   font-size: 1rem;
   font-weight: 900;
   cursor: pointer;
-  background: #d8f3df;
-  color: #215a2f;
+  background: var(--control-secondary-bg);
+  color: var(--control-secondary-text);
 }
 
 .sell:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 
 .modal-card.selling {
   overflow: hidden;
@@ -214,4 +303,15 @@ p {
 @keyframes modalSellSpin {
   0% { transform: rotate(0deg) scale(1); opacity: 0.85; }
   100% { transform: rotate(300deg) scale(1.25); opacity: 0; }
+}
+
+@media (max-width: 40rem) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  }
+
+  article {
+    min-height: 170px;
+    padding: 0.6rem;
+  }
 }

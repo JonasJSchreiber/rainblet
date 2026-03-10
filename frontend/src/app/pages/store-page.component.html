@@ -30,14 +30,41 @@
   <section class="panel store-section">
     <div class="section-head">
       <h3 class="section-title">Packs</h3>
-      <p>Prices stay visible in the right rail; this region focuses on actions.</p>
+      <p>Browse tiles first, then act from the tray.</p>
+    </div>
+    <div class="context-tray" [class.active]="focusedPack() !== null">
+      @if (focusedPack(); as rarity) {
+        <div class="context-copy">
+          <span class="context-kicker">Selected Pack</span>
+          <strong>{{ rarity | titlecase }} Pack</strong>
+          <small>Selected tiles reveal actions here. Tap another pack to switch focus.</small>
+        </div>
+        <div class="context-actions">
+          <span class="tray-cost">{{ packCost(rarity) }} {{ packCurrency(rarity) }}</span>
+          <button class="tray-button" [disabled]="!canBuyPack(rarity)" (click)="openPackConfirm(rarity)">Open Pack</button>
+          <button class="tray-button secondary" type="button" (click)="clearFocusedPack()">Clear</button>
+        </div>
+      } @else {
+        <div class="context-copy">
+          <span class="context-kicker">Browse State</span>
+          <strong>Select a pack tile</strong>
+          <small>Unselected tiles stay clean for scanning. Selection arms the purchase controls in this tray.</small>
+        </div>
+      }
     </div>
     <div class="pack-grid">
       @for (rarity of rarityOrder; track rarity) {
-        <article class="pack-card" [class]="'pack-card ' + rarity">
-          <div class="pack-name">{{ rarity | titlecase }} Pack</div>
-          <div class="pack-meta">Price: {{ packCost(rarity) }} {{ packCurrency(rarity) }}</div>
-          <button [disabled]="!canBuyPack(rarity)" (click)="openPackConfirm(rarity)">Buy Pack</button>
+        <article
+          class="pack-card"
+          [class]="'pack-card ' + rarity"
+          [class.selected]="focusedPack() === rarity"
+          (click)="focusPack(rarity)">
+          <div class="tile-topline">
+            <span class="tile-pill">{{ rarity }}</span>
+            <span class="tile-cost">{{ packCost(rarity) }} {{ packCurrency(rarity) }}</span>
+          </div>
+          <div class="pack-visual" aria-hidden="true">{{ packGlyph(rarity) }}</div>
+          <div class="pack-name">{{ rarity | titlecase }}</div>
         </article>
       }
     </div>
@@ -46,18 +73,44 @@
   <section class="panel store-section">
     <div class="section-head">
       <h3 class="section-title">Sell Stickers</h3>
-      <p>Convert duplicate inventory into coins.</p>
+      <p>Browse collection first, then sell from the tray.</p>
+    </div>
+    <div class="context-tray" [class.active]="focusedSticker() !== null">
+      @if (focusedSticker(); as sticker) {
+        <div class="context-copy">
+          <span class="context-kicker">Selected Sticker</span>
+          <strong>{{ sticker.emoji }} {{ sticker.name }}</strong>
+          <small>Selected state exposes the sell action here while tiles stay compact in browse mode.</small>
+        </div>
+        <div class="context-actions">
+          <span class="tray-cost">Owned x{{ ownedCount(sticker) }}</span>
+          <button class="tray-button" [disabled]="ownedCount(sticker) <= 0 || sellingStickerId() === sticker.id" (click)="sellSticker(sticker)">
+            @if (sellingStickerId() === sticker.id) { Selling... } @else { Sell for {{ salePrice(sticker) }} coins }
+          </button>
+          <button class="tray-button secondary" type="button" (click)="clearFocusedSticker()">Clear</button>
+        </div>
+      } @else {
+        <div class="context-copy">
+          <span class="context-kicker">Browse State</span>
+          <strong>Select a sticker tile</strong>
+          <small>Ownership stays visible on the tile. Selling only appears once a sticker is selected.</small>
+        </div>
+      }
     </div>
     <div class="sticker-grid">
       @for (sticker of sortedStoreStickers(); track sticker.id) {
-        <article class="sticker-card" [class]="'sticker-card ' + sticker.rarity" [class.selling]="sellingStickerId() === sticker.id">
+        <article
+          class="sticker-card"
+          [class]="'sticker-card ' + sticker.rarity"
+          [class.selling]="sellingStickerId() === sticker.id"
+          [class.selected]="isStickerFocused(sticker)"
+          (click)="focusSticker(sticker)">
+          <div class="tile-topline">
+            <span class="tile-pill">{{ sticker.rarity }}</span>
+            <span class="tile-count">x{{ ownedCount(sticker) }}</span>
+          </div>
           <div class="sticker-emoji">{{ sticker.emoji }}</div>
           <div class="name">{{ sticker.name }}</div>
-          <div class="rarity">{{ sticker.rarity | titlecase }}</div>
-          <div class="owned">Owned: {{ ownedCount(sticker) }}</div>
-          <button class="sell" [disabled]="ownedCount(sticker) <= 0 || sellingStickerId() === sticker.id" (click)="sellSticker(sticker)">
-            @if (sellingStickerId() === sticker.id) { Selling... } @else { Sell: {{ salePrice(sticker) }} coins }
-          </button>
         </article>
       }
     </div>

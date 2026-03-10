@@ -17,6 +17,8 @@ export class StorePageComponent {
   readonly inventory = computed(() => this.game.stickerInventory());
   readonly rarityOrder = RARITY_DISPLAY_ORDER;
   readonly selectedPack = signal<Rarity | null>(null);
+  readonly focusedPack = signal<Rarity | null>(null);
+  readonly focusedStickerId = signal<string | null>(null);
 
   readonly sortedStoreStickers = computed(() => {
     const rarityRank = new Map(RARITY_DISPLAY_ORDER.map((rarity, index) => [rarity, index]));
@@ -53,6 +55,7 @@ export class StorePageComponent {
     this.game.buyStickerPack(rarity).subscribe((result) => {
       this.lastResult.set(result);
       this.lastSale.set(null);
+      this.focusedPack.set(rarity);
       this.closePackConfirm();
     });
   }
@@ -67,6 +70,31 @@ export class StorePageComponent {
 
   canBuyPack(rarity: Rarity): boolean {
     return this.game.canAffordPack(rarity);
+  }
+
+  focusPack(rarity: Rarity): void {
+    this.focusedPack.set(rarity);
+  }
+
+  clearFocusedPack(): void {
+    this.focusedPack.set(null);
+  }
+
+  packGlyph(rarity: Rarity): string {
+    switch (rarity) {
+      case 'common':
+        return '◈';
+      case 'rare':
+        return '✦';
+      case 'epic':
+        return '✺';
+      case 'legendary':
+        return '⬢';
+      case 'chroma':
+        return '⬡';
+      default:
+        return '◉';
+    }
   }
 
   salePrice(sticker: StickerAvatar): number {
@@ -85,6 +113,9 @@ export class StorePageComponent {
         next: (sale) => {
           this.lastSale.set(sale);
           this.lastResult.set(null);
+          if (this.ownedCount(sticker) <= 1) {
+            this.focusedStickerId.set(null);
+          }
         },
         complete: () => this.sellingStickerId.set(null),
         error: () => this.sellingStickerId.set(null)
@@ -94,6 +125,27 @@ export class StorePageComponent {
 
   ownedCount(sticker: StickerAvatar): number {
     return this.inventory()[sticker.id] ?? 0;
+  }
+
+  focusSticker(sticker: StickerAvatar): void {
+    this.focusedStickerId.set(sticker.id);
+  }
+
+  clearFocusedSticker(): void {
+    this.focusedStickerId.set(null);
+  }
+
+  isStickerFocused(sticker: StickerAvatar): boolean {
+    return this.focusedStickerId() === sticker.id;
+  }
+
+  focusedSticker(): StickerAvatar | null {
+    const stickerId = this.focusedStickerId();
+    if (!stickerId) {
+      return null;
+    }
+
+    return this.sortedStoreStickers().find((sticker) => sticker.id === stickerId) ?? null;
   }
 }
 
