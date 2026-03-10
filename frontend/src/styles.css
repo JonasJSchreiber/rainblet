@@ -28,3 +28,19 @@ input {
   padding: 1rem;
   box-shadow: 0 10px 28px rgba(11, 44, 126, 0.24);
 }
+
+.panel {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(170, 201, 255, 0.8);
+  border-radius: 22px;
+  padding: 1rem;
+  box-shadow: 0 14px 34px rgba(11, 44, 126, 0.18);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}

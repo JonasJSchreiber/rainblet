@@ -1,23 +1,42 @@
-.store h2 { margin: 0; }
-.subtitle { margin-top: 0.3rem; color: #3e5c96; font-weight: 800; }
-
-.banner {
-  margin-top: 0.6rem;
+.store-page {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 0.5rem;
+  gap: 1rem;
+  padding-bottom: 1rem;
 }
 
-.banner div {
-  background: #f1f8ff;
-  border-radius: 10px;
-  padding: 0.55rem;
-  border: 1px solid #c8dbff;
+.page-hero h2,
+.section-title,
+.drop h3 {
+  margin: 0;
+}
+
+.page-hero .subtitle {
+  margin: 0.4rem 0 0;
+  color: #3e5c96;
   font-weight: 800;
+  max-width: 42rem;
+}
+
+.store-section {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.section-head p {
+  margin: 0;
+  color: #5872aa;
+  font-weight: 700;
 }
 
 .drop {
-  margin-top: 0.9rem;
   border-radius: 14px;
   padding: 0.7rem;
   display: flex;
@@ -37,7 +56,7 @@
 }
 
 .section-title {
-  margin: 1rem 0 0.45rem;
+  margin: 0;
 }
 
 .pack-grid {
@@ -216,4 +235,10 @@
 @keyframes stickerSellSpin {
   0% { transform: rotate(0deg) scale(1); opacity: 0.8; }
   100% { transform: rotate(260deg) scale(1.25); opacity: 0; }
+}
+
+@media (max-width: 40rem) {
+  .section-head {
+    align-items: start;
+  }
 }
