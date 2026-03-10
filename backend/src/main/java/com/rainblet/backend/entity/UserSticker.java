@@ -14,6 +14,8 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.Instant;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(
@@ -36,6 +38,10 @@ public class UserSticker {
 
     @Column(name = "sticker_count", nullable = false)
     private int stickerCount;
+
+    @Column(name = "is_avatar", nullable = false)
+    @JdbcTypeCode(SqlTypes.TINYINT)
+    private boolean isAvatar;
 
     @Column(name = "first_obtained_at", nullable = false, updatable = false)
     private Instant firstObtainedAt;
@@ -98,6 +104,14 @@ public class UserSticker {
 
     public void setStickerCount(int stickerCount) {
         this.stickerCount = stickerCount;
+    }
+
+    public boolean isAvatar() {
+        return isAvatar;
+    }
+
+    public void setAvatar(boolean avatar) {
+        isAvatar = avatar;
     }
 
     public Instant getFirstObtainedAt() {

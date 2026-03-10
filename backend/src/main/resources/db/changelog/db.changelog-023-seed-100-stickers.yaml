@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 023-001-load-20-new-stickers-per-rarity
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: stickers
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM stickers WHERE id = 'new-common-sticker-001'
+      changes:
+        - loadData:
+            file: db/changelog/data/stickers-20-per-rarity.csv
+            tableName: stickers
+            encoding: UTF-8
+            separator: ","
+            quotchar: '"'

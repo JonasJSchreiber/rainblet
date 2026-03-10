@@ -46,6 +46,11 @@ interface UserWalletResponse {
 
 interface UserStickersResponse {
   stickerInventory: Record<string, number>;
+  avatarStickerId: string | null;
+}
+
+interface UserStickerAvatarResponse {
+  avatarStickerId: string | null;
 }
 
 interface UserStickerRollResponse {
@@ -85,6 +90,7 @@ export class GameService {
   private readonly persistedUnlockedCollectibleIds = signal<string[]>([]);
   private readonly persistedWallet = signal<{ coins: number; points: number }>({ coins: 0, points: 0 });
   private readonly persistedStickerInventory = signal<Record<string, number>>({});
+  private readonly persistedAvatarStickerId = signal<string | null>(null);
 
   readonly gameState = computed(() => this.state());
   readonly hasActiveGame = computed(() => {
@@ -118,6 +124,14 @@ export class GameService {
   readonly walletCoins = computed(() => this.state()?.coins ?? this.persistedWallet().coins);
   readonly walletPoints = computed(() => this.state()?.score ?? this.persistedWallet().points);
   readonly stickerInventory = computed(() => this.state()?.stickerInventory ?? this.persistedStickerInventory());
+  readonly selectedAvatarStickerId = computed(() => this.persistedAvatarStickerId());
+  readonly selectedAvatarSticker = computed<StickerAvatar | null>(() => {
+    const avatarId = this.selectedAvatarStickerId();
+    if (!avatarId) {
+      return null;
+    }
+    return this.stickersState().find((sticker) => sticker.id === avatarId) ?? null;
+  });
 
   readonly progressText = computed(() => {
     const session = this.state();
@@ -151,6 +165,7 @@ export class GameService {
       this.persistedUnlockedCollectibleIds.set([]);
       this.persistedWallet.set({ coins: 0, points: 0 });
       this.persistedStickerInventory.set({});
+      this.persistedAvatarStickerId.set(null);
       return;
     }
 
@@ -182,8 +197,11 @@ export class GameService {
     });
 
     this.http.get<UserStickersResponse>(`${apiBase}/api/users/me/stickers`).subscribe({
-      next: (response) => this.applyPersistedStickerInventory(response?.stickerInventory ?? {}),
-      error: () => this.persistedStickerInventory.set({})
+      next: (response) => this.applyPersistedStickerState(response),
+      error: () => {
+        this.persistedStickerInventory.set({});
+        this.persistedAvatarStickerId.set(null);
+      }
     });
   }
 
@@ -456,7 +474,36 @@ export class GameService {
   }
 
   getStickerSalePrice(sticker: StickerAvatar): number {
-    return this.calculateSalePrice(this.getOfferForSticker(sticker));
+    return Math.max(0, Number(sticker.sellPrice ?? 0));
+  }
+
+  setAvatarSticker(stickerId: string): Observable<string | null> {
+    const session = this.ensureProfileSession();
+    const normalizedStickerId = stickerId.trim();
+    if (!normalizedStickerId) {
+      return of(null);
+    }
+
+    const ownedCount = session.stickerInventory[normalizedStickerId] ?? 0;
+    if (ownedCount <= 0) {
+      return of(null);
+    }
+
+    const token = sessionStorage.getItem('auth_token');
+    if (!token) {
+      this.persistedAvatarStickerId.set(normalizedStickerId);
+      return of(normalizedStickerId);
+    }
+
+    const apiBase = this.appConfig.apiBaseUrl;
+    return this.http.put<UserStickerAvatarResponse>(`${apiBase}/api/users/me/stickers/avatar`, { stickerId: normalizedStickerId }).pipe(
+      map((response) => {
+        const avatarStickerId = this.normalizeAvatarStickerId(response?.avatarStickerId, this.stickerInventory());
+        this.persistedAvatarStickerId.set(avatarStickerId);
+        return avatarStickerId;
+      }),
+      catchError(() => of(null))
+    );
   }
 
   sellSticker(stickerId: string): Observable<{ salePrice: number; remainingCount: number; remainingCoins: number } | null> {
@@ -795,8 +842,8 @@ export class GameService {
     this.persistState();
   }
 
-  private applyPersistedStickerInventory(serverInventory: Record<string, number>): void {
-    const normalizedInventory = Object.entries(serverInventory ?? {}).reduce<Record<string, number>>((acc, [id, count]) => {
+  private applyPersistedStickerState(response: UserStickersResponse | null | undefined): void {
+    const normalizedInventory = Object.entries(response?.stickerInventory ?? {}).reduce<Record<string, number>>((acc, [id, count]) => {
       const normalizedCount = Math.max(0, Number(count ?? 0));
       if (id && normalizedCount > 0) {
         acc[id] = normalizedCount;
@@ -805,6 +852,7 @@ export class GameService {
     }, {});
 
     this.persistedStickerInventory.set(normalizedInventory);
+    this.persistedAvatarStickerId.set(this.normalizeAvatarStickerId(response?.avatarStickerId ?? null, normalizedInventory));
 
     const session = this.state();
     if (!session) {
@@ -816,6 +864,14 @@ export class GameService {
       stickerInventory: normalizedInventory
     });
     this.persistState();
+  }
+
+  private normalizeAvatarStickerId(avatarStickerId: string | null | undefined, inventory: Record<string, number>): string | null {
+    if (!avatarStickerId) {
+      return null;
+    }
+
+    return (inventory[avatarStickerId] ?? 0) > 0 ? avatarStickerId : null;
   }
 
   private persistUnlockedCollectiblesToServer(unlockedCollectibleIds: string[]): void {
@@ -837,12 +893,6 @@ export class GameService {
           // Keep optimistic client state even if persistence fails temporarily.
         }
       });
-  }
-
-  private calculateSalePrice(offer: StickerRollOffer): number {
-    // Worth is implied by cost and drop chance: worth = cost / chance.
-    const worth = offer.successRate > 0 ? offer.cost / offer.successRate : 0;
-    return Math.max(0, Math.floor(worth * 0.4));
   }
 
   private persistWalletToServer(coins: number, points: number): void {

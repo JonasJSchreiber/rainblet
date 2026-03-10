@@ -43,13 +43,13 @@
   <h3 class="section-title">Sell Stickers</h3>
   <div class="sticker-grid">
     @for (sticker of sortedStoreStickers(); track sticker.id) {
-      <article class="sticker-card" [class]="'sticker-card ' + sticker.rarity">
+      <article class="sticker-card" [class]="'sticker-card ' + sticker.rarity" [class.selling]="sellingStickerId() === sticker.id">
         <div class="sticker-emoji">{{ sticker.emoji }}</div>
         <div class="name">{{ sticker.name }}</div>
         <div class="rarity">{{ sticker.rarity | titlecase }}</div>
         <div class="owned">Owned: {{ ownedCount(sticker) }}</div>
-        <button class="sell" [disabled]="ownedCount(sticker) <= 0" (click)="sellSticker(sticker)">
-          Sell: {{ salePrice(sticker) }} coins
+        <button class="sell" [disabled]="ownedCount(sticker) <= 0 || sellingStickerId() === sticker.id" (click)="sellSticker(sticker)">
+          @if (sellingStickerId() === sticker.id) { Selling... } @else { Sell: {{ salePrice(sticker) }} coins }
         </button>
       </article>
     }

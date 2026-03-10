@@ -19,6 +19,7 @@ export class StickersPageComponent {
 
   readonly inventory = computed(() => this.game.stickerInventory());
   readonly selectedSticker = signal<StickerAvatar | null>(null);
+  readonly isSellingSticker = signal(false);
 
   readonly groupedCollectionStickers = computed<StickerRarityGroup[]>(() => {
     const grouped = new Map<Rarity, StickerAvatar[]>();
@@ -57,11 +58,23 @@ export class StickersPageComponent {
   }
 
   sellSticker(sticker: StickerAvatar): void {
-    this.game.sellSticker(sticker.id).subscribe(() => {
-      if (this.stickerCount(sticker.id) <= 0) {
-        this.closeSticker();
-      }
-    });
+    if (this.isSellingSticker()) {
+      return;
+    }
+
+    this.isSellingSticker.set(true);
+
+    setTimeout(() => {
+      this.game.sellSticker(sticker.id).subscribe({
+        next: () => {
+          if (this.stickerCount(sticker.id) <= 0) {
+            this.closeSticker();
+          }
+        },
+        complete: () => this.isSellingSticker.set(false),
+        error: () => this.isSellingSticker.set(false)
+      });
+    }, 620);
   }
 
   closeSticker(): void {

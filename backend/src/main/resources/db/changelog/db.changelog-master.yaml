@@ -39,3 +39,13 @@ databaseChangeLog:
       file: db/changelog/db.changelog-019-strip-science-check-prefix.yaml
   - include:
       file: db/changelog/db.changelog-020-dedupe-questions.yaml
+  - include:
+      file: db/changelog/db.changelog-021-sticker-sell-price.yaml
+  - include:
+      file: db/changelog/db.changelog-022-update-epic-sell-price.yaml
+  - include:
+      file: db/changelog/db.changelog-023-seed-100-stickers.yaml
+  - include:
+      file: db/changelog/db.changelog-024-user-sticker-avatar.yaml
+  - include:
+      file: db/changelog/db.changelog-025-rename-nova-stickers.yaml

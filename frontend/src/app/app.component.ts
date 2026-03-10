@@ -1,6 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import { Component, ElementRef, HostListener, computed, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { StickerAvatar } from './models/game.models';
 import { AuthService } from './services/auth.service';
 import { GameService } from './services/game.service';
 
@@ -26,13 +27,17 @@ export class AppComponent {
   private readonly authPictureSource = computed(() => this.auth.user()?.pictureUrl || '');
   readonly profileImageErrored = signal(false);
   readonly authPicture = computed(() => (this.profileImageErrored() ? '' : this.authPictureSource()));
-  readonly authInitials = computed(() => {
-    const source = this.auth.user()?.name || this.auth.user()?.email || 'U';
-    const first = source.trim().charAt(0);
-    return first ? first.toUpperCase() : 'U';
+  readonly selectedAvatarSticker = this.game.selectedAvatarSticker;
+  readonly ownedAvatarStickers = computed<StickerAvatar[]>(() => {
+    const inventory = this.game.stickerInventory();
+    return this.game
+      .allStickers()
+      .filter((sticker) => (inventory[sticker.id] ?? 0) > 0)
+      .sort((a, b) => a.name.localeCompare(b.name));
   });
   readonly isProfileMenuOpen = signal(false);
   readonly isLoginModalOpen = signal(false);
+  readonly isAvatarModalOpen = signal(false);
   readonly loginEmail = signal('');
   readonly loginPassword = signal('');
   readonly loginError = signal('');
@@ -112,12 +117,31 @@ export class AppComponent {
     this.isProfileMenuOpen.update((open) => !open);
   }
 
+  openAvatarModal(event?: Event): void {
+    event?.stopPropagation();
+    this.isAvatarModalOpen.set(true);
+    this.isProfileMenuOpen.set(false);
+  }
+
+  closeAvatarModal(): void {
+    this.isAvatarModalOpen.set(false);
+  }
+
+  selectAvatar(stickerId: string): void {
+    this.game.setAvatarSticker(stickerId).subscribe((avatarStickerId) => {
+      if (avatarStickerId) {
+        this.closeAvatarModal();
+      }
+    });
+  }
+
   onProfileImageError(): void {
     this.profileImageErrored.set(true);
   }
 
   logout(): void {
     this.isProfileMenuOpen.set(false);
+    this.isAvatarModalOpen.set(false);
     this.auth.logout();
   }
 
@@ -132,6 +156,3 @@ export class AppComponent {
     return fallback;
   }
 }
-
-
-

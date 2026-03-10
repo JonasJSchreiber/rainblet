@@ -182,3 +182,38 @@
   border-color: #d8b8ff;
   background: linear-gradient(120deg, #f9efff, #dffcff);
 }
+
+
+.sticker-card.selling {
+  position: relative;
+  overflow: hidden;
+  animation: stickerSellBlast 620ms ease-out;
+}
+
+.sticker-card.selling > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sticker-card.selling::after {
+  content: '';
+  position: absolute;
+  inset: -55%;
+  background: conic-gradient(from 0deg, #ff5ec4, #ffd84f, #6efff6, #8f7dff, #ff5ec4);
+  opacity: 0.75;
+  mix-blend-mode: screen;
+  animation: stickerSellSpin 620ms linear;
+  pointer-events: none;
+}
+
+@keyframes stickerSellBlast {
+  0% { transform: scale(1); filter: brightness(1); }
+  35% { transform: scale(1.06) rotate(-1deg); filter: brightness(1.35); }
+  70% { transform: scale(0.96) rotate(1deg); filter: brightness(1.08); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes stickerSellSpin {
+  0% { transform: rotate(0deg) scale(1); opacity: 0.8; }
+  100% { transform: rotate(260deg) scale(1.25); opacity: 0; }
+}

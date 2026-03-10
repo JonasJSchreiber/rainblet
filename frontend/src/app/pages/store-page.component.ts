@@ -13,6 +13,7 @@ export class StorePageComponent {
   readonly game = inject(GameService);
   readonly lastResult = signal<StickerRollResult | null>(null);
   readonly lastSale = signal<{ salePrice: number; remainingCount: number; remainingCoins: number } | null>(null);
+  readonly sellingStickerId = signal<string | null>(null);
   readonly inventory = computed(() => this.game.stickerInventory());
   readonly rarityOrder = RARITY_DISPLAY_ORDER;
   readonly selectedPack = signal<Rarity | null>(null);
@@ -73,10 +74,22 @@ export class StorePageComponent {
   }
 
   sellSticker(sticker: StickerAvatar): void {
-    this.game.sellSticker(sticker.id).subscribe((sale) => {
-      this.lastSale.set(sale);
-      this.lastResult.set(null);
-    });
+    if (this.sellingStickerId()) {
+      return;
+    }
+
+    this.sellingStickerId.set(sticker.id);
+
+    setTimeout(() => {
+      this.game.sellSticker(sticker.id).subscribe({
+        next: (sale) => {
+          this.lastSale.set(sale);
+          this.lastResult.set(null);
+        },
+        complete: () => this.sellingStickerId.set(null),
+        error: () => this.sellingStickerId.set(null)
+      });
+    }, 620);
   }
 
   ownedCount(sticker: StickerAvatar): number {

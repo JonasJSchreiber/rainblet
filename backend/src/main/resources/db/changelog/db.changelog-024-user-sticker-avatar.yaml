@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 024-001-add-user-stickers-is-avatar-column
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_stickers
+          - not:
+              columnExists:
+                tableName: user_stickers
+                columnName: is_avatar
+      changes:
+        - addColumn:
+            tableName: user_stickers
+            columns:
+              - column:
+                  name: is_avatar
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 024-002-add-user-stickers-avatar-index
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_stickers
+          - columnExists:
+              tableName: user_stickers
+              columnName: is_avatar
+          - not:
+              indexExists:
+                tableName: user_stickers
+                indexName: idx_user_stickers_avatar
+      changes:
+        - createIndex:
+            tableName: user_stickers
+            indexName: idx_user_stickers_avatar
+            columns:
+              - column:
+                  name: user_id
+              - column:
+                  name: is_avatar

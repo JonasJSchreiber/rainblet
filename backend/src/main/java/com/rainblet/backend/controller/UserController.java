@@ -1,6 +1,8 @@
 package com.rainblet.backend.controller;
 
 import com.rainblet.backend.dto.UserCollectiblesRequest;
+import com.rainblet.backend.dto.UserStickerAvatarRequest;
+import com.rainblet.backend.dto.UserStickerAvatarResponse;
 import com.rainblet.backend.dto.UserStickerRollRequest;
 import com.rainblet.backend.dto.UserStickerRollResponse;
 import com.rainblet.backend.dto.UserStickerSellRequest;
@@ -127,7 +129,10 @@ public class UserController {
     @GetMapping("/me/stickers")
     public UserStickersResponse getMyStickers(Authentication authentication) {
         User user = userService.resolveAuthenticatedUser(authentication);
-        return new UserStickersResponse(userStickerService.getStickerInventory(user.getId()));
+        return new UserStickersResponse(
+                userStickerService.getStickerInventory(user.getId()),
+                userStickerService.getAvatarStickerId(user.getId())
+        );
     }
 
     @PostMapping("/me/stickers/roll")
@@ -141,6 +146,19 @@ public class UserController {
 
         User user = userService.resolveAuthenticatedUser(authentication);
         return userStickerService.rollSticker(user.getId(), request.getRarity());
+    }
+
+    @PutMapping("/me/stickers/avatar")
+    public UserStickerAvatarResponse setMyStickerAvatar(
+            Authentication authentication,
+            @RequestBody(required = false) UserStickerAvatarRequest request
+    ) {
+        if (request == null || request.getStickerId() == null || request.getStickerId().trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "stickerId is required");
+        }
+
+        User user = userService.resolveAuthenticatedUser(authentication);
+        return new UserStickerAvatarResponse(userStickerService.setAvatarSticker(user.getId(), request.getStickerId()));
     }
 
     @PostMapping("/me/stickers/sell")

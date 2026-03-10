@@ -286,3 +286,11 @@ footer {
     width: 100%;
   }
 }
+
+
+.profile-avatar.sticker,.profile-avatar.generic{display:grid;place-items:center;line-height:1}
+.profile-avatar.sticker{font-size:1.25rem}
+.avatar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;max-height:340px;overflow:auto}
+.avatar-option{border:2px solid #d1dbf7;border-radius:12px;background:#f7faff;color:#173f82;padding:.5rem;cursor:pointer;display:grid;gap:.2rem}
+.avatar-option .emoji{font-size:1.3rem}
+.avatar-option .name{font-size:.78rem}

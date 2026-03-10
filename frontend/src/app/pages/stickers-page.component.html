@@ -28,14 +28,14 @@
 
   @if (selectedSticker(); as sticker) {
     <div class="modal-backdrop" (click)="closeSticker()">
-      <article class="modal-card" [class]="'modal-card ' + sticker.rarity" (click)="$event.stopPropagation()">
+      <article class="modal-card" [class]="'modal-card ' + sticker.rarity" [class.selling]="isSellingSticker()" (click)="$event.stopPropagation()">
         <button class="close" (click)="closeSticker()">x</button>
         <div class="modal-emoji">{{ sticker.emoji }}</div>
         <h3>{{ sticker.name }}</h3>
         <p>{{ sticker.rarity | titlecase }}</p>
         <p class="owned-count">Owned: {{ stickerCount(sticker.id) }}</p>
-        <button class="sell" [disabled]="stickerCount(sticker.id) === 0" (click)="sellSticker(sticker)">
-          Sell 1 copy for {{ salePrice(sticker) }} coins
+        <button class="sell" [disabled]="stickerCount(sticker.id) === 0 || isSellingSticker()" (click)="sellSticker(sticker)">
+          @if (isSellingSticker()) { Selling... } @else { Sell 1 copy for {{ salePrice(sticker) }} coins }
         </button>
       </article>
     </div>

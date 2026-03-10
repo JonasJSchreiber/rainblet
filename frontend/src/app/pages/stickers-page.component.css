@@ -183,3 +183,32 @@ p {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+
+.modal-card.selling {
+  overflow: hidden;
+  animation: modalSellPulse 620ms ease-out;
+}
+
+.modal-card.selling::after {
+  content: '';
+  position: absolute;
+  inset: -65%;
+  background: conic-gradient(from 45deg, #6bffb8, #4ad9ff, #ff7adf, #ffe062, #6bffb8);
+  opacity: 0.72;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: modalSellSpin 620ms linear;
+}
+
+@keyframes modalSellPulse {
+  0% { transform: scale(1); filter: saturate(1); }
+  30% { transform: scale(1.04); filter: saturate(1.35); }
+  65% { transform: scale(0.97); filter: saturate(1.12); }
+  100% { transform: scale(1); filter: saturate(1); }
+}
+
+@keyframes modalSellSpin {
+  0% { transform: rotate(0deg) scale(1); opacity: 0.85; }
+  100% { transform: rotate(300deg) scale(1.25); opacity: 0; }
+}
