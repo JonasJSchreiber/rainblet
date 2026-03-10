@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 021-001-add-stickers-sell-price-column
+      author: codex
+      changes:
+        - addColumn:
+            tableName: stickers
+            columns:
+              - column:
+                  name: sell_price
+                  type: INT
+                  defaultValueNumeric: 0
+                  remarks: Sell price in coins for one sticker copy.
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 021-002-backfill-stickers-sell-price-by-rarity
+      author: codex
+      changes:
+        - sql:
+            sql: |
+              UPDATE stickers
+              SET sell_price = CASE LOWER(rarity)
+                  WHEN 'common' THEN 2
+                  WHEN 'rare' THEN 10
+                  WHEN 'epic' THEN 48
+                  WHEN 'legendary' THEN 20
+                  WHEN 'chroma' THEN 35
+                  ELSE sell_price
+              END;

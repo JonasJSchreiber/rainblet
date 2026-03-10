@@ -10,10 +10,12 @@
       @if (isAuthenticated()) {
         <div class="profile-menu" [class.open]="isProfileMenuOpen()">
           <button class="profile-trigger" type="button" (click)="toggleProfileMenu()" [attr.aria-expanded]="isProfileMenuOpen()">
-            @if (authPicture()) {
-              <img class="profile-avatar" [src]="authPicture()" alt="User avatar" referrerpolicy="no-referrer" (error)="onProfileImageError()" />
+            @if (selectedAvatarSticker(); as stickerAvatar) {
+              <span class="profile-avatar sticker" (click)="openAvatarModal($event)">{{ stickerAvatar.emoji }}</span>
+            } @else if (authPicture()) {
+              <img class="profile-avatar" [src]="authPicture()" alt="User avatar" referrerpolicy="no-referrer" (error)="onProfileImageError()" (click)="openAvatarModal($event)" />
             } @else {
-              <span class="profile-avatar fallback">{{ authInitials() }}</span>
+              <span class="profile-avatar fallback generic" (click)="openAvatarModal($event)">&#128100;</span>
             }
             <span class="profile-email">{{ authEmail() }}</span>
           </button>
@@ -43,6 +45,29 @@
     <router-outlet />
   </main>
 </div>
+
+@if (isAvatarModalOpen() && isAuthenticated()) {
+  <div class="modal-backdrop" (click)="closeAvatarModal()">
+    <article class="auth-modal avatar-modal" (click)="$event.stopPropagation()">
+      <button class="close" type="button" (click)="closeAvatarModal()">x</button>
+      <h3>Choose Avatar</h3>
+      <p class="subtitle">Pick one of your owned sticker emojis.</p>
+
+      @if (ownedAvatarStickers().length === 0) {
+        <p class="empty-avatars">No owned stickers yet. Open packs to unlock avatar emojis.</p>
+      } @else {
+        <div class="avatar-grid">
+          @for (sticker of ownedAvatarStickers(); track sticker.id) {
+            <button class="avatar-option" type="button" (click)="selectAvatar(sticker.id)">
+              <span class="emoji">{{ sticker.emoji }}</span>
+              <span class="name">{{ sticker.name }}</span>
+            </button>
+          }
+        </div>
+      }
+    </article>
+  </div>
+}
 
 @if (isLoginModalOpen() && !isAuthenticated()) {
   <div class="modal-backdrop" (click)="closeLoginModal()">
@@ -77,3 +102,4 @@
     </article>
   </div>
 }
+

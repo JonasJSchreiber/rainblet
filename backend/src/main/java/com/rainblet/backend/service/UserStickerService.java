@@ -12,7 +12,6 @@ import com.rainblet.backend.repository.UserWalletRepository;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -57,6 +56,35 @@ public class UserStickerService {
         return inventory;
     }
 
+    @Transactional(readOnly = true)
+    public String getAvatarStickerId(Long userId) {
+        validateUserExists(userId);
+
+        return userStickerRepository.findByUserIdAndIsAvatarTrue(userId)
+                .filter(row -> row.getStickerCount() > 0)
+                .map(UserSticker::getStickerId)
+                .orElse(null);
+    }
+
+    @Transactional
+    public String setAvatarSticker(Long userId, String stickerId) {
+        validateUserExists(userId);
+
+        String normalizedStickerId = normalizeStickerId(stickerId);
+        UserSticker ownedSticker = userStickerRepository
+                .findByUserIdAndStickerIdAndStickerCountGreaterThan(userId, normalizedStickerId, 0)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Sticker is not owned: " + stickerId
+                ));
+
+        userStickerRepository.clearAvatarByUserId(userId);
+        ownedSticker.setAvatar(true);
+        userStickerRepository.save(ownedSticker);
+
+        return ownedSticker.getStickerId();
+    }
+
     @Transactional
     public UserStickerRollResponse rollSticker(Long userId, String rarity) {
         validateUserExists(userId);
@@ -93,6 +121,7 @@ public class UserStickerService {
                     created.setUserId(userId);
                     created.setStickerId(awardedSticker.getId());
                     created.setStickerCount(0);
+                    created.setAvatar(false);
                     return created;
                 });
 
@@ -119,7 +148,7 @@ public class UserStickerService {
         Sticker sticker = stickerRepository.findById(normalizeStickerId(stickerId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sticker not found: " + stickerId));
 
-        int salePrice = calculateSalePrice(resolveLegacyOfferRule(sticker));
+        int salePrice = resolveSalePrice(sticker);
 
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(
                 "CALL sell_user_sticker(?, ?, ?)",
@@ -164,24 +193,23 @@ public class UserStickerService {
         };
     }
 
-    private StickerOfferRule resolveLegacyOfferRule(Sticker sticker) {
-        String rarity = Objects.requireNonNullElse(sticker.getRarity(), "").toLowerCase();
-        return switch (rarity) {
-            case "common" -> new StickerOfferRule(1, "coins", 0.2d);
-            case "rare" -> new StickerOfferRule(3, "coins", 0.12d);
-            case "epic" -> new StickerOfferRule(6, "coins", 0.05d);
-            case "legendary" -> new StickerOfferRule(10, "score", 0.02d);
-            case "chroma" -> new StickerOfferRule(14, "score", 0.01d);
-            default -> throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Unsupported sticker rarity for sale: " + sticker.getRarity()
+    private int resolveSalePrice(Sticker sticker) {
+        Integer configuredSalePrice = sticker.getSellPrice();
+        if (configuredSalePrice == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Sticker sale price is not configured: " + sticker.getId()
             );
-        };
-    }
+        }
 
-    private int calculateSalePrice(StickerOfferRule offer) {
-        double worth = offer.successRate() > 0 ? offer.cost() / offer.successRate() : 0;
-        return Math.max(0, (int) Math.floor(worth * 0.4d));
+        if (configuredSalePrice < 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Sticker sale price is invalid: " + sticker.getId()
+            );
+        }
+
+        return configuredSalePrice;
     }
 
     private void validateUserExists(Long userId) {
@@ -221,10 +249,6 @@ public class UserStickerService {
         return Integer.parseInt(String.valueOf(value));
     }
 
-    private record StickerOfferRule(int cost, String currency, double successRate) {
-    }
-
     private record StickerPackRule(int costCoins) {
     }
 }
-

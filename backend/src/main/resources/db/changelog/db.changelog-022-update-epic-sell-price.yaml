@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 022-001-update-epic-sticker-sell-price
+      author: codex
+      changes:
+        - sql:
+            sql: |
+              UPDATE stickers
+              SET sell_price = 15
+              WHERE LOWER(rarity) = 'epic';

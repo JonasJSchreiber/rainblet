@@ -29,6 +29,9 @@ public class Sticker {
     @Column(nullable = false, length = 32)
     private String emoji;
 
+    @Column(name = "sell_price", nullable = false)
+    private Integer sellPrice;
+
     public String getId() {
         return id;
     }
@@ -59,5 +62,13 @@ public class Sticker {
 
     public void setEmoji(String emoji) {
         this.emoji = emoji;
+    }
+
+    public Integer getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(Integer sellPrice) {
+        this.sellPrice = sellPrice;
     }
 }

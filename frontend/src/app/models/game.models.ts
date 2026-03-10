@@ -22,6 +22,7 @@ export interface StickerAvatar {
   name: string;
   rarity: Rarity;
   emoji: string;
+  sellPrice: number;
 }
 
 export interface AnswerRecord {
