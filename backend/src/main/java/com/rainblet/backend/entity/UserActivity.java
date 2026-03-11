@@ -26,6 +26,9 @@ public class UserActivity {
     @Column(name = "resource_called", nullable = false, length = 500)
     private String resourceCalled;
 
+    @Column(name = "response_body", length = 2000)
+    private String responseBody;
+
     @Column(name = "called_at", nullable = false)
     private Instant calledAt;
 
@@ -75,5 +78,12 @@ public class UserActivity {
     public void setCalledAt(Instant calledAt) {
         this.calledAt = calledAt;
     }
-}
 
+    public String getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(String responseBody) {
+        this.responseBody = responseBody;
+    }
+}

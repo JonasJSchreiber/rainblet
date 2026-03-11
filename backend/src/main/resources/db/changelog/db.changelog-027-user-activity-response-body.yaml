@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 027-user-activity-response-body
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: user_activity
+          - not:
+              columnExists:
+                tableName: user_activity
+                columnName: response_body
+      changes:
+        - addColumn:
+            tableName: user_activity
+            columns:
+              - column:
+                  name: response_body
+                  type: varchar(2000)
+                  constraints:
+                    nullable: true
