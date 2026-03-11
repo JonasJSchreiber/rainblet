@@ -9,7 +9,7 @@
 .app-shell {
   --shell-gap: 1rem;
   --shell-padding: 1rem;
-  --shell-left-width: 24rem;
+  --shell-left-width: 25.5rem;
   --shell-right-width: 14rem;
   position: relative;
   z-index: 1;
@@ -126,6 +126,8 @@
 .nav-group {
   display: grid;
   gap: 0.65rem;
+  width: 100%;
+  min-width: 0;
 }
 
 .nav-group-utility {
@@ -147,6 +149,8 @@
 .shell-nav {
   display: grid;
   gap: 0.8rem;
+  width: 100%;
+  min-width: 0;
 }
 
 .shell-nav a {
@@ -163,6 +167,8 @@
   font-weight: 900;
   box-shadow: inset 0 0 0 1px rgba(147, 234, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  min-width: 0;
   transition:
     background 140ms ease,
     transform 140ms ease,
@@ -546,6 +552,14 @@
 
 @media (min-width: 68rem) {
   .app-shell {
+    /*
+      Desktop density mode:
+      - reduce shell framing slightly
+      - preserve rail clarity
+      - dedicate more vertical space to inventory tiles above the fold
+    */
+    --shell-gap: 0.8rem;
+    --shell-padding: 0.8rem;
     height: 100vh;
     overflow: hidden;
   }
@@ -556,14 +570,15 @@
     top: var(--shell-padding);
     bottom: var(--shell-padding);
     overflow-y: auto;
+    overflow-x: hidden;
     scrollbar-width: thin;
   }
 
   .shell-rail-left {
     left: var(--shell-padding);
     width: var(--shell-left-width);
-    padding: 1.15rem;
-    padding-bottom: 1.4rem;
+    padding: 1rem;
+    padding-bottom: 1.1rem;
     background: linear-gradient(180deg, rgba(43, 13, 111, 0.98), rgba(27, 32, 143, 0.98) 36%, rgba(0, 115, 155, 0.98) 74%, rgba(0, 152, 145, 0.96));
     border-radius: 28px;
     border: 1px solid rgba(127, 232, 255, 0.24);
@@ -586,7 +601,7 @@
   .content-scroll {
     height: calc(100vh - (var(--shell-padding) * 2));
     overflow-y: auto;
-    padding-right: 1.2rem;
+    padding: 0.8rem 0.9rem 0.9rem;
   }
 }
 
