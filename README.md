@@ -167,3 +167,16 @@ Question payload:
 - `correctIndex` is validated to ensure it is within the `options` bounds.
 - Frontend routes `play`, `results`, `store`, and `collection` now require login.
 - If Google OAuth is not configured, `GET /api/auth/google` returns `503`.
+
+## Frontend Shell Layout
+
+Collection and store-related screens should use the desktop app shell defined in [frontend/src/app/app.component.css](/Users/jonasschreiber/workspace/rainblet/frontend/src/app/app.component.css).
+
+- Desktop breakpoint: `68rem` and up.
+- Left rail width: `18rem`, fixed.
+- Right stats rail width: `14rem`, fixed.
+- Shell gap: `1rem` between rails and content.
+- Outer shell padding: `1rem`.
+- Primary scroll container on desktop: the central `.content-scroll` region.
+
+On smaller screens, the rails stack above and below the content instead of remaining fixed.

@@ -1,12 +1,54 @@
 <div class="sparkles"></div>
-<div class="shell">
-  <header class="header">
-    <div>
-      <h1>Rainblet</h1>
-      <p>Fast quiz rounds. Big shiny rewards.</p>
+<div class="app-shell">
+  <aside class="shell-rail shell-rail-left">
+    <div class="brand-card">
+      <p class="eyebrow">Rainblet</p>
+      <h1>Game Shell</h1>
+      <p class="brand-copy">Persistent raid-style navigation for rounds, loot, and collection progress.</p>
+      <button class="rail-primary-action" type="button" (click)="goToPlay()">Start Round</button>
     </div>
-    <div class="header-right">
-      <div class="wallet">Coins: {{ coins() }}</div>
+
+    <div class="nav-group">
+      <p class="nav-group-label">Core Navigation</p>
+      <nav class="shell-nav" aria-label="Primary">
+        @for (item of coreNavItems; track item.path) {
+          <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.exact }">
+            <span class="nav-icon" aria-hidden="true">{{ item.icon }}</span>
+            <span class="nav-copy">
+              <span class="nav-label">{{ item.label }}</span>
+              <span class="nav-detail">{{ item.detail }}</span>
+            </span>
+          </a>
+        }
+      </nav>
+    </div>
+
+    <section class="rail-card player-card">
+      <p class="eyebrow">Player</p>
+      <strong>{{ playerName() }}</strong>
+      <span>{{ roundStatus() }}</span>
+    </section>
+
+    <div class="nav-group nav-group-utility">
+      <p class="nav-group-label">Utilities</p>
+      <nav class="shell-nav shell-nav-utility" aria-label="Utilities">
+        @for (item of utilityNavItems; track item.path) {
+          <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.exact }">
+            <span class="nav-icon" aria-hidden="true">{{ item.icon }}</span>
+            <span class="nav-copy">
+              <span class="nav-label">{{ item.label }}</span>
+              <span class="nav-detail">{{ item.detail }}</span>
+            </span>
+          </a>
+        }
+      </nav>
+    </div>
+
+    <section class="rail-card auth-card">
+      <div class="rail-card-header">
+        <p class="eyebrow">Account</p>
+      </div>
+
       @if (isAuthenticated()) {
         <div class="profile-menu" [class.open]="isProfileMenuOpen()">
           <button class="profile-trigger" type="button" (click)="toggleProfileMenu()" [attr.aria-expanded]="isProfileMenuOpen()">
@@ -29,21 +71,46 @@
       } @else {
         <button class="auth-btn" type="button" (click)="openLoginModal()">Login</button>
       }
+    </section>
+  </aside>
+
+  <main class="shell-main">
+    <div class="content-scroll">
+      <router-outlet />
     </div>
-  </header>
-
-  <nav>
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLink="/play" routerLinkActive="active">Play</a>
-    <a routerLink="/store" routerLinkActive="active">Store</a>
-    <a routerLink="/achievements" routerLinkActive="active">Achievements</a>
-    <a routerLink="/stickers" routerLinkActive="active">Stickers</a>
-    <a routerLink="/feedback" routerLinkActive="active">Feedback</a>
-  </nav>
-
-  <main>
-    <router-outlet />
   </main>
+
+  <aside class="shell-rail shell-rail-right">
+    <section class="stats-card">
+      <p class="eyebrow">Run Stats</p>
+      <div class="stat-list">
+        <article>
+          <span>Coins</span>
+          <strong>{{ coins() }}</strong>
+        </article>
+        <article>
+          <span>Score</span>
+          <strong>{{ points() }}</strong>
+        </article>
+        <article>
+          <span>Round</span>
+          <strong>{{ roundProgress() }}</strong>
+        </article>
+        <article>
+          <span>Unlocked</span>
+          <strong>{{ unlockedCollectiblesText() }}</strong>
+        </article>
+        <article>
+          <span>Sticker Types</span>
+          <strong>{{ ownedStickers() }}</strong>
+        </article>
+        <article>
+          <span>Total Copies</span>
+          <strong>{{ totalStickerCopies() }}</strong>
+        </article>
+      </div>
+    </section>
+  </aside>
 </div>
 
 @if (isAvatarModalOpen() && isAuthenticated()) {

@@ -49,3 +49,5 @@ databaseChangeLog:
       file: db/changelog/db.changelog-024-user-sticker-avatar.yaml
   - include:
       file: db/changelog/db.changelog-025-rename-nova-stickers.yaml
+  - include:
+      file: db/changelog/db.changelog-026-add-furry-shadow-sticker.yaml

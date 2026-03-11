@@ -17,10 +17,25 @@ export class AppComponent {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
+  readonly coreNavItems = [
+    { path: '/', label: 'Home Base', detail: 'Lobby and run overview', icon: 'H', exact: true },
+    { path: '/play', label: 'Play', detail: 'Jump into the next quiz', icon: 'P', exact: false },
+    { path: '/store', label: 'Store', detail: 'Spend coins on loot', icon: 'S', exact: false },
+    { path: '/achievements', label: 'Achievements', detail: 'Track unlock progress', icon: 'A', exact: false },
+    { path: '/stickers', label: 'Stickers', detail: 'Browse owned avatar drops', icon: 'T', exact: false }
+  ] as const;
+  readonly utilityNavItems = [
+    { path: '/feedback', label: 'Feedback', detail: 'Send notes to the team', icon: 'F', exact: false }
+  ] as const;
 
   readonly playerName = computed(() => this.game.gameState()?.playerName || 'Guest');
   readonly coins = this.game.walletCoins;
+  readonly points = this.game.walletPoints;
   readonly ownedStickers = this.game.ownedStickerCount;
+  readonly totalStickerCopies = this.game.totalStickerCopies;
+  readonly unlockedCollectiblesText = computed(() => `${this.game.unlockedCollectibles().length} / ${this.game.allCollectibles().length}`);
+  readonly roundProgress = computed(() => (this.game.hasActiveGame() ? this.game.progressText() : 'No active round'));
+  readonly roundStatus = computed(() => (this.game.hasActiveGame() ? 'In Progress' : 'Idle'));
   readonly isAuthenticated = this.auth.isAuthenticated;
   readonly authName = computed(() => this.auth.user()?.name || 'User');
   readonly authEmail = computed(() => this.auth.user()?.email || this.authName());
@@ -111,6 +126,10 @@ export class AppComponent {
   goToCreateUser(): void {
     this.closeLoginModal();
     this.router.navigateByUrl('/signup');
+  }
+
+  goToPlay(): void {
+    this.router.navigateByUrl('/play');
   }
 
   toggleProfileMenu(): void {

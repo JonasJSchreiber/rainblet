@@ -5,6 +5,10 @@
 
 .signup h2 {
   margin: 0;
+  font-size: var(--size-display);
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px var(--heading-glow);
 }
 
 .form {
@@ -13,20 +17,20 @@
 }
 
 .form input {
-  border: 2px solid #d3dcf9;
+  border: 1px solid var(--border-soft);
   border-radius: 10px;
   padding: 0.55rem;
   font: inherit;
 }
 
 .form button {
-  border: 0;
-  border-radius: 10px;
-  padding: 0.6rem 0.75rem;
+  border-color: var(--control-primary-border);
+  border-radius: 18px;
+  padding: 0.72rem 0.85rem;
   font-weight: 800;
   cursor: pointer;
-  background: #1c6af9;
-  color: #fff;
+  background: var(--control-primary-bg);
+  color: var(--control-primary-text);
 }
 
 .form button:disabled {
@@ -36,6 +40,6 @@
 
 .error {
   margin: 0;
-  color: #b01a20;
+  color: var(--status-danger-text);
   font-weight: 700;
 }

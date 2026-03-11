@@ -1,9 +1,12 @@
-<section class="card stickers-page">
-  <h2>Stickers</h2>
-  <p class="subtitle">Avatar sticker inventory and sell actions.</p>
+<section class="stickers-page">
+  <header class="panel page-hero">
+    <p class="eyebrow">Collection</p>
+    <h2>Stickers</h2>
+    <p class="subtitle">Inventory lives in the center column while wallet and progression stay pinned in the shell rails.</p>
+  </header>
 
   @for (group of groupedCollectionStickers(); track group.rarity) {
-    <section class="rarity-section">
+    <section class="panel rarity-section">
       <h3 class="rarity-heading">{{ group.rarity | titlecase }}</h3>
 
       <div class="grid stickers">
@@ -12,14 +15,12 @@
             [class.locked]="stickerCount(sticker.id) === 0"
             [class.clickable]="stickerCount(sticker.id) > 0"
             (click)="openSticker(sticker)">
-            <header>
-              <strong>{{ sticker.emoji }} {{ sticker.name }}</strong>
-              <span [class]="sticker.rarity">{{ sticker.rarity }}</span>
-            </header>
-            <p>Owned: {{ stickerCount(sticker.id) }}</p>
-            @if (stickerCount(sticker.id) > 0) {
-              <small class="view-hint">Tap to view</small>
-            }
+            <div class="tile-topline">
+              <span [class]="'tile-pill ' + sticker.rarity">{{ sticker.rarity }}</span>
+              <span class="tile-count">@if (stickerCount(sticker.id) > 0) { x{{ stickerCount(sticker.id) }} } @else { -- }</span>
+            </div>
+            <div class="sticker-visual">{{ sticker.emoji }}</div>
+            <strong class="tile-name">{{ sticker.name }}</strong>
           </article>
         }
       </div>

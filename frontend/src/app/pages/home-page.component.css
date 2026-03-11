@@ -1,11 +1,15 @@
 .home h2 {
   margin-top: 0;
   margin-bottom: 0.3rem;
+  font-size: var(--size-display);
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px var(--heading-glow);
 }
 
 .home p {
   margin-top: 0;
-  color: #365796;
+  color: var(--text-secondary);
   font-weight: 700;
 }
 
@@ -16,8 +20,8 @@
 }
 
 .stats div {
-  background: #f1f8ff;
-  border: 1px solid #c5dbff;
+  background: linear-gradient(180deg, rgba(78, 29, 177, 0.44), rgba(8, 89, 127, 0.34));
+  border: 1px solid var(--border-strong);
   border-radius: 10px;
   padding: 0.5rem;
 }
@@ -25,12 +29,13 @@
 label {
   display: block;
   margin: 0.8rem 0 0.35rem;
+  font-family: var(--font-utility);
   font-weight: 800;
 }
 
 input {
   width: 100%;
-  border: 1px solid #b8d2ff;
+  border: 1px solid var(--border-soft);
   border-radius: 10px;
   padding: 0.65rem;
   font-size: 1rem;
@@ -44,13 +49,13 @@ input {
 }
 
 button {
-  border: 0;
-  border-radius: 10px;
-  padding: 0.55rem 0.95rem;
+  border-color: var(--control-primary-border);
+  border-radius: 18px;
+  padding: 0.7rem 1rem;
   font-weight: 900;
   cursor: pointer;
-  background: linear-gradient(120deg, #1c53ff, #43a1ff);
-  color: #fff;
+  background: var(--control-primary-bg);
+  color: var(--control-primary-text);
 }
 
 button:disabled {
@@ -59,11 +64,13 @@ button:disabled {
 }
 
 .secondary {
-  background: linear-gradient(120deg, #16b45d, #42d695);
+  background: var(--control-secondary-bg);
+  border-color: var(--control-secondary-border);
+  color: var(--control-secondary-text);
 }
 
 .note {
   display: block;
   margin-top: 0.7rem;
-  color: #5f6d8c;
+  color: var(--text-muted);
 }

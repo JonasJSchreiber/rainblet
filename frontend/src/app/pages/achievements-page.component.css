@@ -1,10 +1,14 @@
 .achievements h2 {
   margin: 0;
+  font-size: var(--size-display);
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px var(--heading-glow);
 }
 
 .subtitle {
   margin: 0.3rem 0 0.7rem;
-  color: #43609d;
+  color: var(--text-secondary);
   font-weight: 700;
 }
 
@@ -16,10 +20,10 @@
 }
 
 article {
-  border: 1px solid #d7e4ff;
+  border: 1px solid var(--border-soft);
   border-radius: 12px;
   padding: 0.65rem;
-  background: #f9fbff;
+  background: linear-gradient(180deg, rgba(46, 19, 115, 0.52), rgba(7, 74, 109, 0.42));
 }
 
 article.locked {
@@ -42,28 +46,28 @@ span {
 }
 
 .common {
-  background: #e8f6ed;
-  color: #2c7645;
+  background: var(--rarity-common-bg);
+  color: var(--rarity-common-text);
 }
 
 .rare {
-  background: #e4edff;
-  color: #3158a6;
+  background: var(--rarity-rare-bg);
+  color: var(--rarity-rare-text);
 }
 
 .epic {
-  background: #ffe8d6;
-  color: #a45521;
+  background: var(--rarity-epic-bg);
+  color: var(--rarity-epic-text);
 }
 
 .legendary {
-  background: #fff2be;
-  color: #7f5600;
+  background: var(--rarity-legendary-bg);
+  color: var(--rarity-legendary-text);
 }
 
 .chroma {
-  background: #f1e6ff;
-  color: #6e2bb5;
+  background: var(--rarity-chroma-bg);
+  color: var(--rarity-chroma-text);
 }
 
 p {

@@ -9,6 +9,8 @@
 /frontend/npm-debug.log
 /frontend/yarn-error.log
 /frontend/testem.log
+/node_modules
+/.angular
 
 # Backend (Spring Boot)
 /backend/target

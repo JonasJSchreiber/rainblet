@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 026-001-add-furry-shadow-sticker
+      author: codex
+      preConditions:
+        onFail: MARK_RAN
+        and:
+          - tableExists:
+              tableName: stickers
+          - sqlCheck:
+              expectedResult: "0"
+              sql: SELECT COUNT(*) FROM stickers WHERE id = 'furry-shadow'
+      changes:
+        - insert:
+            tableName: stickers
+            columns:
+              - column:
+                  name: id
+                  value: furry-shadow
+              - column:
+                  name: name
+                  value: Furry Shadow
+              - column:
+                  name: rarity
+                  value: chroma
+              - column:
+                  name: emoji
+                  value: "🐺"
+              - column:
+                  name: sell_price
+                  valueNumeric: 200
