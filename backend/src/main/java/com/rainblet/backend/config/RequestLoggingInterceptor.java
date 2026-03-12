@@ -27,6 +27,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
     private static final String GREEN_CIRCLE = "\uD83D\uDFE2";
     private static final Logger log = LoggerFactory.getLogger(RequestLoggingInterceptor.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final int RESPONSE_BODY_MAX_LENGTH = 2000;
     private static final String START_TIME_ATTRIBUTE = RequestLoggingInterceptor.class.getName() + ".startTimeNanos";
     private static final Set<String> SENSITIVE_HEADERS = Set.of(
             "authorization",
@@ -80,6 +81,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
     ) {
         long durationMs = durationMillis(request);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String responseBody = truncateResponseBody(request.getAttribute(ResponseBodyCaptureAdvice.RESPONSE_BODY_ATTRIBUTE));
 
         if (ex != null) {
             log.error(
@@ -92,7 +94,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
                     ex.getClass().getSimpleName(),
                     ex
             );
-            userActivityService.record(request, authentication);
+            userActivityService.record(request, authentication, responseBody);
             return;
         }
 
@@ -105,7 +107,20 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
                 durationMs
         );
 
-        userActivityService.record(request, authentication);
+        userActivityService.record(request, authentication, responseBody);
+    }
+
+    @Nullable
+    private String truncateResponseBody(@Nullable Object responseBodyAttribute) {
+        if (!(responseBodyAttribute instanceof String responseBody) || !StringUtils.hasText(responseBody)) {
+            return null;
+        }
+
+        if (responseBody.length() <= RESPONSE_BODY_MAX_LENGTH) {
+            return responseBody;
+        }
+
+        return responseBody.substring(0, RESPONSE_BODY_MAX_LENGTH);
     }
 
     private String headersToJson(HttpServletRequest request) {

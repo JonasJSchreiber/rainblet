@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,7 @@ public class UserActivityService {
     }
 
     @Transactional
-    public void record(HttpServletRequest request, Authentication authentication) {
+    public void record(HttpServletRequest request, Authentication authentication, @Nullable String responseBody) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return;
         }
@@ -61,6 +62,7 @@ public class UserActivityService {
         activity.setUserId(userId);
         activity.setUserEmail(email.trim().toLowerCase());
         activity.setResourceCalled(resource);
+        activity.setResponseBody(responseBody);
         activity.setCalledAt(Instant.now());
 
         try {
@@ -136,4 +138,3 @@ public class UserActivityService {
         }
     }
 }
-
