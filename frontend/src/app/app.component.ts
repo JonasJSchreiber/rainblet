@@ -28,14 +28,12 @@ export class AppComponent {
     { path: '/feedback', label: 'Feedback', detail: 'Send notes to the team', icon: 'F', exact: false }
   ] as const;
 
-  readonly playerName = computed(() => this.game.gameState()?.playerName || 'Guest');
   readonly coins = this.game.walletCoins;
   readonly points = this.game.walletPoints;
   readonly ownedStickers = this.game.ownedStickerCount;
   readonly totalStickerCopies = this.game.totalStickerCopies;
   readonly unlockedCollectiblesText = computed(() => `${this.game.unlockedCollectibles().length} / ${this.game.allCollectibles().length}`);
   readonly roundProgress = computed(() => (this.game.hasActiveGame() ? this.game.progressText() : 'No active round'));
-  readonly roundStatus = computed(() => (this.game.hasActiveGame() ? 'In Progress' : 'Idle'));
   readonly isAuthenticated = this.auth.isAuthenticated;
   readonly authName = computed(() => this.auth.user()?.name || 'User');
   readonly authEmail = computed(() => this.auth.user()?.email || this.authName());
@@ -126,10 +124,6 @@ export class AppComponent {
   goToCreateUser(): void {
     this.closeLoginModal();
     this.router.navigateByUrl('/signup');
-  }
-
-  goToPlay(): void {
-    this.router.navigateByUrl('/play');
   }
 
   toggleProfileMenu(): void {

@@ -1,13 +1,6 @@
 <div class="sparkles"></div>
 <div class="app-shell">
   <aside class="shell-rail shell-rail-left">
-    <div class="brand-card">
-      <p class="eyebrow">Rainblet</p>
-      <h1>Game Shell</h1>
-      <p class="brand-copy">Persistent raid-style navigation for rounds, loot, and collection progress.</p>
-      <button class="rail-primary-action" type="button" (click)="goToPlay()">Start Round</button>
-    </div>
-
     <div class="nav-group">
       <p class="nav-group-label">Core Navigation</p>
       <nav class="shell-nav" aria-label="Primary">
@@ -22,12 +15,6 @@
         }
       </nav>
     </div>
-
-    <section class="rail-card player-card">
-      <p class="eyebrow">Player</p>
-      <strong>{{ playerName() }}</strong>
-      <span>{{ roundStatus() }}</span>
-    </section>
 
     <div class="nav-group nav-group-utility">
       <p class="nav-group-label">Utilities</p>

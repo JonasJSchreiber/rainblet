@@ -2,7 +2,7 @@
   <header class="panel page-hero">
     <p class="eyebrow">Store</p>
     <h2>Sticker Store</h2>
-    <p class="subtitle">Open packs and liquidate duplicates without leaving the collection shell.</p>
+    <p class="subtitle">Open packs to grow your collection.</p>
   </header>
 
   @if (lastResult(); as result) {
@@ -12,17 +12,6 @@
         <h3>You won {{ result.sticker?.name }}!</h3>
         <p>{{ result.offer.rarity | titlecase }} pack opened.</p>
         <small>@if (result.isNew) { New sticker unlocked! } @else { Duplicate added. }</small>
-      </div>
-    </article>
-  }
-
-  @if (lastSale(); as sale) {
-    <article class="panel drop sold">
-      <div class="emoji">+{{ sale.salePrice }}</div>
-      <div>
-        <h3>Sticker sold</h3>
-        <p>You received {{ sale.salePrice }} coins.</p>
-        <small>Coins now: {{ sale.remainingCoins }}</small>
       </div>
     </article>
   }
@@ -65,52 +54,6 @@
           </div>
           <div class="pack-visual" aria-hidden="true">{{ packGlyph(rarity) }}</div>
           <div class="pack-name">{{ rarity | titlecase }}</div>
-        </article>
-      }
-    </div>
-  </section>
-
-  <section class="panel store-section">
-    <div class="section-head">
-      <h3 class="section-title">Sell Stickers</h3>
-      <p>Browse collection first, then sell from the tray.</p>
-    </div>
-    <div class="context-tray" [class.active]="focusedSticker() !== null">
-      @if (focusedSticker(); as sticker) {
-        <div class="context-copy">
-          <span class="context-kicker">Selected Sticker</span>
-          <strong>{{ sticker.emoji }} {{ sticker.name }}</strong>
-          <small>Selected state exposes the sell action here while tiles stay compact in browse mode.</small>
-        </div>
-        <div class="context-actions">
-          <span class="tray-cost">Owned x{{ ownedCount(sticker) }}</span>
-          <button class="tray-button" [disabled]="ownedCount(sticker) <= 0 || sellingStickerId() === sticker.id" (click)="sellSticker(sticker)">
-            @if (sellingStickerId() === sticker.id) { Selling... } @else { Sell for {{ salePrice(sticker) }} coins }
-          </button>
-          <button class="tray-button secondary" type="button" (click)="clearFocusedSticker()">Clear</button>
-        </div>
-      } @else {
-        <div class="context-copy">
-          <span class="context-kicker">Browse State</span>
-          <strong>Select a sticker tile</strong>
-          <small>Ownership stays visible on the tile. Selling only appears once a sticker is selected.</small>
-        </div>
-      }
-    </div>
-    <div class="sticker-grid">
-      @for (sticker of sortedStoreStickers(); track sticker.id) {
-        <article
-          class="sticker-card"
-          [class]="'sticker-card ' + sticker.rarity"
-          [class.selling]="sellingStickerId() === sticker.id"
-          [class.selected]="isStickerFocused(sticker)"
-          (click)="focusSticker(sticker)">
-          <div class="tile-topline">
-            <span class="tile-pill">{{ sticker.rarity }}</span>
-            <span class="tile-count">x{{ ownedCount(sticker) }}</span>
-          </div>
-          <div class="sticker-emoji">{{ sticker.emoji }}</div>
-          <div class="name">{{ sticker.name }}</div>
         </article>
       }
     </div>
